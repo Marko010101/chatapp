@@ -5,14 +5,14 @@ const GlobalStyles = createGlobalStyle`
 
 :root {
   /* Indigo */
-  /* --color-brand-50: #eef2ff;
+  --color-brand-50: #eef2ff;
   --color-brand-100: #e0e7ff;
   --color-brand-200: #c7d2fe;
   --color-brand-500: #6366f1;
   --color-brand-600: #4f46e5;
   --color-brand-700: #4338ca;
   --color-brand-800: #3730a3;
-  --color-brand-900: #312e81; */
+  --color-brand-900: #312e81; 
 
   /* Black */
   --color-black: #000;
@@ -57,6 +57,10 @@ const GlobalStyles = createGlobalStyle`
   --border-radius-sm: 5px;
   --border-radius-md: 7px;
   --border-radius-lg: 9px;
+
+  /* Width */
+  --sidebar-width-medium: 24.45rem;
+
 
   /* For dark mode */
   --image-grayscale: 0;
