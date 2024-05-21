@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import {
   HiOutlineCalendarDays,
@@ -7,6 +7,7 @@ import {
   HiOutlineHomeModern,
   HiOutlineUsers,
 } from "react-icons/hi2";
+import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
 
 const NavList = styled.ul`
   display: flex;
@@ -33,8 +34,8 @@ const StyledNavLink = styled(NavLink)`
   &:active,
   &.active:link,
   &.active:visited {
-    color: var(--color-grey-800);
-    background-color: var(--color-grey-100);
+    color: var(--color-grey-100);
+    background-color: var(--color-grey-900);
     border-radius: var(--border-radius-sm);
   }
 
@@ -49,11 +50,13 @@ const StyledNavLink = styled(NavLink)`
   &:active svg,
   &.active:link svg,
   &.active:visited svg {
-    color: var(--color-brand-600);
+    color: var(--color-grey-50);
   }
 `;
 
 function MainNav() {
+  const { toggleShrink } = useSidebarShrink();
+
   return (
     <nav>
       <ul>
@@ -87,10 +90,8 @@ function MainNav() {
             </StyledNavLink>
           </li>
           <li>
-            <StyledNavLink to="/notifications">
-              <HiOutlineCog6Tooth />
-              <span>Notifications</span>
-            </StyledNavLink>
+            <HiOutlineCog6Tooth />
+            <span>Notifications</span>
           </li>
           <li>
             <StyledNavLink to="Create">
@@ -99,7 +100,7 @@ function MainNav() {
             </StyledNavLink>
           </li>
           <li>
-            <StyledNavLink to="/profile">
+            <StyledNavLink to="/profile" onClick={toggleShrink}>
               <HiOutlineCog6Tooth />
               <span>Profile</span>
             </StyledNavLink>

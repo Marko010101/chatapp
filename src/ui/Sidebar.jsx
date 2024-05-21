@@ -8,8 +8,7 @@ function Sidebar() {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    padding-left: 3rem;
-    padding-top: 4rem;
+    padding: 2rem;
   `;
 
   return (
