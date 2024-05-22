@@ -2,15 +2,17 @@ import { NavLink } from "react-router-dom";
 import NavLinkItem from "./NavLinkItem.jsx";
 import styled, { css } from "styled-components";
 
+import messageIcon from "../../public/messages.svg";
+import activeMessageIcon from "../../public/messagesActive.svg";
+
 import { IoHomeOutline, IoSearchSharp, IoHomeSharp } from "react-icons/io5";
 import { MdOutlineExplore, MdExplore } from "react-icons/md";
 import { IoIosSearch } from "react-icons/io";
 import { PiFilmReelFill, PiFilmReelLight } from "react-icons/pi";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
-import { MdOutlineAddBox } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
+import { RiAddCircleLine, RiAddCircleFill } from "react-icons/ri";
 
-import { HiOutlineCog6Tooth } from "react-icons/hi2";
 // import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
 
 const NavList = styled.ul`
@@ -38,7 +40,7 @@ const StyledNavLink = styled(NavLink)`
     color: var(--color-gray-300);
     font-size: 1.6rem;
     font-weight: var(--font-weight-regular);
-    padding: 1rem 1.2rem;
+    padding: 1.1rem 1.2rem;
     transition: all 0.3s;
   }
 
@@ -52,13 +54,13 @@ const StyledNavLink = styled(NavLink)`
   &.active:link,
   &.active:visited {
     color: var(--color-gray-100);
-    border-radius: var(--border-radius-sm);
+    border-radius: var(--border-radius-lg);
     font-weight: var(--font-weight-bold);
   }
 
   &:hover {
     background-color: var(--backdrop-color);
-    border-radius: var(--border-radius-sm);
+    border-radius: var(--border-radius-lg);
   }
 
   & svg,
@@ -128,13 +130,20 @@ function MainNav() {
           </li>
           <li>
             <StyledNavLink to="/inbox">
-              <NavLinkItem
+              {/* <NavLinkItem
                 icon={<img src="/public/messages.svg" alt="Messages image" />}
                 iconActive={
                   <img
                     src="/public/messagesActive.svg"
                     alt="Active messages image"
                   />
+                }
+                title={"inbox"}
+              /> */}
+              <NavLinkItem
+                icon={<img src={messageIcon} alt="message icon" />}
+                iconActive={
+                  <img src={activeMessageIcon} alt="Active messages image" />
                 }
                 title={"inbox"}
               />
@@ -151,8 +160,11 @@ function MainNav() {
           </li>
           <li>
             <StyledNavLink to="create">
-              <MdOutlineAddBox />
-              <span>Create</span>
+              <NavLinkItem
+                icon={<RiAddCircleLine />}
+                iconActive={<RiAddCircleFill />}
+                title={"create"}
+              />
             </StyledNavLink>
           </li>
           <li>
