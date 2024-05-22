@@ -21,7 +21,7 @@ const StyledPageNotFound = styled.main`
       color: var(--color-brand-100);
       cursor: pointer;
       &:active {
-        color: var(--color-grey-500);
+        color: var(--color-gray-500);
       }
     }
   }

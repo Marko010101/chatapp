@@ -1,18 +1,30 @@
 import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import {
-  HiOutlineCalendarDays,
-  HiOutlineCog6Tooth,
-  HiOutlineHome,
-  HiOutlineHomeModern,
-  HiOutlineUsers,
-} from "react-icons/hi2";
-import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
+import NavLinkItem from "./NavLinkItem.jsx";
+import styled, { css } from "styled-components";
+
+import { IoHomeOutline, IoSearchSharp, IoHomeSharp } from "react-icons/io5";
+import { MdOutlineExplore, MdExplore } from "react-icons/md";
+import { IoIosSearch } from "react-icons/io";
+import { PiFilmReelFill, PiFilmReelLight } from "react-icons/pi";
+import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
+import { MdOutlineAddBox } from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
+
+import { HiOutlineCog6Tooth } from "react-icons/hi2";
+// import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
 
 const NavList = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 0.4rem;
+
+  /* ${(props) =>
+    props.isShrunk &&
+    css`
+      & span {
+        display: none;
+      }
+    `}; */
 `;
 
 const StyledNavLink = styled(NavLink)`
@@ -20,88 +32,132 @@ const StyledNavLink = styled(NavLink)`
   &:visited {
     display: flex;
     align-items: center;
-    gap: 1.2rem;
+    justify-content: start;
+    gap: 1.4rem;
 
-    color: var(--color-grey-600);
+    color: var(--color-gray-300);
     font-size: 1.6rem;
-    font-weight: 500;
-    padding: 1.2rem 2.4rem;
+    font-weight: var(--font-weight-regular);
+    padding: 1rem 1.2rem;
     transition: all 0.3s;
+  }
+
+  & span {
+    align-self: self-end;
   }
 
   /* This works because react-router places the active class on the active NavLink */
-  &:hover,
+
   &:active,
   &.active:link,
   &.active:visited {
-    color: var(--color-grey-100);
-    background-color: var(--color-grey-900);
+    color: var(--color-gray-100);
+    border-radius: var(--border-radius-sm);
+    font-weight: var(--font-weight-bold);
+  }
+
+  &:hover {
+    background-color: var(--backdrop-color);
     border-radius: var(--border-radius-sm);
   }
 
-  & svg {
-    width: 2.4rem;
-    height: 2.4rem;
-    color: var(--color-grey-400);
-    transition: all 0.3s;
+  & svg,
+  img {
+    width: 2.6rem;
+    height: 2.6rem;
+    color: var(--color-gray-50);
+    transition: all 0.2s;
   }
 
   &:hover svg,
   &:active svg,
   &.active:link svg,
-  &.active:visited svg {
-    color: var(--color-grey-50);
+  &.active:visited svg,
+  &:hover img,
+  &:active img,
+  &.active:link img,
+  &.active:visited img {
+    color: var(--color-gray-50);
+    scale: 110%;
   }
 `;
 
 function MainNav() {
-  const { toggleShrink } = useSidebarShrink();
+  // const { isShrunk } = useSidebarShrink();
 
+  // css properties does not working same for all the svgs so i had to create NavLinkItem.
   return (
     <nav>
       <ul>
         <NavList>
           <li>
             <StyledNavLink to="/">
-              <HiOutlineHome /> <span>Home</span>
+              <NavLinkItem
+                icon={<IoHomeOutline />}
+                iconActive={<IoHomeSharp />}
+                title={""}
+              />
             </StyledNavLink>
           </li>
           <li>
             <StyledNavLink to="/search">
-              <HiOutlineHome /> <span>Search</span>
+              <NavLinkItem
+                icon={<IoIosSearch />}
+                iconActive={<IoSearchSharp />}
+                title={"search"}
+              />
             </StyledNavLink>
           </li>
           <li>
-            <StyledNavLink to="/Explore">
-              <HiOutlineCalendarDays />
-              <span>Explore</span>
+            <StyledNavLink to="/explore">
+              <NavLinkItem
+                icon={<MdOutlineExplore />}
+                iconActive={<MdExplore />}
+                title={"explore"}
+              />
             </StyledNavLink>
           </li>
           <li>
-            <StyledNavLink to="/Reels">
-              <HiOutlineHomeModern />
-              <span>Reels</span>
+            <StyledNavLink to="/reels">
+              <NavLinkItem
+                icon={<PiFilmReelLight />}
+                iconActive={<PiFilmReelFill />}
+                title={"reels"}
+              />
             </StyledNavLink>
           </li>
           <li>
-            <StyledNavLink to="/Inbox">
-              <HiOutlineUsers />
-              <span>Messages</span>
+            <StyledNavLink to="/inbox">
+              <NavLinkItem
+                icon={<img src="/public/messages.svg" alt="Messages image" />}
+                iconActive={
+                  <img
+                    src="/public/messagesActive.svg"
+                    alt="Active messages image"
+                  />
+                }
+                title={"inbox"}
+              />
             </StyledNavLink>
           </li>
           <li>
-            <HiOutlineCog6Tooth />
-            <span>Notifications</span>
+            <StyledNavLink to="notifications">
+              <NavLinkItem
+                icon={<IoMdHeartEmpty />}
+                iconActive={<IoMdHeart />}
+                title={"notifications"}
+              />
+            </StyledNavLink>
           </li>
           <li>
-            <StyledNavLink to="Create">
-              <HiOutlineCog6Tooth />
+            <StyledNavLink to="create">
+              <MdOutlineAddBox />
               <span>Create</span>
             </StyledNavLink>
           </li>
           <li>
-            <StyledNavLink to="/profile" onClick={toggleShrink}>
-              <HiOutlineCog6Tooth />
+            <StyledNavLink to="/profile">
+              <CgProfile />
               <span>Profile</span>
             </StyledNavLink>
           </li>

@@ -22,20 +22,21 @@ const GlobalStyles = createGlobalStyle`
   --color-text-sidebar:#F5F5F5;
 
 
-  /* Grey */
-  --color-grey-0: #fff;
-  --color-grey-50: #f9fafb;
-  --color-grey-100: #f3f4f6;
-  --color-grey-200: #e5e7eb;
-  --color-grey-300: #d1d5db;
-  --color-grey-400: #9ca3af;
-  --color-grey-500: #6b7280;
-  --color-grey-600: #4b5563;
-  --color-grey-700: #374151;
-  --color-grey-800: #1f2937;
-  --color-grey-900: #111827; 
+  /* gray */
+  --color-gray-0: #fff;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827; 
 
-  /* --backdrop-color: rgba(255, 255, 255, 0.1); */
+
+  --backdrop-color: rgba(255, 255, 255, 0.1);
 
   /* Font weights */
   --font-weight-bold: 700;
@@ -60,7 +61,7 @@ const GlobalStyles = createGlobalStyle`
 
   /* Width */
   --sidebar-width-medium: 24.45rem;
-  --sidebar-width-shrunk: 5rem;
+  --sidebar-width-shrunk: 7.2rem;
 
 
   /* For dark mode */
@@ -93,7 +94,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, A
   min-height: 100vh;
   line-height: 1.5;
   font-size: 1.6rem;
-  background-color:var(--color-grey-0);
+  background-color:var(--color-gray-0);
 }
 
 input,
@@ -114,8 +115,8 @@ button {
 
 select:disabled,
 input:disabled {
-  background-color: var(--color-grey-200);
-  color: var(--color-grey-500);
+  background-color: var(--color-gray-200);
+  color: var(--color-gray-500);
 }
 
 input:focus,

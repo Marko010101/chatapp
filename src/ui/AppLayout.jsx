@@ -6,6 +6,7 @@ import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
 const StyledContainer = styled.div`
   display: grid;
   grid-template-columns: var(--sidebar-width-medium) 1fr;
+  grid-template-rows: max-content;
   background-color: var(--color-black);
   transition: 0.4s ease;
 

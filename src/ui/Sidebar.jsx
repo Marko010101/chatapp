@@ -6,9 +6,10 @@ function Sidebar() {
   const StyledSidebar = styled.aside`
     border-right: var(--border-sidebar);
     height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding: 2rem;
+    display: grid;
+    grid-template-rows: 10rem 1fr;
+    padding: 0 1rem;
+    overflow: hidden;
   `;
 
   return (
