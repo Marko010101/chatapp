@@ -28,8 +28,7 @@ function AppLayout() {
     <StyledContainer isShrunk={isShrunk}>
       <Sidebar />
       <Main>
-        {/* <Outlet /> */}
-        <img src={logoIcon} alt="Logo" />
+        <Outlet />
       </Main>
     </StyledContainer>
   );
