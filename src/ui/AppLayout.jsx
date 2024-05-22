@@ -3,6 +3,8 @@ import Sidebar from "./Sidebar.jsx";
 import { Outlet } from "react-router-dom";
 import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
 
+import logoIcon from "../../public/Friendfolio.svg";
+
 const StyledContainer = styled.div`
   display: grid;
   grid-template-columns: var(--sidebar-width-medium) 1fr;
@@ -26,7 +28,8 @@ function AppLayout() {
     <StyledContainer isShrunk={isShrunk}>
       <Sidebar />
       <Main>
-        <Outlet />
+        {/* <Outlet /> */}
+        <img src={logoIcon} alt="Logo" />
       </Main>
     </StyledContainer>
   );
