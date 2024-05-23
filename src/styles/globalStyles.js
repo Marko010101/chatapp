@@ -159,7 +159,7 @@ img {
   filter: grayscale(var(--image-grayscale)) opacity(var(--image-opacity));
 }
 
-@media (max-width: 992px) {
+/* @media (max-width: 992px) {
   html {
     font-size: 55%;
   }
@@ -175,7 +175,7 @@ img {
   html {
     font-size: 45%;
   }
-}
+} */
 
 
 

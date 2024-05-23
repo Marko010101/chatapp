@@ -5,11 +5,11 @@ import { NavLink } from "react-router-dom";
 const StyledLogo = styled(NavLink)`
   align-self: center;
   justify-self: start;
-  margin-left: 1rem;
+  margin-left: 1.2rem;
   cursor: pointer;
 
   & img {
-    width: 10rem;
+    width: 11rem;
   }
 `;
 

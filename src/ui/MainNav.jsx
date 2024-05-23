@@ -40,7 +40,7 @@ const StyledNavLink = styled(NavLink)`
     color: var(--color-gray-300);
     font-size: 1.6rem;
     font-weight: var(--font-weight-regular);
-    padding: 1.1rem 1.2rem;
+    padding: 1rem 1.2rem;
     transition: all 0.3s;
   }
 
@@ -65,8 +65,8 @@ const StyledNavLink = styled(NavLink)`
 
   & svg,
   img {
-    width: 2.6rem;
-    height: 2.6rem;
+    width: 2.8rem;
+    height: 2.8rem;
     color: var(--color-gray-50);
     transition: all 0.2s;
   }
@@ -129,23 +129,13 @@ function MainNav() {
             </StyledNavLink>
           </li>
           <li>
-            <StyledNavLink to="/inbox">
-              {/* <NavLinkItem
-                icon={<img src="/public/messages.svg" alt="Messages image" />}
-                iconActive={
-                  <img
-                    src="/public/messagesActive.svg"
-                    alt="Active messages image"
-                  />
-                }
-                title={"inbox"}
-              /> */}
+            <StyledNavLink to="/messages">
               <NavLinkItem
                 icon={<img src={messageIcon} alt="message icon" />}
                 iconActive={
                   <img src={activeMessageIcon} alt="Active messages image" />
                 }
-                title={"inbox"}
+                title={"messages"}
               />
             </StyledNavLink>
           </li>
