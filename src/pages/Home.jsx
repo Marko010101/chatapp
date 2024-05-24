@@ -1,5 +1,9 @@
+import { getPosts } from "../services/postApi.js";
+
 function Home() {
-  return <div>Home page</div>;
+  getPosts();
+
+  return <div>get data</div>;
 }
 
 export default Home;
