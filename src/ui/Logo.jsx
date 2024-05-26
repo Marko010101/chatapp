@@ -7,7 +7,7 @@ import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
 const StyledLogo = styled(NavLink).withConfig({
   shouldForwardProp: (prop) => prop !== "isShrunk",
 })`
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   align-self: center;
   justify-self: start;
