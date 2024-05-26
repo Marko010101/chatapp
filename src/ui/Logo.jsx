@@ -26,11 +26,13 @@ const StyledLogo = styled(NavLink).withConfig({
     `};
 
   & img {
+    max-width: 4.2rem;
     width: 4.2rem;
 
     ${(props) =>
       !props.isShrunk &&
       css`
+        max-width: 11rem;
         transition: width 0.05s ease-in;
         margin-left: 1rem;
         width: 11rem;
