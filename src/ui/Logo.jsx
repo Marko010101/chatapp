@@ -10,29 +10,48 @@ const StyledLogo = styled(NavLink).withConfig({
   align-self: center;
   margin-left: 0.5rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
 
-  & :hover {
-    scale: 103%;
+  &:hover {
+    transform: scale(1.03);
   }
 
   ${(props) =>
     props.isShrunk &&
     css`
-      align-items: center;
       justify-items: start;
     `};
 
-  & img {
+  .logo-icon,
+  .logo-svg {
     width: 4.2rem;
-
-    ${(props) =>
-      !props.isShrunk &&
-      css`
-        transition: width 0.1s ease-in;
-        margin-left: 1rem;
-        width: 11rem;
-      `};
+    transition: width 0.3s ease-in-out, margin-left 0.3s ease-in-out;
   }
+
+  ${(props) =>
+    !props.isShrunk &&
+    css`
+      .logo-svg {
+        display: none;
+      }
+      .logo-icon {
+        width: 11rem;
+        margin-left: 1rem;
+      }
+    `}
+
+  ${(props) =>
+    props.isShrunk &&
+    css`
+      .logo-icon {
+        display: none;
+      }
+      .logo-svg {
+        display: block;
+      }
+    `}
 `;
 
 function Logo() {
@@ -40,7 +59,8 @@ function Logo() {
 
   return (
     <StyledLogo to="/" isShrunk={isShrunk}>
-      <img src={isShrunk ? logosvg : logoIcon} alt="Logo" />
+      <img className="logo-svg" src={logosvg} alt="Logo" />
+      <img className="logo-icon" src={logoIcon} alt="Logo" />
     </StyledLogo>
   );
 }
