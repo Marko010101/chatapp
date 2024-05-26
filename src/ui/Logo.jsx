@@ -10,23 +10,28 @@ const StyledLogo = styled(NavLink).withConfig({
   align-self: center;
   margin-left: 0.5rem;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
 
-  &:hover {
-    transform: scale(1.03);
+  & :hover {
+    scale: 103%;
   }
 
   ${(props) =>
     props.isShrunk &&
     css`
+      align-items: center;
       justify-items: start;
     `};
 
   & img {
-    width: ${(props) => (props.isShrunk ? "4.2rem" : "11rem")};
-    max-width: ${(props) => (props.isShrunk ? "4.2rem" : "11rem")};
-    margin-left: ${(props) => (props.isShrunk ? "0" : "1rem")};
-    transition: width 0.1s ease-in-out;
+    width: 4.2rem;
+
+    ${(props) =>
+      !props.isShrunk &&
+      css`
+        transition: width 0.1s ease-in;
+        margin-left: 1rem;
+        width: 11rem;
+      `};
   }
 `;
 
