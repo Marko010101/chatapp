@@ -7,36 +7,26 @@ import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
 const StyledLogo = styled(NavLink).withConfig({
   shouldForwardProp: (prop) => prop !== "isShrunk",
 })`
-  /* width: 100%; */
-  display: flex;
   align-self: center;
-  justify-self: start;
   margin-left: 0.5rem;
   cursor: pointer;
+  transition: all 0.3s ease-in-out;
 
-  & :hover {
-    scale: 105%;
+  &:hover {
+    transform: scale(1.03);
   }
 
   ${(props) =>
     props.isShrunk &&
     css`
-      align-items: center;
       justify-items: start;
     `};
 
   & img {
-    max-width: 4.2rem;
-    width: 4.2rem;
-
-    ${(props) =>
-      !props.isShrunk &&
-      css`
-        max-width: 11rem;
-        transition: width 0.05s ease-in;
-        margin-left: 1rem;
-        width: 11rem;
-      `};
+    width: ${(props) => (props.isShrunk ? "4.2rem" : "11rem")};
+    max-width: ${(props) => (props.isShrunk ? "4.2rem" : "11rem")};
+    margin-left: ${(props) => (props.isShrunk ? "0" : "1rem")};
+    transition: width 0.1s ease-in-out;
   }
 `;
 
