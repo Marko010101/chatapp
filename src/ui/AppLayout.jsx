@@ -5,12 +5,12 @@ import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
 
 const StyledContainer = styled.div`
   position: inherit;
-
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 100vh;
   justify-items: center;
-
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
   background-color: var(--color-black);
 `;
 
