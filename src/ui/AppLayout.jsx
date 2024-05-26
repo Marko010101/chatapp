@@ -4,17 +4,14 @@ import { Outlet } from "react-router-dom";
 import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
 
 const StyledContainer = styled.div`
-  display: grid;
-  grid-template-columns: var(--sidebar-width-medium) 1fr;
-  grid-template-rows: max-content;
-  background-color: var(--color-black);
-  transition: 0.4s ease;
+  position: inherit;
 
-  ${(props) =>
-    props.isShrunk &&
-    css`
-      grid-template-columns: var(--sidebar-width-shrunk) 1fr;
-    `}
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 100vh;
+  justify-items: center;
+
+  background-color: var(--color-black);
 `;
 
 const Main = styled.div``;

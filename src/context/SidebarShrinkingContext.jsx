@@ -3,7 +3,7 @@ import { createContext, useState, useContext } from "react";
 const SidebarShrinkContext = createContext();
 
 function SidebarShrinkProvider({ children }) {
-  const [isShrunk, setIsShrunk] = useState(false);
+  const [isShrunk, setIsShrunk] = useState(true);
 
   function toggleShrink() {
     setIsShrunk((prevIsShrunk) => !prevIsShrunk);

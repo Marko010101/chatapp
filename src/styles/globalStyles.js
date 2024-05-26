@@ -20,7 +20,8 @@ const GlobalStyles = createGlobalStyle`
 
   /* White */
   --color-text-sidebar:#F5F5F5;
-
+  --color-pink-logo: rgb(255,20,147);
+  --color-blue-logo: rgb(0,0,255);
 
   /* gray */
   --color-gray-0: #fff;

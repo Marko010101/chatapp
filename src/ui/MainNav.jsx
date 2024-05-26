@@ -12,6 +12,8 @@ import { PiFilmReelFill, PiFilmReelLight } from "react-icons/pi";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { RiAddCircleLine, RiAddCircleFill } from "react-icons/ri";
+import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
+import { useState } from "react";
 
 // import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
 
@@ -20,13 +22,13 @@ const NavList = styled.ul`
   flex-direction: column;
   gap: 0.4rem;
 
-  /* ${(props) =>
+  ${(props) =>
     props.isShrunk &&
     css`
       & span {
         display: none;
       }
-    `}; */
+    `};
 `;
 
 const StyledNavLink = styled(NavLink)`
@@ -85,13 +87,13 @@ const StyledNavLink = styled(NavLink)`
 `;
 
 function MainNav() {
-  // const { isShrunk } = useSidebarShrink();
+  const { isShrunk } = useSidebarShrink();
 
-  // css properties does not working same for all the svgs so i had to create NavLinkItem.
+  // css properties does not working same for all the svgs so i had to create <NavLinkItem/>.
   return (
     <nav>
       <ul>
-        <NavList>
+        <NavList isShrunk={isShrunk}>
           <li>
             <StyledNavLink to="/">
               <NavLinkItem

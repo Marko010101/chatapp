@@ -1,0 +1,13 @@
+import { useQuery } from "@tanstack/react-query";
+import { getPosts } from "../../services/postApi.js";
+
+export function usePosts() {
+  const { isLoading, data, error } = useQuery({
+    queryKey: ["posts"],
+    queryFn: getPosts,
+  });
+
+  const posts = data ? data.data : [];
+
+  return { isLoading, posts, error };
+}
