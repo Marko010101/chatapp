@@ -27,7 +27,6 @@ const StyledLogo = styled(NavLink).withConfig({
   .logo-icon,
   .logo-svg {
     width: 4.2rem;
-    transition: width 0.3s ease-in-out, margin-left 0.3s ease-in-out;
   }
 
   ${(props) =>
@@ -38,7 +37,7 @@ const StyledLogo = styled(NavLink).withConfig({
       }
       .logo-icon {
         width: 11rem;
-        margin-left: 1rem;
+        margin-left: 0.7rem;
       }
     `}
 
