@@ -27,3 +27,24 @@ export async function getPosts() {
 
   return result;
 }
+
+export async function getComments({ id }) {
+  const response = await fetch(
+    `https://dummyapi.io/data/v1/post/${id}/comment`,
+    {
+      headers: {
+        "app-id": APP_ID,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      `Post comments could not be searched, status: ${response.status}`
+    );
+  }
+
+  const result = await response.json();
+
+  return result;
+}

@@ -6,7 +6,7 @@ import Post from "../features/posts/Post.jsx";
 import Empty from "../ui/Empty.jsx";
 
 const StyledPosts = styled.main`
-  max-width: 70rem;
+  width: 46rem;
 `;
 
 function Home() {
