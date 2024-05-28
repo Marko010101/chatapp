@@ -27,14 +27,16 @@ const GlobalStyles = createGlobalStyle`
   --color-gray-0: #fff;
   --color-gray-50: #f9fafb;
   --color-gray-100: #f3f4f6;
-  --color-gray-200: #e5e7eb;
-  --color-gray-300: #d1d5db;
-  --color-gray-400: #9ca3af;
-  --color-gray-500: #6b7280;
-  --color-gray-600: #4b5563;
-  --color-gray-700: #374151;
-  --color-gray-800: #1f2937;
-  --color-gray-900: #111827; 
+  /* --color-gray-200: #e5e7eb; */
+  /* --color-gray-300: #d1d5db; */
+  /* --color-gray-400: #9ca3af; */
+  /* --color-gray-500: #6b7280; */
+  /* --color-gray-600: #4b5563; */
+  /* --color-gray-700: #374151; */
+  /* --color-gray-800: #1f2937; */
+  /* --color-gray-900: #111827;  */
+  --color-gray-text:#A0A0A0;
+  --color-gray-active: #696969;
 
 
   --backdrop-color: rgba(255, 255, 255, 0.1);
@@ -47,6 +49,12 @@ const GlobalStyles = createGlobalStyle`
   --font-weight-medium: 500;
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
+
+
+  --font-size-tiny: 1.2rem;
+  --font-size-small: 1.4rem;
+  --font-size-medium: 1.6rem;
+  --font-size-big: 1.8rem;
 
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);

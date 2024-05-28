@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { PiDotsThreeBold } from "react-icons/pi";
+import { Tooltip } from "react-tooltip";
 
 import Heading from "../../ui/Heading.jsx";
-import { useComments } from "./useComment.js";
 import Comments from "./Comments.jsx";
+import { getFormattedDateInfo } from "../../utils/helpers.js";
 
 const StyledPost = styled.ul`
   margin-top: 2rem;
@@ -68,8 +69,23 @@ const PostImg = styled.div`
     border-radius: var(--border-radius-tiny);
   }
 `;
+const Date = styled.div``;
 
-const Coments = styled.div``;
+const StyledTooltip = styled(Tooltip)`
+  font-size: var(--font-size-tiny) !important;
+  padding: 1rem !important;
+  border-radius: var(--border-radius-tiny) !important;
+  border-top: 1px solid var(--color-gray-100) !important;
+  border-left: 1px solid var(--color-gray-100) !important;
+
+  &.__react_component_tooltip {
+    padding: 0 !important;
+  }
+
+  .__react_component_tooltip div {
+    padding: 0 !important;
+  }
+`;
 
 const PostFooter = styled.div``;
 
@@ -84,17 +100,9 @@ function Post({ post }) {
     title: ownerTitle,
   } = owner;
 
+  const { relativeTime, formattedDate } = getFormattedDateInfo(publishDate);
+
   const fullName = `${ownerFirstName} ${ownerLastName}`;
-
-  const { comments, isError } = useComments(id);
-
-  /*   if (comments && comments.data.length > 0) {
-    // Map through each comment and return the desired properties
-    return comments.data.map((comment) => {
-      const { id, message, owner, post, publishDate } = comment;
-      return { id, message, owner, post, publishDate };
-    });
-  } */
 
   return (
     <StyledPost>
@@ -107,7 +115,20 @@ function Post({ post }) {
             />
           </ImageWrapper>
           <Heading as="h4">{fullName}</Heading>
-          <p>{publishDate}</p>
+          <div>
+            <a
+              data-tooltip-id="formatedDate"
+              data-tooltip-content={formattedDate}
+            >
+              {relativeTime}
+            </a>
+            <StyledTooltip
+              id="formatedDate"
+              place="top"
+              effect="solid"
+              delayShow={400}
+            />
+          </div>
           <span>
             <PiDotsThreeBold />
           </span>

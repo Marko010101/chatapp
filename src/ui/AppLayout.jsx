@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import Sidebar from "./Sidebar.jsx";
 import { Outlet } from "react-router-dom";
 import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";

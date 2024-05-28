@@ -4,8 +4,7 @@ import MainNav from "./MainNav.jsx";
 import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
 
 const StyledSidebar = styled.aside`
-  position: absolute;
-  top: 0;
+  position: fixed;
   left: 0;
   width: ${(props) =>
     props.isShrunk
