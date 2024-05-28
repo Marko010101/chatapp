@@ -40,18 +40,18 @@ function Sidebar() {
     setIsShrunk(true);
   };
 
-  const handleOnClick = () => {
-    if (window.innerWidth < 1200) {
-      setIsShrunk(true);
-    }
-  };
+  // const handleOnClick = () => {
+  //   if (window.innerWidth < 1200) {
+  //     setIsShrunk(true);
+  //   }
+  // };
 
   return (
     <StyledSidebar
       isShrunk={isShrunk}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={handleOnClick}
+      // onClick={handleOnClick}
     >
       <Logo />
       <MainNav />
