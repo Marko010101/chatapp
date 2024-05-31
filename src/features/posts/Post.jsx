@@ -5,6 +5,7 @@ import { Tooltip } from "react-tooltip";
 import Heading from "../../ui/Heading.jsx";
 import Comments from "./Comments.jsx";
 import { getFormattedDateInfo } from "../../utils/helpers.js";
+import PostInfo from "./PostInfo.jsx";
 
 const StyledPost = styled.ul`
   margin-top: 2rem;
@@ -17,7 +18,7 @@ const PostContainer = styled.li`
   row-gap: 0.5rem;
 `;
 
-const ImageWrapper = styled.div`
+const OwnerImageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -87,8 +88,6 @@ const StyledTooltip = styled(Tooltip)`
   }
 `;
 
-const PostFooter = styled.div``;
-
 function Post({ post }) {
   const { id, image, likes, owner, publishDate, tags, text } = post;
 
@@ -108,12 +107,12 @@ function Post({ post }) {
     <StyledPost>
       <PostContainer>
         <HeaderPost>
-          <ImageWrapper>
+          <OwnerImageWrapper>
             <img
               src={ownerPicture || "../../../public/default-user.jpg"}
               alt="Owner image"
             />
-          </ImageWrapper>
+          </OwnerImageWrapper>
           <Heading as="h4">{fullName}</Heading>
           <div>
             <a
@@ -136,11 +135,7 @@ function Post({ post }) {
         <PostImg>
           <img src={image} alt="Post image" />
         </PostImg>
-        <PostFooter>
-          <span>{likes} likes</span>
-          <p>{text}</p>
-          <Comments postId={id} />
-        </PostFooter>
+        <PostInfo likes={likes} text={text} id={id} />
       </PostContainer>
     </StyledPost>
   );

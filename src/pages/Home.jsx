@@ -16,7 +16,6 @@ function Home() {
   if (isLoading) return <SpinnerFullPage />;
 
   if (!posts.length) return <Empty resourceName="posts" />;
-  // const postsArray = posts ?? [];
 
   return (
     <StyledPosts>
