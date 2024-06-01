@@ -3,7 +3,6 @@ import { PiDotsThreeBold } from "react-icons/pi";
 import { Tooltip } from "react-tooltip";
 
 import Heading from "../../ui/Heading.jsx";
-import Comments from "./Comments.jsx";
 import { getFormattedDateInfo } from "../../utils/helpers.js";
 import PostInfo from "./PostInfo.jsx";
 
@@ -14,7 +13,7 @@ const StyledPost = styled.ul`
 const PostContainer = styled.li`
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 5rem 58rem 15rem;
+  grid-template-rows: 5rem 58rem max-content;
   row-gap: 0.5rem;
 `;
 

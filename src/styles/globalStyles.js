@@ -27,8 +27,8 @@ const GlobalStyles = createGlobalStyle`
   --color-gray-0: #fff;
   --color-gray-50: #f9fafb;
   --color-gray-100: #f3f4f6;
-  /* --color-gray-200: #e5e7eb; */
-  /* --color-gray-300: #d1d5db; */
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
   /* --color-gray-400: #9ca3af; */
   /* --color-gray-500: #6b7280; */
   /* --color-gray-600: #4b5563; */
@@ -61,7 +61,7 @@ const GlobalStyles = createGlobalStyle`
   --shadow-md: 0px 0.6rem 2.4rem rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 2.4rem 3.2rem rgba(0, 0, 0, 0.12);
 
-  --border-sidebar: 0.1px solid var(--color-solf-black);
+  --border: 0.1px solid var(--color-solf-black);
 
   --border-radius-tiny: 3px;
   --border-radius-sm: 5px;

@@ -11,7 +11,7 @@ const StyledSidebar = styled.aside`
       ? "var(--sidebar-width-shrunk)"
       : "var(--sidebar-width-medium)"};
   z-index: 100;
-  border-right: var(--border-sidebar);
+  border-right: var(--border);
   height: 100vh;
   display: grid;
   grid-template-rows: 10rem 1fr;

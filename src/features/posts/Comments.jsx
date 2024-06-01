@@ -24,8 +24,6 @@ function Comments({ postId }) {
   const { comments = {}, isError } = useComments(postId);
   const { data: commentsData = [] } = comments;
 
-  console.log(commentsData);
-
   const isComments = commentsData.length;
 
   return (
