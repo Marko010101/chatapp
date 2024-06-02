@@ -2,17 +2,19 @@ import styled from "styled-components";
 
 const StyledButton = styled.button`
   background-color: transparent;
-  color: var(--color-brand-500);
-  font-weight: var(--font-weight-semibold);
+  color: var(--text-blue-500);
+  font-weight: var(--font-weight-medium);
   border: none;
-  cursor: pointer; /* Add a pointer cursor for better UX */
+  cursor: pointer;
 
   &:focus {
     outline: none;
   }
+
   &:hover {
     color: var(--color-gray-200);
   }
+
   &:active {
     color: var(--color-gray-text);
   }

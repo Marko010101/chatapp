@@ -5,18 +5,26 @@ const GlobalStyles = createGlobalStyle`
 
 :root {
   /* Indigo */
-  --color-brand-50: #eef2ff;
+  /* --color-brand-50: #eef2ff;
   --color-brand-100: #e0e7ff;
   --color-brand-200: #c7d2fe;
   --color-brand-500: #6366f1;
   --color-brand-600: #4f46e5;
   --color-brand-700: #4338ca;
   --color-brand-800: #3730a3;
-  --color-brand-900: #312e81; 
+  --color-brand-900: #312e81;  */
+
+  /* Sky */
+  --color-sky-600: #0284c7; 
+
+  --text-blue-500: rgb(59 130 246);
 
   /* Black */
   --color-black: #000;
   --color-solf-black: #282828;
+  
+  /* Stone */
+  --text-stone-700: rgb(68 64 60);
 
   /* White */
   --color-text-sidebar:#F5F5F5;

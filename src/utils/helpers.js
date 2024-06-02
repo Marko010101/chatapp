@@ -49,3 +49,10 @@ export function getFormattedDateInfo(dateString) {
 
   return { relativeTime, formattedDate };
 }
+
+export function titleFix(str) {
+  if (str.endsWith("...")) {
+    return str.slice(0, -2);
+  }
+  return str;
+}
