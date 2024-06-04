@@ -64,19 +64,20 @@ function InputComment() {
   const [comment, setComment] = useState("");
   const [isEmojiPickerVisible, setEmojiPickerVisible] = useState(false);
   const textareaRef = useRef(null);
-  const ref = useOutsideClick(() => setEmojiPickerVisible(false));
+  const ref = useOutsideClick(() => setEmojiPickerVisible(false), false);
+  console.log(isEmojiPickerVisible);
 
   const isCommenting = comment.length > 0;
 
   const handleInputChange = (event) => {
     setComment(event.target.value);
-    // Adjust the height of the textarea to fit content
     event.target.style.height = "auto";
     event.target.style.height = event.target.scrollHeight + "px";
   };
 
-  const toggleEmojiPicker = () => {
-    setEmojiPickerVisible(!isEmojiPickerVisible);
+  const toggleEmojiPicker = (e) => {
+    e.stopPropagation();
+    setEmojiPickerVisible((prev) => !prev);
   };
 
   const handleEmojiSelect = (emojiObject) => {
@@ -87,11 +88,9 @@ function InputComment() {
     const newText = comment.slice(0, start) + emoji + comment.slice(end);
 
     setComment(newText);
-    // Adjust the height of the textarea to fit content after inserting the emoji
     textarea.style.height = "auto";
     textarea.style.height = textarea.scrollHeight + "px";
 
-    // Set cursor position after the inserted emoji
     setTimeout(() => {
       textarea.selectionStart = textarea.selectionEnd = start + emoji.length;
     });
