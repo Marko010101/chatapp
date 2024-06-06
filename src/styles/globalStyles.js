@@ -1,10 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
-
-
 :root {
-
 
   /* Sky */
   --color-sky-600: #0284c7; 
@@ -33,8 +30,6 @@ const GlobalStyles = createGlobalStyle`
   /* --color-neutral-800: #262626; */
   /* --color-neutral-900: #171717; */
   /* --color-neutral-950: #0a0a0; */
-
-
 
 
   /* White */

@@ -13,6 +13,8 @@ import Profile from "./pages/Profile.jsx";
 import PageNotFound from "./pages/PageNotFound.jsx";
 import { SidebarShrinkProvider } from "./context/SidebarShrinkingContext.jsx";
 import Search from "./pages/Search.jsx";
+import Create from "./pages/Create.jsx";
+import ProtectedRoute from "./ui/ProtectedRoute.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,12 +33,20 @@ function App() {
           <GlobalStyles />
           <Suspense fallback={<SpinnerFullPage />}>
             <Routes>
-              <Route path="/" element={<AppLayout />}>
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <AppLayout />
+                  </ProtectedRoute>
+                }
+              >
                 <Route index path="/" element={<Home />} />
                 <Route index path="/search" element={<Search />} />
                 <Route path="explore" element={<Explore />} />
                 <Route path="reels" element={<Reels />} />
                 <Route path="messages" element={<Messages />} />
+                <Route path="create" element={<Create />} />
                 <Route path="profile/:user" element={<Profile />} />
                 <Route path="*" element={<PageNotFound />} />
               </Route>
