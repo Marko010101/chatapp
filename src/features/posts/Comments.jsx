@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 import { useComments } from "./useComment.js";
 import Modal from "../../ui/Modal.jsx";
 import ModalPost from "../../ui/ModalPost.jsx";
+import ErrorText from "../../ui/ErrorText.jsx";
 
 const StyledComments = styled.div``;
 
@@ -20,11 +21,17 @@ const Text = styled.p`
     `}
 `;
 
-function Comments({ postId }) {
-  const { comments = {}, isError } = useComments(postId);
+function Comments({ postId, textareaRef }) {
+  const { comments = {}, error } = useComments(postId);
   const { data: commentsData = [] } = comments;
 
   const isComments = commentsData.length;
+
+  const handleFocusingTextarea = () => {
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  };
 
   return (
     <StyledComments>
@@ -38,7 +45,13 @@ function Comments({ postId }) {
           </Modal.Window>
         </Modal>
       ) : (
-        <Text>No comments yet</Text>
+        <>
+          {error ? (
+            <ErrorText>Could not load comments, {error}</ErrorText>
+          ) : (
+            <Text onClick={handleFocusingTextarea}>No comments yet</Text>
+          )}
+        </>
       )}
     </StyledComments>
   );

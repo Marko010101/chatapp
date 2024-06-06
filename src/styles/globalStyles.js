@@ -4,27 +4,38 @@ const GlobalStyles = createGlobalStyle`
 
 
 :root {
-  /* Indigo */
-  /* --color-brand-50: #eef2ff;
-  --color-brand-100: #e0e7ff;
-  --color-brand-200: #c7d2fe;
-  --color-brand-500: #6366f1;
-  --color-brand-600: #4f46e5;
-  --color-brand-700: #4338ca;
-  --color-brand-800: #3730a3;
-  --color-brand-900: #312e81;  */
+
 
   /* Sky */
   --color-sky-600: #0284c7; 
-
   --text-blue-500: rgb(59 130 246);
+
+  /* red */
+  --color-red-400: #f87171;
 
   /* Black */
   --color-black: #000;
   --color-solf-black: #282828;
   
   /* Stone */
-  --text-stone-700: rgb(68 64 60);
+  --text-stone-700: #443c3c;
+
+
+  /* Neutral */
+  /* --color-neutral-50: #fafafa; */
+  /* --color-neutral-100: #f5f5f5; */
+  /* --color-neutral-200: #e5e5e5; */
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;
+  /* --color-neutral-600: #525252; */
+  --color-neutral-700: #404040;
+  /* --color-neutral-800: #262626; */
+  /* --color-neutral-900: #171717; */
+  /* --color-neutral-950: #0a0a0; */
+
+
+
 
   /* White */
   --color-text-sidebar:#F5F5F5;
@@ -111,8 +122,59 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, A
   min-height: 100vh;
   line-height: 1.5;
   font-size: 1.6rem;
-  background-color:var(--color-gray-0);
+  background-color:var(--color-gray-0); 
 }
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 1.6rem;
+}
+
+::-webkit-scrollbar-corner,
+::-webkit-scrollbar-track {
+  background: var(--color-neutral-700);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-neutral-500);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-neutral-400);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--color-neutral-300);
+}
+
+
+
+/* Scrollbar buttons */
+::-webkit-scrollbar-button {
+  display: block;
+  background-color: var(--color-neutral-700);
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: center;
+}
+
+::-webkit-scrollbar-button:vertical:end:increment {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ee/Chevron-down.svg'); 
+}
+
+::-webkit-scrollbar-button:vertical:end:decrement {
+  display: none; 
+}
+
+ ::-webkit-scrollbar-button:vertical:start:increment {
+  display: none; 
+}
+
+::-webkit-scrollbar-button:vertical:start:decrement {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/7/7e/Chevron-up.svg');
+}
+
+
 
 input,
 button,

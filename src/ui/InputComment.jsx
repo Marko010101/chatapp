@@ -1,10 +1,10 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
-import EmojiPicker from "emoji-picker-react";
 import Button from "./Button.jsx";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { useRef } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick.js";
+import MemoizedEmoji from "./MemoizedEmoji.jsx";
 
 const StyledCommentArea = styled.div`
   position: relative;
@@ -13,8 +13,14 @@ const StyledCommentArea = styled.div`
   padding: 0.3rem 0.3rem 1rem;
   border-bottom: var(--border);
 
+  /* On clicks of svg does not select other parts */
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
   ${(props) =>
-    props.comment
+    props.isCommenting
       ? css`
           grid-template-columns: 1fr 5rem 2rem;
         `
@@ -53,19 +59,11 @@ const StyledCommentArea = styled.div`
   }
 `;
 
-const EmojiPickerContainer = styled.div`
-  position: absolute;
-  bottom: 3rem;
-  left: 45rem;
-  z-index: 1000;
-`;
-
-function InputComment() {
+function InputComment({textareaRef}) {
   const [comment, setComment] = useState("");
   const [isEmojiPickerVisible, setEmojiPickerVisible] = useState(false);
-  const textareaRef = useRef(null);
-  const ref = useOutsideClick(() => setEmojiPickerVisible(false), false);
-  console.log(isEmojiPickerVisible);
+
+  const emojiRef = useOutsideClick(() => setEmojiPickerVisible(false), false);
 
   const isCommenting = comment.length > 0;
 
@@ -97,7 +95,7 @@ function InputComment() {
   };
 
   return (
-    <StyledCommentArea comment={isCommenting}>
+    <StyledCommentArea isCommenting={isCommenting}>
       <textarea
         ref={textareaRef}
         placeholder="Add a comment..."
@@ -108,17 +106,10 @@ function InputComment() {
       {isCommenting && <Button text="Post" />}
       <HiOutlineEmojiHappy onClick={toggleEmojiPicker} />
       {isEmojiPickerVisible && (
-        <EmojiPickerContainer ref={ref}>
-          <EmojiPicker
-            height={320}
-            width={350}
-            theme="dark"
-            searchLabel="Procurar emoji"
-            searchDisabled={true}
-            onEmojiClick={handleEmojiSelect}
-            categoryDisabled={true}
-          />
-        </EmojiPickerContainer>
+        <MemoizedEmoji
+          emojiRef={emojiRef}
+          handleEmojiSelect={handleEmojiSelect}
+        />
       )}
     </StyledCommentArea>
   );

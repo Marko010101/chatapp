@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 import Comments from "./Comments.jsx";
 import InputComment from "../../ui/InputComment.jsx";
 import { titleFix } from "../../utils/helpers.js";
+import { useRef } from "react";
 
 const StyledPostInfo = styled.div`
   display: grid;
@@ -10,12 +11,14 @@ const StyledPostInfo = styled.div`
 `;
 
 function PostInfo({ likes, text, id }) {
+  const textareaRef = useRef(null);
+  
   return (
     <StyledPostInfo>
       <span>{likes} likes</span>
       <p>{titleFix(text)}</p>
-      <Comments postId={id} />
-      <InputComment />
+      <Comments postId={id} textareaRef={textareaRef} />
+      <InputComment textareaRef={textareaRef} />
     </StyledPostInfo>
   );
 }

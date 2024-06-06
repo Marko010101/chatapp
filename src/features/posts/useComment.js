@@ -8,7 +8,7 @@ export function useComments(id) {
     error,
   } = useQuery({
     queryKey: ["comments", id],
-    queryFn: () => getComments({ id }), // Pass id to getComments function
+    queryFn: () => getComments({ id }),
   });
 
   return { isLoading, comments, error };
