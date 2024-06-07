@@ -20,6 +20,11 @@ const StyledPageNotFound = styled.main`
     & span {
       color: var(--color-brand-100);
       cursor: pointer;
+
+      & span {
+        font-weight: var(--font-weight-semibold);
+      }
+
       &:active {
         color: var(--color-gray-500);
       }
@@ -39,7 +44,10 @@ function PageNotFound() {
       <Heading as="h1">Sorry, this page isn't available.</Heading>
       <p>
         The link you followed may be broken, or the page may have been removed.
-        <span onClick={moveBack}> Go back to Instagram.</span>
+        <span onClick={moveBack}>
+          {" "}
+          Go back to <span>PetFolio.</span>
+        </span>
       </p>
       <Footer />
     </StyledPageNotFound>

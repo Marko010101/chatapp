@@ -1,9 +1,9 @@
-import CreateUser from "../ui/CreateUser.jsx";
+import Register from "../ui/Register.jsx";
 
 function Create() {
   return (
     <div>
-      <CreateUser />
+      <Register />
     </div>
   );
 }

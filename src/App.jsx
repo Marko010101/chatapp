@@ -15,6 +15,7 @@ import { SidebarShrinkProvider } from "./context/SidebarShrinkingContext.jsx";
 import Search from "./pages/Search.jsx";
 import Create from "./pages/Create.jsx";
 import ProtectedRoute from "./ui/ProtectedRoute.jsx";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -53,6 +54,26 @@ function App() {
             </Routes>
           </Suspense>
         </BrowserRouter>
+        <Toaster
+          position="top-center"
+          gutter={12}
+          containerStyle={{ margin: "8px" }}
+          toastOptions={{
+            success: {
+              duration: 3000,
+            },
+            error: {
+              duration: 5000,
+            },
+            style: {
+              fontSize: "16px",
+              maxWidth: "500px",
+              padding: "16px 24px",
+              backgroundColor: "var(--color-neutral-0)",
+              color: "var(--color-neutral-700)",
+            },
+          }}
+        />
       </QueryClientProvider>
     </SidebarShrinkProvider>
   );

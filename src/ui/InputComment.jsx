@@ -59,7 +59,7 @@ const StyledCommentArea = styled.div`
   }
 `;
 
-function InputComment({textareaRef}) {
+function InputComment({ textareaRef }) {
   const [comment, setComment] = useState("");
   const [isEmojiPickerVisible, setEmojiPickerVisible] = useState(false);
 
@@ -103,7 +103,7 @@ function InputComment({textareaRef}) {
         onChange={handleInputChange}
         rows={1}
       />
-      {isCommenting && <Button text="Post" />}
+      {isCommenting && <Button>Post</Button>}
       <HiOutlineEmojiHappy onClick={toggleEmojiPicker} />
       {isEmojiPickerVisible && (
         <MemoizedEmoji

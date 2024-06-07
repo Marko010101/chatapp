@@ -21,10 +21,16 @@ const StyledButton = styled.button`
   &:visited {
     outline: none;
   }
+
+  /* Additional styles for the disabled state */
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 `;
 
-function Button({ text }) {
-  return <StyledButton>{text}</StyledButton>;
+function Button({ children, ...props }) {
+  return <StyledButton {...props}>{children}</StyledButton>;
 }
 
 export default Button;

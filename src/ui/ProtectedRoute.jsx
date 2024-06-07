@@ -1,5 +1,5 @@
-function ProtectedRoute() {
-  return <div>ProtectedRoute</div>;
+function ProtectedRoute({ children }) {
+  return <>{children}</>;
 }
 
 export default ProtectedRoute;

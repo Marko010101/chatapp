@@ -19,21 +19,21 @@ const GlobalStyles = createGlobalStyle`
 
 
   /* Neutral */
-  /* --color-neutral-50: #fafafa; */
-  /* --color-neutral-100: #f5f5f5; */
-  /* --color-neutral-200: #e5e5e5; */
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5; 
+  --color-neutral-200: #e5e5e5;
   --color-neutral-300: #d4d4d4;
   --color-neutral-400: #a3a3a3;
   --color-neutral-500: #737373;
-  /* --color-neutral-600: #525252; */
+  --color-neutral-600: #525252;
   --color-neutral-700: #404040;
-  /* --color-neutral-800: #262626; */
-  /* --color-neutral-900: #171717; */
-  /* --color-neutral-950: #0a0a0; */
+  --color-neutral-800: #262626;
+  --color-neutral-900: #171717;
+  --color-neutral-950: #0a0a0a;
 
 
   /* White */
-  --color-text-sidebar:#F5F5F5;
+  --color-text:#F5F5F5;
   --color-pink-logo: rgb(255,20,147);
   --color-blue-logo: rgb(0,0,255);
 
@@ -48,7 +48,7 @@ const GlobalStyles = createGlobalStyle`
   /* --color-gray-600: #4b5563; */
   /* --color-gray-700: #374151; */
   /* --color-gray-800: #1f2937; */
-  /* --color-gray-900: #111827;  */
+  --color-gray-900: #111827; 
   --color-gray-text:#A0A0A0;
   --color-gray-active: #696969;
 
@@ -111,7 +111,7 @@ body {
   
 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 
-  color: var(--color-text-sidebar);
+  color: var(--color-text);
 
   transition: color 0.3s, background-color 0.3s;
   min-height: 100vh;
