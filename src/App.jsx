@@ -16,6 +16,9 @@ import Search from "./pages/Search.jsx";
 import Create from "./pages/Create.jsx";
 import ProtectedRoute from "./ui/ProtectedRoute.jsx";
 import { Toaster } from "react-hot-toast";
+import Register from "./pages/Register.jsx";
+import Login from "./pages/Login.jsx";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,6 +33,7 @@ function App() {
   return (
     <SidebarShrinkProvider>
       <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={false} />
         <BrowserRouter>
           <GlobalStyles />
           <Suspense fallback={<SpinnerFullPage />}>
@@ -51,6 +55,8 @@ function App() {
                 <Route path="profile/:user" element={<Profile />} />
                 <Route path="*" element={<PageNotFound />} />
               </Route>
+              <Route path="register" element={<Register />} />
+              <Route path="login" element={<Login />} />
             </Routes>
           </Suspense>
         </BrowserRouter>
