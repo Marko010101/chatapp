@@ -1,11 +1,5 @@
-import Register from "../ui/Register.jsx";
-
 function Create() {
-  return (
-    <div>
-      <Register />
-    </div>
-  );
+  return <div>Create</div>;
 }
 
 export default Create;

@@ -12,7 +12,6 @@ const StyledPosts = styled.main`
 function Home() {
   const { isLoading, posts, error } = usePosts();
 
-  console.log("Posts", posts);
   if (isLoading) return <SpinnerFullPage />;
 
   if (!posts.length) return <Empty resourceName="posts" />;

@@ -112,12 +112,12 @@ body {
 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 
   color: var(--color-text);
+  background-color: var(--color-black);
 
   transition: color 0.3s, background-color 0.3s;
   min-height: 100vh;
   line-height: 1.5;
   font-size: 1.6rem;
-  background-color:var(--color-gray-0); 
 }
 
 /* Scrollbar */

@@ -35,7 +35,5 @@ export function useLogin() {
     },
   });
 
-  console.log(isLoading);
-
   return { login, isLoading, error };
 }

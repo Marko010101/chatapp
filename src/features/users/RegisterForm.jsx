@@ -40,7 +40,7 @@ function RegisterForm() {
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmit)} type="register">
       <FormRow label="First name" error={errors?.firstName?.message}>
         <Input
           type="text"
@@ -111,6 +111,7 @@ function RegisterForm() {
           disabled={isLoading1 || isLoading2}
           onClick={() => {
             reset();
+            navigate("/login");
           }}
         >
           Cancel

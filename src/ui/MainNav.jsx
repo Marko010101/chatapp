@@ -13,9 +13,18 @@ import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { RiAddCircleLine, RiAddCircleFill } from "react-icons/ri";
 import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
-import { useState } from "react";
+import { BiLogOut } from "react-icons/bi";
+// import { useState } from "react";
+import { useLogout } from "../features/users/useLogout.js";
 
 // import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
+
+const StyledNav = styled.nav`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 2rem;
+`;
 
 const NavList = styled.ul`
   display: flex;
@@ -88,11 +97,12 @@ const StyledNavLink = styled(NavLink)`
 
 function MainNav() {
   const { isShrunk } = useSidebarShrink();
+  const { logout } = useLogout();
 
   // css properties does not working same for all the svgs so i had to create <NavLinkItem/>.
   return (
-    <nav>
-      <ul>
+    <StyledNav>
+      <div>
         <NavList isShrunk={isShrunk}>
           <li>
             <StyledNavLink to="/">
@@ -159,15 +169,25 @@ function MainNav() {
               />
             </StyledNavLink>
           </li>
+        </NavList>
+      </div>
+      <div>
+        <NavList isShrunk={isShrunk}>
           <li>
             <StyledNavLink to="/profile">
               <CgProfile />
               <span>Profile</span>
             </StyledNavLink>
           </li>
+          <li>
+            <StyledNavLink onClick={logout} to="*">
+              <BiLogOut style={{ marginLeft: "-0.3rem" }} />
+              <span>Logout</span>
+            </StyledNavLink>
+          </li>
         </NavList>
-      </ul>
-    </nav>
+      </div>
+    </StyledNav>
   );
 }
 

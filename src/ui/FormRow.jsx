@@ -1,15 +1,21 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import ErrorText from "./ErrorText.jsx";
 
 const StyledFormRow = styled.div`
   display: grid;
   align-items: center;
-  grid-template-columns: 15rem 1fr;
+  grid-template-columns: 15rem 25rem;
   grid-template-rows: max-content 3rem;
   gap: 1.2rem;
 
   padding: 1rem 0;
+
+  ${(props) =>
+    props.type === "register" &&
+    css`
+      grid-template-columns: 15rem 30rem;
+    `}
 
   & p {
     grid-column: 2/3;
