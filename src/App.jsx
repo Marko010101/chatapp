@@ -46,7 +46,7 @@ function App() {
                 }
               >
                 {/* <Route index element={<Navigate replace to="home" />} /> */}
-                <Route path="/" index element={<Home />} />
+                <Route path="/" element={<Home />} />
                 <Route path="search" element={<Search />} />
                 <Route path="explore" element={<Explore />} />
                 <Route path="reels" element={<Reels />} />
@@ -56,7 +56,7 @@ function App() {
                 <Route path="*" element={<PageNotFound />} />
               </Route>
               <Route path="register" element={<Register />} />
-              <Route path="login" element={<Login />} />
+              <Route path="login " index element={<Login />} />
             </Routes>
           </Suspense>
         </BrowserRouter>
