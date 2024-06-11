@@ -3,12 +3,13 @@ import LoginForm from "../features/users/LoginForm.jsx";
 import LogoText from "../ui/LogoText";
 const LoginLayout = styled.main`
   min-height: 100vh;
-  display: grid;
-  grid-template-columns: 40rem;
-  grid-template-rows: 20rem max-content;
 
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
   justify-content: center;
+  width: 45rem;
+  padding-bottom: 7rem;
 
   /* @media (max-width: 576px) {
     grid-template-columns: 0.8fr;
