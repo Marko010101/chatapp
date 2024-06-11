@@ -6,7 +6,7 @@ const StyledLogo = styled.header`
   border-bottom: var(--border);
   margin: 0 auto;
   font-weight: var(--font-weight-medium);
-
+  margin-bottom: 6rem;
   background: linear-gradient(
     to bottom right,
     rgb(0, 0, 255) 0%,
