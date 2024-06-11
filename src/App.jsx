@@ -56,7 +56,7 @@ function App() {
                 <Route path="*" element={<PageNotFound />} />
               </Route>
               <Route path="register" element={<Register />} />
-              <Route path="login " element={<Login />} />
+              <Route path="login" element={<Login />} />
             </Routes>
           </Suspense>
         </BrowserRouter>

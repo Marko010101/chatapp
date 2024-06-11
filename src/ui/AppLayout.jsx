@@ -15,8 +15,10 @@ const StyledContainer = styled.div`
 
 const Main = styled.div``;
 
+
 function AppLayout() {
   const { isShrunk } = useSidebarShrink();
+  
 
   return (
     <StyledContainer isShrunk={isShrunk}>

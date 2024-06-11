@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import LoginForm from "../features/users/LoginForm.jsx";
-
+import LogoText from "../ui/LogoText";
 const LoginLayout = styled.main`
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 48rem;
+  grid-template-columns: 40rem;
+  grid-template-rows: 20rem max-content;
+
   align-items: center;
   justify-content: center;
-
-  gap: 3.2rem;
 
   /* @media (max-width: 576px) {
     grid-template-columns: 0.8fr;
@@ -27,6 +27,7 @@ const LoginLayout = styled.main`
 function Login() {
   return (
     <LoginLayout>
+      <LogoText />
       <LoginForm />
     </LoginLayout>
   );

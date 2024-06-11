@@ -16,18 +16,13 @@ function ProtectedRoute({ children }) {
   const navigate = useNavigate();
 
   // 1. Load the authenticated user
-  const { isLoading, isAuthenticated, user } = useUserFirebase();
-
-  console.log("isLoading", isLoading);
-  console.log("isAuthenticated", isAuthenticated);
-  console.log("user", user);
+  const { isLoading, isAuthenticated } = useUserFirebase();
 
   //  2. If there is NO authenticated user, redirect to the /login
   useEffect(
     function () {
       if (!isAuthenticated && !isLoading) {
         navigate("/login");
-        toast.error("To access this feature, you need to sign up.");
       }
     },
     [isAuthenticated, isLoading, navigate]
