@@ -8,6 +8,7 @@ import { useLogin } from "./useLogin.js";
 import SpinnerMini from "../../ui/SpinnerMini.jsx";
 import FormRowVertical from "../../ui/FormRowVertical.jsx";
 import Row from "../../ui/Row.jsx";
+import FancyButton from "../../ui/FancyButton.jsx";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -54,7 +55,7 @@ function LoginForm() {
       <FormRowVertical>
         <Row type="horizontal">
           <Button disabled={isLoading}>
-            {!isLoading ? "Log in" : <SpinnerMini />}
+            {!isLoading ? <FancyButton>Sign in</FancyButton> : <SpinnerMini />}
           </Button>
           <Button
             onClick={(e) => {
