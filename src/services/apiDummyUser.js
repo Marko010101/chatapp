@@ -57,3 +57,26 @@ export async function getUserById(id) {
   console.log(result);
   return result;
 }
+
+export async function updateUser(id, changes) {
+  const { email, ...allowedChanges } = changes;
+
+  const body = JSON.stringify(allowedChanges);
+
+  const response = await fetch(`${DUMMY_API}user/${id}`, {
+    method: "PUT",
+    headers: {
+      "app-id": APP_ID,
+      "Content-Type": "application/json", // Ensure content type is JSON
+    },
+    body: body,
+  });
+
+  if (!response.ok) {
+    throw new Error(`Could not update user, status: ${response.status}`);
+  }
+
+  const result = await response.json();
+  console.log(result);
+  return result;
+}

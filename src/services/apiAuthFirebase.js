@@ -8,13 +8,15 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../constants/firebaseConfig.js";
 
 // Registration
-export const registerUser = async ({ email, password }) => {
+export const registerUser = async ({ email, password, id }) => {
   const userCredential = await createUserWithEmailAndPassword(
     auth,
     email,
     password
   );
-  return userCredential.user;
+  const user = userCredential.user;
+
+  return { ...user, uid: id };
 };
 
 export const logInUser = async ({ email, password }) => {
