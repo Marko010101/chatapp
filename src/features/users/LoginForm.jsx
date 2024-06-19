@@ -54,9 +54,11 @@ function LoginForm() {
       </FormRowVertical>
       <FormRowVertical>
         <Row type="horizontal">
-          <Button disabled={isLoading}>
-            {!isLoading ? <FancyButton>Sign in</FancyButton> : <SpinnerMini />}
-          </Button>
+          {!isLoading ? (
+            <FancyButton disabled={isLoading}>Sign in</FancyButton>
+          ) : (
+            <SpinnerMini />
+          )}
           <Button
             onClick={(e) => {
               e.preventDefault();

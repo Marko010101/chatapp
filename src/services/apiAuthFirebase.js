@@ -8,7 +8,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../constants/firebaseConfig.js";
 
 // Registration
-export const registerUser = async ({ email, password, id }) => {
+export const registerUser = async ({ email, password }) => {
   const userCredential = await createUserWithEmailAndPassword(
     auth,
     email,
@@ -16,8 +16,30 @@ export const registerUser = async ({ email, password, id }) => {
   );
   const user = userCredential.user;
 
-  return { ...user, uid: id };
+  return { user };
 };
+
+// export const registerUser = async ({ email, password, id }) => {
+//   try {
+//     const userCredential = await createUserWithEmailAndPassword(
+//       auth,
+//       email,
+//       password
+//     );
+//     const user = userCredential.user;
+
+//     // Add the custom ID to Firestore
+//     await setDoc(doc(firestore, "users", user.uid), {
+//       email: user.email,
+//       customId: id,
+//     });
+
+//     return { ...user, customId: id };
+//   } catch (error) {
+//     console.error("Error registering user:", error);
+//     throw error;
+//   }
+// };
 
 export const logInUser = async ({ email, password }) => {
   const userCredential = await signInWithEmailAndPassword(

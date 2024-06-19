@@ -3,13 +3,13 @@ import { getUsers } from "../../services/apiDummyUser.js";
 
 export function useUsers() {
   const {
-    data: users,
+    data: dummyUsers,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["dummyUsers"],
     queryFn: getUsers,
   });
 
-  return { users, isLoading, error };
+  return { dummyUsers, isLoading, error };
 }
