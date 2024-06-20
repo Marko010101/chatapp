@@ -5,10 +5,15 @@ import {
 } from "firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
 
-import { auth } from "../constants/firebaseConfig.js";
+import { auth, firestore } from "../constants/firebaseConfig.js";
 
-// Registration
-export const registerUser = async ({ email, password }) => {
+import { doc, setDoc } from "firebase/firestore";
+
+import { collection, query, where, getDocs } from "firebase/firestore";
+
+export const registerUser = async ({ email, password, dummyId }) => {
+  // Create a new user with email and password
+  console.log("register user dummyid", dummyId);
   const userCredential = await createUserWithEmailAndPassword(
     auth,
     email,
@@ -16,30 +21,40 @@ export const registerUser = async ({ email, password }) => {
   );
   const user = userCredential.user;
 
+  await setDoc(doc(firestore, "usersCollection", user.uid), {
+    email: user.email,
+    dummyIdUser: dummyId,
+  });
+
   return { user };
 };
 
-// export const registerUser = async ({ email, password, id }) => {
-//   try {
-//     const userCredential = await createUserWithEmailAndPassword(
-//       auth,
-//       email,
-//       password
-//     );
-//     const user = userCredential.user;
+/**
+ * Fetches the dummyIdUser from 'usersCollection' in Firestore based on UID match.
+ * @param {string} uid - The UID of the Firebase authenticated user.
+ * @returns {Promise<string|null>} The dummyIdUser if found, otherwise null.
+ */
+export const fetchCurrentUsersCollectionUser = async (uid) => {
+  try {
+    const usersCollectionRef = collection(firestore, "usersCollection");
+    const querySnapshot = await getDocs(usersCollectionRef);
 
-//     // Add the custom ID to Firestore
-//     await setDoc(doc(firestore, "users", user.uid), {
-//       email: user.email,
-//       customId: id,
-//     });
+    let matchedDummyIdUser = null;
 
-//     return { ...user, customId: id };
-//   } catch (error) {
-//     console.error("Error registering user:", error);
-//     throw error;
-//   }
-// };
+    querySnapshot.forEach((doc) => {
+      const userData = doc.data();
+      const { dummyIdUser } = userData;
+      if (doc.id === uid || dummyIdUser === uid) {
+        matchedDummyIdUser = dummyIdUser;
+      }
+    });
+
+    return matchedDummyIdUser;
+  } catch (error) {
+    console.error("Error fetching users collection:", error);
+    throw error; // Re-throw the error to handle it where this function is called
+  }
+};
 
 export const logInUser = async ({ email, password }) => {
   const userCredential = await signInWithEmailAndPassword(

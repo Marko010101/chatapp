@@ -108,7 +108,6 @@ html {
 }
 
 body {
-  
 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 
   color: var(--color-text);

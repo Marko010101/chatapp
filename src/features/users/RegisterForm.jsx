@@ -34,9 +34,10 @@ function RegisterForm() {
       { firstName, lastName, email },
       {
         onSuccess: async (data) => {
-          const id = await data.id;
+          const { id: dummyId } = await data;
+          console.log("dummyId", dummyId);
           return signupWithFirebase(
-            { email, password, id },
+            { email, password, dummyId },
             {
               onSuccess: () => navigate("/"),
             }

@@ -61,26 +61,31 @@ export async function getUserById(id) {
 }
 
 export async function updateUser(id, changes) {
-  const { email, ...allowedChanges } = changes;
+  const { email, ...allowedChanges } = changes; // Exclude email from changes if present
 
-  const body = JSON.stringify(allowedChanges);
+  const body = JSON.stringify(allowedChanges); // Convert allowed changes to JSON
 
-  const response = await fetch(`${DUMMY_API}user/${id}`, {
-    method: "PUT",
-    headers: {
-      "app-id": APP_ID,
-      "Content-Type": "application/json", // Ensure content type is JSON
-    },
-    body: body,
-  });
+  try {
+    // Make the PUT request to update the user
+    const response = await fetch(`${DUMMY_API}user/${id}`, {
+      method: "PUT",
+      headers: {
+        "app-id": APP_ID,
+        "Content-Type": "application/json", // Ensure content type is JSON
+      },
+      body: body,
+    });
 
-  if (!response.ok) {
-    throw new Error(`Could not update user, status: ${response.status}`);
+    if (!response.ok) {
+      throw new Error(`Could not update user, status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.error("Update failed:", error);
   }
-
-  const result = await response.json();
-  console.log(result);
-  return result;
 }
 
 export async function deleteUser(id) {

@@ -11,6 +11,7 @@ import {
   getUserById,
   updateUser,
 } from "../services/apiDummyUser.js";
+import { fetchCurrentUsersCollectionUser } from "../services/apiAuthFirebase.js";
 
 const StyledPosts = styled.main`
   width: 46rem;
@@ -18,17 +19,26 @@ const StyledPosts = styled.main`
 
 function Home() {
   const { isLoading, posts, error } = usePosts();
-  const { user } = useUserFirebase();
   const { dummyUsers } = useUsers();
+  const { user } = useUserFirebase();
 
-  // console.log(user);
-  // console.log(dummyUsers?.data);
+  const userUid = user?.uid;
 
-  console.log(user.uid);
-  console.log(dummyUsers);
-  const newId = user.uid;
-  const changes = { id: newId };
-  updateUser("6670823117660c170a5e9dea", changes);
+  const fetchAndProcessUser = async (userUid) => {
+    const currentUser = await fetchCurrentUsersCollectionUser(userUid);
+
+    const matchingUser = dummyUsers?.data.find(
+      (user) => user.id === currentUser
+    );
+
+    if (matchingUser) {
+      return getUserById(matchingUser.id);
+    } else {
+      return null;
+    }
+  };
+
+  const currentUser = fetchAndProcessUser(userUid);
 
   if (isLoading) return <SpinnerFullPage />;
   if (!posts.length) return <Empty resourceName="posts" />;
