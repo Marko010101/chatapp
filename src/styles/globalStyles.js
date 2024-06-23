@@ -71,6 +71,8 @@ const GlobalStyles = createGlobalStyle`
   --font-size-big: 1.8rem;
 
 
+
+
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-md: 0px 0.6rem 2.4rem rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 2.4rem 3.2rem rgba(0, 0, 0, 0.12);
@@ -100,7 +102,7 @@ const GlobalStyles = createGlobalStyle`
   margin: 0;
 
   /* Creating animations for dark mode */
-  transition: background-color 0.3s, border 0.3s;
+  transition: background-color 0.2s, border 0.2s;
 }
 
 html {
@@ -121,52 +123,62 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, A
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 1.6rem;
-}
-
-::-webkit-scrollbar-corner,
-::-webkit-scrollbar-track {
-  background: var(--color-neutral-700);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-neutral-500);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-neutral-400);
-}
-
-::-webkit-scrollbar-thumb:active {
-  background: var(--color-neutral-300);
+  width: 1.4rem;
 }
 
 
+  ::-webkit-scrollbar-corner,
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 0.65rem;
+    background: var(--color-neutral-700);
+  }
 
-/* Scrollbar buttons */
-::-webkit-scrollbar-button {
-  display: block;
-  background-color: var(--color-neutral-700);
-  background-repeat: no-repeat;
-  background-size: 50%;
-  background-position: center;
-}
+  ::-webkit-scrollbar-thumb {
+    border-radius: 0.65rem;
+    background: var(--color-neutral-500);
+  }
 
-::-webkit-scrollbar-button:vertical:end:increment {
-  background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ee/Chevron-down.svg'); 
-}
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-neutral-400);
+  }
 
-::-webkit-scrollbar-button:vertical:end:decrement {
-  display: none; 
-}
+  ::-webkit-scrollbar-thumb:active {
+    background: var(--color-neutral-300);
+  }
 
- ::-webkit-scrollbar-button:vertical:start:increment {
-  display: none; 
-}
+  ::-webkit-scrollbar-button {
+    display: block;
+    background-color: var(--color-neutral-700);
+    background-repeat: no-repeat;
+    background-size: 70%;
+    background-position: center;
+  }
 
-::-webkit-scrollbar-button:vertical:start:decrement {
-  background-image: url('https://upload.wikimedia.org/wikipedia/commons/7/7e/Chevron-up.svg');
-}
+  ::-webkit-scrollbar-button:vertical:end:increment {
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/e/ee/Chevron-down.svg");
+  }
+
+  ::-webkit-scrollbar-button:vertical:end:decrement {
+    display: none;
+  }
+
+  ::-webkit-scrollbar-button:vertical:start:increment {
+    display: none;
+  }
+
+  ::-webkit-scrollbar-button:vertical:start:decrement {
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/7/7e/Chevron-up.svg");
+  }
+  ::-webkit-scrollbar-button:vertical:end:increment:hover,
+  ::-webkit-scrollbar-button:vertical:start:decrement:hover {
+    background-color: var(--color-neutral-500);
+  }
+  
+  ::-webkit-scrollbar-button:vertical:end:increment:active,
+  ::-webkit-scrollbar-button:vertical:start:decrement:active {
+    background-color: var(--color-neutral-400);
+  }
 
 
 
@@ -231,6 +243,18 @@ img {
   /* For dark mode */
   filter: grayscale(var(--image-grayscale)) opacity(var(--image-opacity));
 }
+
+/* REUSABLE CLASSES */
+
+.image-user{
+  display: block;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 50%;
+}
+
+
 
 /* @media (max-width: 992px) {
   html {

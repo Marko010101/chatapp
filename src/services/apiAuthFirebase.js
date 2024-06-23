@@ -9,7 +9,8 @@ import { auth, firestore } from "../constants/firebaseConfig.js";
 
 import { doc, setDoc } from "firebase/firestore";
 
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
+import { getUserById } from "./apiDummyUser.js";
 
 export const registerUser = async ({ email, password, dummyId }) => {
   // Create a new user with email and password
@@ -37,11 +38,11 @@ export const registerUser = async ({ email, password, dummyId }) => {
 export const fetchCurrentUsersCollectionUser = async (uid) => {
   try {
     const usersCollectionRef = collection(firestore, "usersCollection");
-    const querySnapshot = await getDocs(usersCollectionRef);
+    const usersCollection = await getDocs(usersCollectionRef);
 
     let matchedDummyIdUser = null;
 
-    querySnapshot.forEach((doc) => {
+    usersCollection.forEach((doc) => {
       const userData = doc.data();
       const { dummyIdUser } = userData;
       if (doc.id === uid || dummyIdUser === uid) {
@@ -52,7 +53,21 @@ export const fetchCurrentUsersCollectionUser = async (uid) => {
     return matchedDummyIdUser;
   } catch (error) {
     console.error("Error fetching users collection:", error);
-    throw error; // Re-throw the error to handle it where this function is called
+    throw error;
+  }
+};
+
+export const matchFirebaseAndDummyUsers = async (userUid, dummyUsers) => {
+  const currentUser = await fetchCurrentUsersCollectionUser(userUid);
+
+  const matchingUser = await dummyUsers?.data.find(
+    (user) => user.id === currentUser
+  );
+
+  if (matchingUser) {
+    return await getUserById(matchingUser.id);
+  } else {
+    return "";
   }
 };
 

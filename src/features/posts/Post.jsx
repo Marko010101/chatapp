@@ -28,12 +28,7 @@ const OwnerImageWrapper = styled.div`
   background: linear-gradient(var(--color-pink-logo), var(--color-blue-logo));
 
   img {
-    display: block;
     width: 3.6rem;
-    aspect-ratio: 1;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 50%;
     border: 0.2rem solid var(--color-black);
   }
 `;
@@ -108,6 +103,7 @@ function Post({ post }) {
         <HeaderPost>
           <OwnerImageWrapper>
             <img
+              className="image-user"
               src={ownerPicture || "../../../public/default-user.jpg"}
               alt="Owner image"
             />

@@ -56,7 +56,6 @@ export async function getUserById(id) {
 
   const result = await response.json();
 
-  console.log(result);
   return result;
 }
 

@@ -14,8 +14,9 @@ import { CgProfile } from "react-icons/cg";
 import { RiAddCircleLine, RiAddCircleFill } from "react-icons/ri";
 import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
 import { BiLogOut } from "react-icons/bi";
-// import { useState } from "react";
 import { useLogout } from "../features/users/useLogout.js";
+import { useCurrentDummyUser } from "../features/users/useCurrentDummyUser.js";
+import SpinnerMini from "./SpinnerMini.jsx";
 
 // import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
 
@@ -98,8 +99,9 @@ const StyledNavLink = styled(NavLink)`
 function MainNav() {
   const { isShrunk } = useSidebarShrink();
   const { logout } = useLogout();
+  const { currentUserById, isLoading: currentUserIsLoading } =
+    useCurrentDummyUser();
 
-  // css properties does not working same for all the svgs so i had to create <NavLinkItem/>.
   return (
     <StyledNav>
       <div>
@@ -109,7 +111,7 @@ function MainNav() {
               <NavLinkItem
                 icon={<IoHomeOutline />}
                 iconActive={<IoHomeSharp />}
-                title={""}
+                title=""
               />
             </StyledNavLink>
           </li>
@@ -118,7 +120,7 @@ function MainNav() {
               <NavLinkItem
                 icon={<IoIosSearch />}
                 iconActive={<IoSearchSharp />}
-                title={"search"}
+                title="Search"
               />
             </StyledNavLink>
           </li>
@@ -127,7 +129,7 @@ function MainNav() {
               <NavLinkItem
                 icon={<MdOutlineExplore />}
                 iconActive={<MdExplore />}
-                title={"explore"}
+                title="Explore"
               />
             </StyledNavLink>
           </li>
@@ -136,7 +138,7 @@ function MainNav() {
               <NavLinkItem
                 icon={<PiFilmReelLight />}
                 iconActive={<PiFilmReelFill />}
-                title={"reels"}
+                title="Reels"
               />
             </StyledNavLink>
           </li>
@@ -147,25 +149,25 @@ function MainNav() {
                 iconActive={
                   <img src={activeMessageIcon} alt="Active messages image" />
                 }
-                title={"messages"}
+                title="Messages"
               />
             </StyledNavLink>
           </li>
           <li>
-            <StyledNavLink to="notifications">
+            <StyledNavLink to="/notifications">
               <NavLinkItem
                 icon={<IoMdHeartEmpty />}
                 iconActive={<IoMdHeart />}
-                title={"notifications"}
+                title="Notifications"
               />
             </StyledNavLink>
           </li>
           <li>
-            <StyledNavLink to="create">
+            <StyledNavLink to="/create">
               <NavLinkItem
                 icon={<RiAddCircleLine />}
                 iconActive={<RiAddCircleFill />}
-                title={"create"}
+                title="Create"
               />
             </StyledNavLink>
           </li>
@@ -174,13 +176,13 @@ function MainNav() {
       <div>
         <NavList isShrunk={isShrunk}>
           <li>
-            <StyledNavLink to="/profile">
+            <StyledNavLink to={`/profile/${currentUserById?.id}`}>
               <CgProfile />
               <span>Profile</span>
             </StyledNavLink>
           </li>
           <li>
-            <StyledNavLink onClick={logout} to="*">
+            <StyledNavLink onClick={logout} to="/">
               <BiLogOut style={{ marginLeft: "-0.3rem" }} />
               <span>Logout</span>
             </StyledNavLink>
