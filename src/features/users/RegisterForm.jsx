@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import FormRow from "../../ui/FormRow.jsx";
 import Input from "../../ui/Input.jsx";
 import Form from "../../ui/Form.jsx";
-import FancyButton from "../../ui/FancyButton.jsx";
-import Button from "../../ui/Button.jsx";
+import FancyButton from "../../ui/Buttons/FancyButton.jsx";
+import Button from "../../ui/Buttons/Button.jsx";
 import { useSignup } from "./useSignup.js";
 import { useFirebaseSignup } from "./useFirebaseSignup.js";
 

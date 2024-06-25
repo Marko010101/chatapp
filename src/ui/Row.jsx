@@ -15,6 +15,12 @@ const Row = styled.div`
       flex-direction: column;
       gap: 1.6rem;
     `}
+
+    ${(props) =>
+    props?.mt &&
+    css`
+      margin-top: ${props.mt};
+    `}
 `;
 
 Row.defaultProps = {

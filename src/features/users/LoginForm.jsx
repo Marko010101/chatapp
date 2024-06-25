@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Button from "../../ui/Button";
+import Button from "../../ui/Buttons/Button.jsx";
 import Form from "../../ui/Form";
 import Input from "../../ui/Input";
 import { useLogin } from "./useLogin.js";
 import SpinnerMini from "../../ui/SpinnerMini.jsx";
 import FormRowVertical from "../../ui/FormRowVertical.jsx";
 import Row from "../../ui/Row.jsx";
-import FancyButton from "../../ui/FancyButton.jsx";
+import FancyButton from "../../ui/Buttons/FancyButton.jsx";
 
 function LoginForm() {
   const [email, setEmail] = useState("");

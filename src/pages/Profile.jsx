@@ -4,12 +4,16 @@ import { useCurrentDummyUser } from "../features/users/useCurrentDummyUser.js";
 import SpinnerFullPage from "../ui/SpinnerFullPage.jsx";
 import Heading from "../ui/Heading.jsx";
 import ButtonNeutral from "../ui/Buttons/ButtonNeutral.jsx";
+import ErrorFallback from "../ui/ErrorFallback.jsx";
+import { useMoveBack } from "../hooks/useMoveBack.js";
+import Row from "../ui/Row.jsx";
+import { useUserPosts } from "../features/posts/useUsersPosts.js";
 
 const StyledProfile = styled.main`
   display: grid;
-  grid-template-columns: 40rem 1fr;
-  grid-template-rows: 40rem 1fr;
+  grid-template-columns: 40rem max-content;
   align-items: start;
+  border-bottom: var(--border);
 `;
 
 const UserImage = styled.div`
@@ -21,29 +25,36 @@ const UserImage = styled.div`
 
 const UserDetail = styled.div`
   margin-top: 3rem;
-  display: flex;
-  align-items: center;
-  justify-items: center;
-  gap: 3rem;
+`;
 
-  & h3 {
-    align-items: center;
-    justify-items: center;
-  }
+const RecreatedBtn = styled(ButtonNeutral)`
+  margin-left: 3rem;
 `;
 
 function Profile() {
-  const { currentUserById, isLoading, isError } = useCurrentDummyUser();
+  const moveBack = useMoveBack();
+  const {
+    currentUserById,
+    isLoading,
+    error: errorCurrentUser,
+  } = useCurrentDummyUser();
 
-  if (isLoading || !currentUserById) {
+  const {
+    currentUserPosts,
+    isLoading: isLoadingUserPost,
+    error,
+  } = useUserPosts(currentUserById?.id);
+
+  if (isLoading || !currentUserById || isLoadingUserPost)
     return <SpinnerFullPage />;
-  }
 
-  // Error state: Handle error if fetching user data fails
-  if (isError) {
-    return <div>Error loading profile. Please try again later.</div>;
-  }
+  if (errorCurrentUser)
+    return (
+      <ErrorFallback error={errorCurrentUser} resetErrorBoundary={moveBack} />
+    );
+
   const { firstName, lastName, email, registerDate } = currentUserById;
+  const userPostsAmount = currentUserPosts?.data.length;
 
   return (
     <StyledProfile>
@@ -55,13 +66,24 @@ function Profile() {
       </UserImage>
 
       <UserDetail>
-        <Heading as="h3">
-          {firstName}_{lastName}
-        </Heading>
-        <ButtonNeutral>Edit profile</ButtonNeutral>
+        <Row type="horizontal">
+          <Heading as="h3">
+            {firstName}_{lastName}
+          </Heading>
+          <RecreatedBtn>Edit profile</RecreatedBtn>
+        </Row>
+        <Row type="horizontal" mt="5rem">
+          <p>
+            {userPostsAmount === 0 ? (
+              <ButtonNeutral>Add Post</ButtonNeutral>
+            ) : (
+              userPostsAmount
+            )}
+          </p>
+          <p>Registered: {new Date(registerDate).toLocaleDateString()}</p>
+        </Row>
       </UserDetail>
-      <p>Email: {email}</p>
-      <p>Registered Date: {new Date(registerDate).toLocaleDateString()}</p>
+      <p>{email}</p>
     </StyledProfile>
   );
 }

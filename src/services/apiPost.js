@@ -27,3 +27,19 @@ export async function getPosts() {
 
   return result;
 }
+
+export async function getPostsByUser(id) {
+  const response = await fetch(`${DUMMY_API}user/${id}/post`, {
+    headers: {
+      "app-id": APP_ID,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Users posts could not load, status: ${response.status}`);
+  }
+
+  const result = await response.json();
+
+  return result;
+}

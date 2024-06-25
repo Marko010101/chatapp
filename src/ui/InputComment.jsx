@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
-import Button from "./Button.jsx";
+import Button from "./Buttons/Button.jsx";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { useRef } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick.js";
