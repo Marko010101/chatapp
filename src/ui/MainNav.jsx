@@ -175,12 +175,21 @@ function MainNav() {
       </div>
       <div>
         <NavList isShrunk={isShrunk}>
-          <li>
-            <StyledNavLink to={`/profile/${currentUserById?.id}`}>
-              <CgProfile />
-              <span>Profile</span>
-            </StyledNavLink>
-          </li>
+          {currentUserById?.id ? (
+            <li>
+              <StyledNavLink to={`/profile/${currentUserById?.id}`}>
+                <CgProfile />
+                <span>Profile</span>
+              </StyledNavLink>
+            </li>
+          ) : (
+            <li>
+              <StyledNavLink>
+                <CgProfile />
+                <span>Profile</span>
+              </StyledNavLink>
+            </li>
+          )}
           <li>
             <StyledNavLink onClick={logout} to="/">
               <BiLogOut style={{ marginLeft: "-0.3rem" }} />

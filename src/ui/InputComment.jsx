@@ -5,6 +5,7 @@ import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { useRef } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick.js";
 import MemoizedEmoji from "./MemoizedEmoji.jsx";
+import { createComment } from "../services/apiComments.js";
 
 const StyledCommentArea = styled.div`
   position: relative;

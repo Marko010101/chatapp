@@ -31,6 +31,12 @@ const RecreatedBtn = styled(ButtonNeutral)`
   margin-left: 3rem;
 `;
 
+const EmailLink = styled.a`
+  font-weight: var(--font-weight-light) & span {
+
+  }
+`;
+
 function Profile() {
   const moveBack = useMoveBack();
   const {
@@ -50,18 +56,28 @@ function Profile() {
 
   if (errorCurrentUser)
     return (
-      <ErrorFallback error={errorCurrentUser} resetErrorBoundary={moveBack} />
+      <ErrorFallback
+        error={errorCurrentUser || error}
+        resetErrorBoundary={moveBack}
+      />
     );
+
+  /*   const openGmail = (email) => {
+    const gmailUrl =
+      "https://mail.google.com/mail/?view=cm&fs=1&to=" +
+      encodeURIComponent(email);
+    window.open(gmailUrl, "_blank");
+  }; */
 
   const { firstName, lastName, email, registerDate } = currentUserById;
   const userPostsAmount = currentUserPosts?.data.length;
-
   return (
     <StyledProfile>
       <UserImage>
         <img
           className="image-user"
           src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg"
+          alt={`${firstName} ${lastName}`}
         />
       </UserImage>
 
@@ -83,8 +99,11 @@ function Profile() {
           <p>Registered: {new Date(registerDate).toLocaleDateString()}</p>
         </Row>
       </UserDetail>
-      <p>{email}</p>
+      {/* <EmailLink onClick={() => openGmail(email)}>
+        Message {firstName} on email: <span>{email}</span>
+      </EmailLink> */}
     </StyledProfile>
   );
 }
+
 export default Profile;

@@ -39,6 +39,9 @@ const StyledLogo = styled(NavLink).withConfig({
         width: 11rem;
         margin-left: 0.7rem;
       }
+      .logo-icon:active {
+        filter: brightness(60%);
+      }
     `}
 
   ${(props) =>
