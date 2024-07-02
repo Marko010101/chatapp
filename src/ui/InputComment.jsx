@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import Button from "./Buttons/Button.jsx";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
-import { useRef } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick.js";
 import MemoizedEmoji from "./MemoizedEmoji.jsx";
-import { createComment } from "../services/apiComments.js";
+import SpinnerFullPage from "./SpinnerFullPage.jsx";
+import { useCurrentDummyUser } from "../features/users/useCurrentDummyUser.js";
+import useCreateComment from "../features/posts/useCreateComment.js";
 
 const StyledCommentArea = styled.div`
   position: relative;
@@ -14,7 +15,6 @@ const StyledCommentArea = styled.div`
   padding: 0.3rem 0.3rem 1rem;
   border-bottom: var(--border);
 
-  /* On clicks of svg does not select other parts */
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -60,9 +60,12 @@ const StyledCommentArea = styled.div`
   }
 `;
 
-function InputComment({ textareaRef }) {
+function InputComment({ textareaRef, postId }) {
+  const { currentUserById, isLoading, error } = useCurrentDummyUser();
+  const createCommentMutation = useCreateComment();
   const [comment, setComment] = useState("");
   const [isEmojiPickerVisible, setEmojiPickerVisible] = useState(false);
+  const [comments, setComments] = useState([]); // State to manage comments
 
   const emojiRef = useOutsideClick(() => setEmojiPickerVisible(false), false);
 
@@ -95,6 +98,33 @@ function InputComment({ textareaRef }) {
     });
   };
 
+  const handlePostComment = () => {
+    if (comment.trim() === "") return;
+
+    // Ensure we have the necessary IDs
+    if (!currentUserById || !postId) {
+      console.error("Owner ID or Post ID is missing");
+      return;
+    }
+
+    const payload = {
+      comment: comment,
+      ownerId: currentUserById,
+      postId,
+    };
+
+    console.log("Payload being sent to mutation:", payload);
+
+    createCommentMutation.mutate(payload, {
+      onSuccess: (newComment) => {
+        setComment(""); // Clear the comment input on success
+        setComments((prevComments) => [...prevComments, newComment]); // Add new comment to the list
+      },
+    });
+  };
+
+  if (isLoading) return <SpinnerFullPage />;
+
   return (
     <StyledCommentArea isCommenting={isCommenting}>
       <textarea
@@ -104,7 +134,7 @@ function InputComment({ textareaRef }) {
         onChange={handleInputChange}
         rows={1}
       />
-      {isCommenting && <Button>Post</Button>}
+      {isCommenting && <Button onClick={handlePostComment}>Post</Button>}
       <HiOutlineEmojiHappy onClick={toggleEmojiPicker} />
       {isEmojiPickerVisible && (
         <MemoizedEmoji
@@ -112,6 +142,17 @@ function InputComment({ textareaRef }) {
           handleEmojiSelect={handleEmojiSelect}
         />
       )}
+      {/* Render the list of comments */}
+      <div>
+        {comments.map((comment) => (
+          <div key={comment.id}>
+            <strong>
+              {comment.owner.firstName} {comment.owner.lastName}:
+            </strong>{" "}
+            {comment.message}
+          </div>
+        ))}
+      </div>
     </StyledCommentArea>
   );
 }
