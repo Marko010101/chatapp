@@ -1,4 +1,6 @@
 function ModalPost({ commentsData, postId }) {
+  console.log(commentsData);
+
   return (
     <div>
       {commentsData.map((comment) => (

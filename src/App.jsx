@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import GlobalStyles from "./styles/globalStyles.js";
 import AppLayout from "./ui/AppLayout.jsx";
-import SpinnerFullPage from "./ui/SpinnerFullPage.jsx";
+import SpinnerFullPage from "./ui/loaders/SpinnerFullPage.jsx";
 import Home from "./pages/Home.jsx";
 import Explore from "./pages/Explore.jsx";
 import Reels from "./pages/Reels.jsx";

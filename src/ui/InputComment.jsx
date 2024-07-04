@@ -4,7 +4,7 @@ import Button from "./Buttons/Button.jsx";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { useOutsideClick } from "../hooks/useOutsideClick.js";
 import MemoizedEmoji from "./MemoizedEmoji.jsx";
-import SpinnerFullPage from "./SpinnerFullPage.jsx";
+import SpinnerFullPage from "./loaders/SpinnerFullPage.jsx";
 import { useCurrentDummyUser } from "../features/users/useCurrentDummyUser.js";
 import useCreateComment from "../features/posts/useCreateComment.js";
 
@@ -62,7 +62,7 @@ const StyledCommentArea = styled.div`
 
 function InputComment({ textareaRef, postId }) {
   const { currentUserById, isLoading, error } = useCurrentDummyUser();
-  const createCommentMutation = useCreateComment();
+  const { mutate, isLoading: isLoadingComment } = useCreateComment();
   const [comment, setComment] = useState("");
   const [isEmojiPickerVisible, setEmojiPickerVisible] = useState(false);
   const [comments, setComments] = useState([]); // State to manage comments
@@ -115,19 +115,21 @@ function InputComment({ textareaRef, postId }) {
 
     console.log("Payload being sent to mutation:", payload);
 
-    createCommentMutation.mutate(payload, {
+    mutate(payload, {
       onSuccess: (newComment) => {
-        setComment(""); // Clear the comment input on success
-        setComments((prevComments) => [...prevComments, newComment]); // Add new comment to the list
+        setComment("");
+        setComments((prevComments) => [...prevComments, newComment]);
       },
     });
   };
 
+  if (isLoadingComment) return <SpinnerFullPage />;
   if (isLoading) return <SpinnerFullPage />;
 
   return (
     <StyledCommentArea isCommenting={isCommenting}>
       <textarea
+        disabled={isLoadingComment}
         ref={textareaRef}
         placeholder="Add a comment..."
         value={comment}
@@ -142,8 +144,7 @@ function InputComment({ textareaRef, postId }) {
           handleEmojiSelect={handleEmojiSelect}
         />
       )}
-      {/* Render the list of comments */}
-      <div>
+      {/*    <div>
         {comments.map((comment) => (
           <div key={comment.id}>
             <strong>
@@ -152,7 +153,7 @@ function InputComment({ textareaRef, postId }) {
             {comment.message}
           </div>
         ))}
-      </div>
+      </div> */}
     </StyledCommentArea>
   );
 }

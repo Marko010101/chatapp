@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { useCurrentDummyUser } from "../features/users/useCurrentDummyUser.js";
-import SpinnerFullPage from "../ui/SpinnerFullPage.jsx";
+import SpinnerFullPage from "../ui/loaders/SpinnerFullPage.jsx";
 import Heading from "../ui/Heading.jsx";
 import ButtonNeutral from "../ui/Buttons/ButtonNeutral.jsx";
 import ErrorFallback from "../ui/ErrorFallback.jsx";

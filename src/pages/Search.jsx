@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import SpinnerFullPage from "../ui/SpinnerFullPage.jsx";
+import SpinnerFullPage from "../ui/loaders/SpinnerFullPage.jsx";
 import { searchGoogle } from "../services/apiGoogleSearch.js";
 
 function Search() {

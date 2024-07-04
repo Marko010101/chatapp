@@ -16,7 +16,7 @@ import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
 import { BiLogOut } from "react-icons/bi";
 import { useLogout } from "../features/users/useLogout.js";
 import { useCurrentDummyUser } from "../features/users/useCurrentDummyUser.js";
-import SpinnerMini from "./SpinnerMini.jsx";
+import SpinnerMini from "./loaders/SpinnerMini.jsx";
 
 // import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
 

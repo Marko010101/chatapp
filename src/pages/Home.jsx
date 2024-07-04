@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import SpinnerFullPage from "../ui/SpinnerFullPage.jsx";
+import SpinnerFullPage from "../ui/loaders/SpinnerFullPage.jsx";
 import { usePosts } from "../features/posts/usePosts.js";
 import Post from "../features/posts/Post.jsx";
 import Empty from "../ui/Empty.jsx";

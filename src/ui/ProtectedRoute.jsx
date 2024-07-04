@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import SpinnerFullPage from "./SpinnerFullPage.jsx";
+import SpinnerFullPage from "./loaders/SpinnerFullPage.jsx";
 import styled from "styled-components";
 import { useUserFirebase } from "../features/users/useUserFirebase.js";
 import toast from "react-hot-toast";
