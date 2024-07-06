@@ -45,7 +45,6 @@ function App() {
                   </ProtectedRoute>
                 }
               >
-                {/* <Route index element={<Navigate replace to="home" />} /> */}
                 <Route path="/" index element={<Home />} />
                 <Route path="search" element={<Search />} />
                 <Route path="explore" element={<Explore />} />

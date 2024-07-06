@@ -65,7 +65,6 @@ function InputComment({ textareaRef, postId }) {
   const { mutate, isLoading: isLoadingComment } = useCreateComment();
   const [comment, setComment] = useState("");
   const [isEmojiPickerVisible, setEmojiPickerVisible] = useState(false);
-  const [comments, setComments] = useState([]); // State to manage comments
 
   const emojiRef = useOutsideClick(() => setEmojiPickerVisible(false), false);
 
@@ -101,9 +100,7 @@ function InputComment({ textareaRef, postId }) {
   const handlePostComment = () => {
     if (comment.trim() === "") return;
 
-    // Ensure we have the necessary IDs
     if (!currentUserById || !postId) {
-      console.error("Owner ID or Post ID is missing");
       return;
     }
 
@@ -113,17 +110,20 @@ function InputComment({ textareaRef, postId }) {
       postId,
     };
 
-    console.log("Payload being sent to mutation:", payload);
-
     mutate(payload, {
       onSuccess: (newComment) => {
         setComment("");
-        setComments((prevComments) => [...prevComments, newComment]);
       },
     });
   };
 
-  if (isLoadingComment) return <SpinnerFullPage />;
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      handlePostComment();
+    }
+  };
+
   if (isLoading) return <SpinnerFullPage />;
 
   return (
@@ -135,6 +135,7 @@ function InputComment({ textareaRef, postId }) {
         value={comment}
         onChange={handleInputChange}
         rows={1}
+        onKeyDown={handleKeyPress}
       />
       {isCommenting && <Button onClick={handlePostComment}>Post</Button>}
       <HiOutlineEmojiHappy onClick={toggleEmojiPicker} />
@@ -144,16 +145,6 @@ function InputComment({ textareaRef, postId }) {
           handleEmojiSelect={handleEmojiSelect}
         />
       )}
-      {/*    <div>
-        {comments.map((comment) => (
-          <div key={comment.id}>
-            <strong>
-              {comment.owner.firstName} {comment.owner.lastName}:
-            </strong>{" "}
-            {comment.message}
-          </div>
-        ))}
-      </div> */}
     </StyledCommentArea>
   );
 }

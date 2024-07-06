@@ -3,6 +3,7 @@ import { useComments } from "./useComment.js";
 import Modal from "../../ui/Modal.jsx";
 import ModalPost from "../../ui/ModalPost.jsx";
 import ErrorText from "../../ui/ErrorText.jsx";
+import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
 
 const StyledComments = styled.div``;
 
@@ -22,7 +23,11 @@ const Text = styled.p`
 `;
 
 function Comments({ postId, textareaRef }) {
-  const { comments = {}, error } = useComments(postId);
+  const {
+    comments = {},
+    error,
+    isLoading: loadingComments,
+  } = useComments(postId);
   const { data: commentsData = [] } = comments;
 
   const isComments = commentsData.length;
@@ -32,6 +37,8 @@ function Comments({ postId, textareaRef }) {
       textareaRef.current.focus();
     }
   };
+
+  if (loadingComments) return <SpinnerMini />;
 
   return (
     <StyledComments>

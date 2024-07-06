@@ -43,3 +43,21 @@ export async function getPostsByUser(id) {
 
   return result;
 }
+
+export async function getPostById(id) {
+  const response = await fetch(`${DUMMY_API}post/${id}`, {
+    headers: {
+      "app-id": APP_ID,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `Post with this id is not available, status: ${response.status}`
+    );
+  }
+
+  const result = await response.json();
+
+  return result;
+}

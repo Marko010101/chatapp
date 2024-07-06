@@ -11,7 +11,6 @@ const useCreateComment = () => {
     },
     {
       onSuccess: (data, variables) => {
-        // Invalidate and refetch the comments query to get the latest comments
         queryClient.invalidateQueries(["comments", variables.postId]);
       },
       onError: (error) => {

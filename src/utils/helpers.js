@@ -10,6 +10,7 @@ export function getFormattedDateInfo(dateString) {
   const yearsToReplace = [2019, 2020, 2021];
   const inputYear = inputDate.getFullYear();
 
+  // Replace the year based on the logic provided
   if (yearsToReplace.includes(inputYear)) {
     const inputMonth = inputDate.getMonth();
     const inputDay = inputDate.getDate();
@@ -27,17 +28,30 @@ export function getFormattedDateInfo(dateString) {
   }
 
   const diffInMilliseconds = currentDate - inputDate;
-  const diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
+  const diffInSeconds = Math.floor(diffInMilliseconds / 1000);
+  const diffInMinutes = Math.floor(diffInSeconds / 60);
+  const diffInHours = Math.floor(diffInMinutes / 60);
+  const diffInDays = Math.floor(diffInHours / 24);
   const diffInMonths = Math.floor(diffInDays / 30);
   const diffInYears = Math.floor(diffInMonths / 12);
 
   let relativeTime;
-  if (diffInYears > 0) {
-    relativeTime = `${diffInYears} year${diffInYears !== 1 ? "s" : ""} ago`;
-  } else if (diffInMonths > 0) {
+
+  // Add the "Just now" and other relative time checks
+  if (diffInSeconds < 60) {
+    relativeTime = "Just now";
+  } else if (diffInMinutes < 60) {
+    relativeTime = `${diffInMinutes} minute${
+      diffInMinutes !== 1 ? "s" : ""
+    } ago`;
+  } else if (diffInHours < 24) {
+    relativeTime = `${diffInHours} hour${diffInHours !== 1 ? "s" : ""} ago`;
+  } else if (diffInDays < 30) {
+    relativeTime = `${diffInDays} day${diffInDays !== 1 ? "s" : ""} ago`;
+  } else if (diffInMonths < 12) {
     relativeTime = `${diffInMonths} month${diffInMonths !== 1 ? "s" : ""} ago`;
   } else {
-    relativeTime = `${diffInDays} day${diffInDays !== 1 ? "s" : ""} ago`;
+    relativeTime = `${diffInYears} year${diffInYears !== 1 ? "s" : ""} ago`;
   }
 
   // Format the date as 21 July 2024
