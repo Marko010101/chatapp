@@ -8,6 +8,7 @@ import ModalPost from "../ui/ModalPost.jsx";
 import Modal, { ModalContext } from "../ui/Modal.jsx";
 import { useEffect } from "react";
 import { useContext } from "react";
+import ErrorText from "../ui/ErrorText.jsx";
 
 const StyledPosts = styled.main`
   width: 46rem;
@@ -16,8 +17,7 @@ const StyledPosts = styled.main`
 function Home() {
   const { isLoading, posts, error } = usePosts();
   let { postId } = useParams();
-  const { open, close } = useContext(ModalContext);
-  console.log(postId);
+  const { open } = useContext(ModalContext);
   useEffect(() => {
     if (postId) {
       open("modalPost");
@@ -26,6 +26,7 @@ function Home() {
 
   if (isLoading) return <SpinnerFullPage />;
   if (!posts.length) return <Empty resourceName="posts" />;
+  if (error) return <ErrorText>{error}</ErrorText>;
 
   return (
     <StyledPosts>
