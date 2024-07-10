@@ -7,6 +7,9 @@ const GlobalStyles = createGlobalStyle`
   --color-sky-600: #0284c7; 
   --text-blue-500: rgb(59 130 246);
 
+
+  --text-cyan-800: #155E75;
+
   /* red */
   --color-red-400: #f87171;
 
@@ -31,6 +34,8 @@ const GlobalStyles = createGlobalStyle`
   --color-neutral-900: #171717;
   --color-neutral-950: #0a0a0a;
 
+  
+  
 
   /* White */
   --color-text:#F5F5F5;
@@ -65,6 +70,7 @@ const GlobalStyles = createGlobalStyle`
   --font-weight-semibold: 600;
 
 
+  --font-size-mini: 1rem;
   --font-size-tiny: 1.2rem;
   --font-size-small: 1.4rem;
   --font-size-medium: 1.6rem;
@@ -154,6 +160,8 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, A
     background-size: 70%;
     background-position: center;
   }
+
+
 
   ::-webkit-scrollbar-button:vertical:end:increment {
     background-image: url("https://upload.wikimedia.org/wikipedia/commons/e/ee/Chevron-down.svg");
@@ -254,6 +262,13 @@ img {
   border-radius: 50%;
 }
 
+.scrollButtonDisappear::-webkit-scrollbar {
+    width: 0.8rem;
+}
+
+.scrollButtonDisappear::-webkit-scrollbar-button {
+    display: none;
+}
 
 
 /* @media (max-width: 992px) {

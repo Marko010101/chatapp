@@ -1,20 +1,33 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 import { HiXMark } from "react-icons/hi2";
 import { createPortal } from "react-dom";
 import { cloneElement, createContext, useContext, useState } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick.js";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+const slideDown = keyframes`
+  0% {
+    transform: translate(-50%, -100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+`;
 
 const StyledModal = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* background-color: var(--color-grey-0); */
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-lg);
-  padding: 3.2rem 4rem;
   transition: all 0.5s;
+  background-color: var(--color-black);
+  animation: ${slideDown} 0.2s ease-out;
 `;
 
 const Overlay = styled.div`
@@ -23,8 +36,7 @@ const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
-  /* background-color: var(--backdrop-color); */
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(3px);
   z-index: 1000;
   transition: all 0.5s;
 `;
@@ -41,7 +53,7 @@ const Button = styled.button`
   right: 1.9rem;
 
   &:hover {
-    background-color: var(--color-grey-100);
+    background-color: var(--color-neutral-900);
   }
 
   & svg {
@@ -58,8 +70,11 @@ const ModalContext = createContext();
 
 function Modal({ children }) {
   const [openName, setOpenName] = useState("");
-
-  const close = () => setOpenName("");
+  const navigate = useNavigate();
+  const close = () => {
+    setOpenName("");
+    navigate("/");
+  };
   const open = setOpenName;
 
   return (
@@ -79,17 +94,31 @@ function Window({ children, name }) {
   const { openName, close } = useContext(ModalContext);
   const ref = useOutsideClick(close);
 
+  useEffect(() => {
+    if (name === openName) {
+      // Add class to body when modal opens
+      document.body.style.overflow = "hidden";
+    } else {
+      // Remove class from body when modal closes
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      // Ensure the overflow style is removed when the component unmounts
+      document.body.style.overflow = "unset";
+    };
+  }, [name, openName]);
+
   if (name !== openName) return null;
 
   return createPortal(
     <Overlay>
       <StyledModal ref={ref}>
-        <Button onClick={close}>
-          <HiXMark />
-        </Button>
-
         <div>{cloneElement(children, { onCloseModal: close })}</div>
       </StyledModal>
+      <Button onClick={close}>
+        <HiXMark />
+      </Button>
     </Overlay>,
     document.body
   );
@@ -98,4 +127,5 @@ function Window({ children, name }) {
 Modal.Open = Open;
 Modal.Window = Window;
 
+export { ModalContext };
 export default Modal;

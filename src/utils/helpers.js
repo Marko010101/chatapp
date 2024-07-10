@@ -66,7 +66,19 @@ export function getFormattedDateInfo(dateString) {
 
 export function titleFix(str) {
   if (str.endsWith("...")) {
-    return str.slice(0, -2);
+    return str.slice(0, -3);
+  } else if (!str.endsWith(".")) {
+    return str + ".";
   }
   return str;
+}
+
+export function fixedSizeFullName(firstName, lastName, size = 15) {
+  const fullName = `${firstName} ${lastName}`;
+
+  if (fullName.length > size) {
+    return fullName.slice(0, size) + "...";
+  }
+
+  return fullName;
 }

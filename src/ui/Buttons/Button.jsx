@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const StyledButton = styled.button`
   background-color: transparent;
@@ -6,6 +6,13 @@ const StyledButton = styled.button`
   font-weight: var(--font-weight-medium);
   border: none;
   cursor: pointer;
+
+  ${(props) =>
+    !props.isTyping &&
+    css`
+      pointer-events: none;
+      color: var(--text-cyan-800);
+    `}
 
   &:focus {
     outline: none;

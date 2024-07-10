@@ -1,26 +1,32 @@
-import styled from "styled-components";
-
-import { getFormattedDateInfo } from "../../utils/helpers.js";
-
-const StyledComment = styled.aside``;
+import CommentSectionModal from "./CommentSectionModal.jsx";
+import { useUserById } from "./useUserById.js";
+import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
+import ErrorText from "../../ui/ErrorText.jsx";
 
 function Comment({ comment }) {
   const { message, owner, publishDate } = comment;
-  const { firstName, lastName } = owner;
+  const { commentOwner = {}, isLoading, error } = useUserById(owner?.id);
+  const {
+    firstName,
+    lastName,
+    picture: ownerPicture,
+  } = commentOwner; /* This have more parts */
 
-  // Get the formatted date info
-  const { relativeTime } = getFormattedDateInfo(publishDate);
+  console.log(isLoading);
+  console.log(owner);
+
+  if (!owner)
+    return <ErrorText>Comment could not load due to an API error.</ErrorText>;
+  if (isLoading) return <SpinnerMini />;
+  if (error) return <ErrorText>{error}</ErrorText>;
 
   return (
-    <StyledComment>
-      <div>
-        {message}{" "}
-        <span>
-          {firstName} {lastName}
-        </span>
-        <span>{relativeTime}</span>
-      </div>
-    </StyledComment>
+    <CommentSectionModal
+      ownerPicture={ownerPicture}
+      firstName={firstName}
+      lastName={lastName}
+      text={message}
+    />
   );
 }
 

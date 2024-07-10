@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import SpinnerFullPage from "./loaders/SpinnerFullPage.jsx";
 import styled from "styled-components";
 import { useUserFirebase } from "../features/users/useUserFirebase.js";
-import toast from "react-hot-toast";
 
 const FullPage = styled.div`
   height: 100vh;

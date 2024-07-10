@@ -120,7 +120,7 @@ function MainNav() {
               <NavLinkItem
                 icon={<IoIosSearch />}
                 iconActive={<IoSearchSharp />}
-                title="Search"
+                title="search"
               />
             </StyledNavLink>
           </li>
@@ -129,7 +129,7 @@ function MainNav() {
               <NavLinkItem
                 icon={<MdOutlineExplore />}
                 iconActive={<MdExplore />}
-                title="Explore"
+                title="explore"
               />
             </StyledNavLink>
           </li>
@@ -138,7 +138,7 @@ function MainNav() {
               <NavLinkItem
                 icon={<PiFilmReelLight />}
                 iconActive={<PiFilmReelFill />}
-                title="Reels"
+                title="reels"
               />
             </StyledNavLink>
           </li>
@@ -149,7 +149,7 @@ function MainNav() {
                 iconActive={
                   <img src={activeMessageIcon} alt="Active messages image" />
                 }
-                title="Messages"
+                title="messages"
               />
             </StyledNavLink>
           </li>
@@ -158,7 +158,7 @@ function MainNav() {
               <NavLinkItem
                 icon={<IoMdHeartEmpty />}
                 iconActive={<IoMdHeart />}
-                title="Notifications"
+                title="notifications"
               />
             </StyledNavLink>
           </li>
@@ -167,7 +167,7 @@ function MainNav() {
               <NavLinkItem
                 icon={<RiAddCircleLine />}
                 iconActive={<RiAddCircleFill />}
-                title="Create"
+                title="create"
               />
             </StyledNavLink>
           </li>

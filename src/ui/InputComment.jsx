@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled, { css } from "styled-components";
 import Button from "./Buttons/Button.jsx";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
@@ -7,6 +7,7 @@ import MemoizedEmoji from "./MemoizedEmoji.jsx";
 import SpinnerFullPage from "./loaders/SpinnerFullPage.jsx";
 import { useCurrentDummyUser } from "../features/users/useCurrentDummyUser.js";
 import useCreateComment from "../features/posts/useCreateComment.js";
+import ErrorText from "./ErrorText.jsx";
 
 const StyledCommentArea = styled.div`
   position: relative;
@@ -14,11 +15,7 @@ const StyledCommentArea = styled.div`
   place-items: center;
   padding: 0.3rem 0.3rem 1rem;
   border-bottom: var(--border);
-
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+  min-height: 5rem;
 
   ${(props) =>
     props.isCommenting
@@ -29,16 +26,43 @@ const StyledCommentArea = styled.div`
           grid-template-columns: 1fr 2rem;
         `}
 
-  & svg {
-    color: var(--color-gray-text);
-    cursor: pointer;
+  ${(props) =>
+    props.isModalComment &&
+    css`
+      grid-template-columns: 4rem 1fr 5rem;
+    `}
 
-    &:hover {
-      color: var(--color-gray-active);
-    }
-    &:active {
-      color: var(--text-stone-700);
-    }
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+  color: var(--color-gray-text);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-gray-active);
+  }
+  &:active {
+    color: var(--text-stone-700);
+  }
+
+  & svg {
+    color: var(--color-gray-0);
+    ${(props) =>
+      props.isModalComment &&
+      css`
+        font-size: 2.5rem;
+        grid-column: 1/2;
+        grid-row: 1/-1;
+
+        &:hover {
+          color: var(--color-neutral-400);
+        }
+        &:active {
+          color: var(--color-neutral-600);
+        }
+      `}
   }
 
   & textarea {
@@ -49,6 +73,8 @@ const StyledCommentArea = styled.div`
     outline: none;
     resize: none;
     overflow: auto;
+    color: var(--color-text);
+    font-size: var(--font-size-small);
 
     &::placeholder {
       color: var(--color-gray-text);
@@ -60,7 +86,7 @@ const StyledCommentArea = styled.div`
   }
 `;
 
-function InputComment({ textareaRef, postId }) {
+function InputComment({ textareaRef, postId, isModalComment }) {
   const { currentUserById, isLoading, error } = useCurrentDummyUser();
   const { mutate, isLoading: isLoadingComment } = useCreateComment();
   const [comment, setComment] = useState("");
@@ -68,7 +94,8 @@ function InputComment({ textareaRef, postId }) {
 
   const emojiRef = useOutsideClick(() => setEmojiPickerVisible(false), false);
 
-  const isCommenting = comment.length > 0;
+  let isCommenting = comment.length > 0;
+  let isTyping = comment.length > 0;
 
   const handleInputChange = (event) => {
     setComment(event.target.value);
@@ -125,9 +152,13 @@ function InputComment({ textareaRef, postId }) {
   };
 
   if (isLoading) return <SpinnerFullPage />;
+  if (error) return <ErrorText />;
 
   return (
-    <StyledCommentArea isCommenting={isCommenting}>
+    <StyledCommentArea
+      isModalComment={isModalComment}
+      isCommenting={!isModalComment ? isCommenting : (isCommenting = false)}
+    >
       <textarea
         disabled={isLoadingComment}
         ref={textareaRef}
@@ -136,13 +167,20 @@ function InputComment({ textareaRef, postId }) {
         onChange={handleInputChange}
         rows={1}
         onKeyDown={handleKeyPress}
+        className="scrollButtonDisappear"
       />
       {isCommenting && <Button onClick={handlePostComment}>Post</Button>}
+      {isModalComment && (
+        <Button onClick={handlePostComment} isTyping={isTyping}>
+          Post
+        </Button>
+      )}
       <HiOutlineEmojiHappy onClick={toggleEmojiPicker} />
       {isEmojiPickerVisible && (
         <MemoizedEmoji
           emojiRef={emojiRef}
           handleEmojiSelect={handleEmojiSelect}
+          isModalEmojiPicker={isModalComment}
         />
       )}
     </StyledCommentArea>

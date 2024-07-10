@@ -1,8 +1,9 @@
-import styled, { css } from "styled-components";
-import Comments from "./Comments.jsx";
+import styled from "styled-components";
+import Comments from "./CommentsModal.jsx";
 import InputComment from "../../ui/InputComment.jsx";
-import { titleFix } from "../../utils/helpers.js";
 import { useRef } from "react";
+import Likes from "./Likes.jsx";
+import Title from "./Title.jsx";
 
 const StyledPostInfo = styled.div`
   display: grid;
@@ -10,14 +11,14 @@ const StyledPostInfo = styled.div`
   row-gap: 0.7rem;
 `;
 
-function PostInfo({ likes, text, id }) {
+function PostInfo({ likes, text = "", id }) {
   const textareaRef = useRef(null);
 
   return (
     <StyledPostInfo>
-      <span>{likes} likes</span>
-      <p>{titleFix(text)}</p>
-      <Comments postId={id} textareaRef={textareaRef} />
+      <Likes likes={likes} />
+      <Title text={text} />
+      <Comments postIdComment={id} textareaRef={textareaRef} />
       <InputComment postId={id} textareaRef={textareaRef} />
     </StyledPostInfo>
   );

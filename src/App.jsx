@@ -19,6 +19,7 @@ import { Toaster } from "react-hot-toast";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Modal from "./ui/Modal.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,29 +36,32 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
         <BrowserRouter>
-          <GlobalStyles />
-          <Suspense fallback={<SpinnerFullPage />}>
-            <Routes>
-              <Route
-                element={
-                  <ProtectedRoute>
-                    <AppLayout />
-                  </ProtectedRoute>
-                }
-              >
-                <Route path="/" index element={<Home />} />
-                <Route path="search" element={<Search />} />
-                <Route path="explore" element={<Explore />} />
-                <Route path="reels" element={<Reels />} />
-                <Route path="messages" element={<Messages />} />
-                <Route path="create" element={<Create />} />
-                <Route path="profile/:user" element={<Profile />} />
-                <Route path="*" element={<PageNotFound />} />
-              </Route>
-              <Route path="register" element={<Register />} />
-              <Route path="login" element={<Login />} />
-            </Routes>
-          </Suspense>
+          <Modal>
+            <GlobalStyles />
+            <Suspense fallback={<SpinnerFullPage />}>
+              <Routes>
+                <Route
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout />
+                    </ProtectedRoute>
+                  }
+                >
+                  <Route path="/" index element={<Home />} />
+                  <Route path="/:postId" element={<Home />} />
+                  <Route path="search" element={<Search />} />
+                  <Route path="explore" element={<Explore />} />
+                  <Route path="reels" element={<Reels />} />
+                  <Route path="messages" element={<Messages />} />
+                  <Route path="create" element={<Create />} />
+                  <Route path="profile/:user" element={<Profile />} />
+                  <Route path="*" element={<PageNotFound />} />
+                </Route>
+                <Route path="register" element={<Register />} />
+                <Route path="login" element={<Login />} />
+              </Routes>
+            </Suspense>
+          </Modal>
         </BrowserRouter>
         <Toaster
           position="top-center"

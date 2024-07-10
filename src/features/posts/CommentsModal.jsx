@@ -4,30 +4,35 @@ import Modal from "../../ui/Modal.jsx";
 import ModalPost from "../../ui/ModalPost.jsx";
 import ErrorText from "../../ui/ErrorText.jsx";
 import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
+import { NavLink, useParams } from "react-router-dom";
 
 const StyledComments = styled.div``;
 
 const Text = styled.p`
-  font-size: var(--font-size-small);
-  color: var(--color-gray-text);
+  & NavLink {
+    font-size: var(--font-size-small);
+    color: var(--color-gray-text);
 
-  ${(props) =>
-    props.isComments &&
-    css`
-      cursor: pointer;
+    ${(props) =>
+      props.isComments &&
+      css`
+        cursor: pointer;
 
-      &:active {
-        color: var(--color-gray-active);
-      }
-    `}
+        &:active {
+          color: var(--color-gray-active);
+        }
+      `}
+  }
 `;
 
-function Comments({ postId, textareaRef }) {
+function CommentsModal({ postIdComment, textareaRef }) {
+  let { postId } = useParams();
+
   const {
     comments = {},
     error,
     isLoading: loadingComments,
-  } = useComments(postId);
+  } = useComments(postIdComment);
   const { data: commentsData = [] } = comments;
 
   const isComments = commentsData.length;
@@ -42,13 +47,17 @@ function Comments({ postId, textareaRef }) {
 
   return (
     <StyledComments>
-      {isComments ? (
+      {!postId && isComments ? (
         <Modal>
           <Modal.Open opens="comments">
-            <Text isComments={isComments}>View all {isComments} comments</Text>
+            <Text isComments={isComments}>
+              <NavLink to={`/${postIdComment}`}>
+                View all {isComments} comments
+              </NavLink>
+            </Text>
           </Modal.Open>
           <Modal.Window name="comments">
-            <ModalPost commentsData={commentsData} postId={postId} />
+            <ModalPost />
           </Modal.Window>
         </Modal>
       ) : (
@@ -64,4 +73,4 @@ function Comments({ postId, textareaRef }) {
   );
 }
 
-export default Comments;
+export default CommentsModal;
