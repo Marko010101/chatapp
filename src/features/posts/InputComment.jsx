@@ -49,20 +49,13 @@ const StyledCommentArea = styled.div`
   }
 
   & svg {
-    color: var(--color-gray-0);
     ${(props) =>
       props.isModalComment &&
       css`
+        color: var(--color-gray-0);
         font-size: 2.5rem;
         grid-column: 1/2;
         grid-row: 1/-1;
-
-        &:hover {
-          color: var(--color-neutral-400);
-        }
-        &:active {
-          color: var(--color-neutral-600);
-        }
       `}
   }
 
@@ -137,7 +130,11 @@ function InputComment({ textareaRef, postId, isModalComment }) {
       postId,
     };
 
-    mutate(payload);
+    mutate(payload, {
+      onSuccess: (newComment) => {
+        setComment("");
+      },
+    });
   };
 
   const handleKeyPress = (event) => {

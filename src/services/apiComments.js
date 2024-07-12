@@ -65,3 +65,21 @@ export async function getCommentsByUser({ id }) {
 
   return result;
 }
+export async function deleteComment({ id }) {
+  const response = await fetch(`${DUMMY_API}user/${id}/comment`, {
+    headers: {
+      "app-id": APP_ID,
+    },
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `Comments could not be searched, status: ${response.status}`
+    );
+  }
+
+  const result = await response.json();
+
+  return result;
+}

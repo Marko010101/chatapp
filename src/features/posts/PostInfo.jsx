@@ -23,7 +23,7 @@ function PostInfo({ post }) {
       <Likes likes={likes} />
       <Title text={text} />
       <Comments postIdComment={id} textareaRef={textareaRef} />
-      <InputComment id={id} textareaRef={textareaRef} />
+      <InputComment textareaRef={textareaRef} postId={id} />
     </StyledPostInfo>
   );
 }
