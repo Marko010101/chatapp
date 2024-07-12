@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { matchFirebaseAndDummyUsers } from "../../services/apiAuthFirebase.js";
-import { useUserFirebase } from "./useUserFirebase.js";
+import { matchFirebaseAndDummyUsers } from "../../../services/apiAuthFirebase.js";
+import { useUserFirebase } from "../hooks/useUserFirebase.js";
 import { useUsers } from "./useUsers.js";
 
 export function useCurrentDummyUser() {

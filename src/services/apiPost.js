@@ -61,3 +61,22 @@ export async function getPostById(id) {
 
   return result;
 }
+
+export async function updatePost(id, updatedPostData) {
+  const response = await fetch(`${DUMMY_API}post/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      "app-id": APP_ID,
+    },
+    method: "PUT",
+    body: JSON.stringify(updatedPostData),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Could not update post, status: ${response.status}`);
+  }
+
+  const result = await response.json();
+
+  return result;
+}

@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import SpinnerFullPage from "../ui/loaders/SpinnerFullPage.jsx";
-import { usePosts } from "../features/posts/usePosts.js";
 import Post from "../features/posts/Post.jsx";
 import Empty from "../ui/Empty.jsx";
 import { useParams } from "react-router-dom";
-import ModalPost from "../ui/ModalPost.jsx";
+import ModalPost from "../features/posts/ModalPost.jsx";
 import Modal, { ModalContext } from "../ui/Modal.jsx";
 import { useEffect } from "react";
 import { useContext } from "react";
 import ErrorText from "../ui/ErrorText.jsx";
+import { usePosts } from "../features/posts/hooks/usePosts.js";
 
 const StyledPosts = styled.main`
   width: 46rem;

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getUserById } from "../../services/apiDummyUser.js";
+import { getUserById } from "../../../services/apiDummyUser.js";
 
 export const useUserById = (userId) => {
   const isValidId = userId != undefined;

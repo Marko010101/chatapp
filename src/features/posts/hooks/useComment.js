@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getComments } from "../../services/apiComments.js";
+import { getComments } from "../../../services/apiComments.js";
 
 export function useComments(postId) {
   const {

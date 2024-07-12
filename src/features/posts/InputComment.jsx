@@ -1,13 +1,14 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
-import Button from "./Buttons/Button.jsx";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
-import { useOutsideClick } from "../hooks/useOutsideClick.js";
-import MemoizedEmoji from "./MemoizedEmoji.jsx";
-import SpinnerFullPage from "./loaders/SpinnerFullPage.jsx";
-import { useCurrentDummyUser } from "../features/users/useCurrentDummyUser.js";
-import useCreateComment from "../features/posts/useCreateComment.js";
-import ErrorText from "./ErrorText.jsx";
+
+import Button from "../../ui/Buttons/Button.jsx";
+import { useOutsideClick } from "../../hooks/useOutsideClick.js";
+import MemoizedEmoji from "../../ui/MemoizedEmoji.jsx";
+import SpinnerFullPage from "../../ui/loaders/SpinnerFullPage.jsx";
+import { useCurrentDummyUser } from "../users/hooks/useCurrentDummyUser.js";
+import useCreateComment from "./hooks/useCreateComment.js";
+import ErrorText from "../../ui/ErrorText.jsx";
 
 const StyledCommentArea = styled.div`
   position: relative;
@@ -18,7 +19,7 @@ const StyledCommentArea = styled.div`
   min-height: 5rem;
 
   ${(props) =>
-    props.isCommenting
+    !props.isModalComment && props.isCommenting
       ? css`
           grid-template-columns: 1fr 5rem 2rem;
         `
@@ -157,7 +158,7 @@ function InputComment({ textareaRef, postId, isModalComment }) {
   return (
     <StyledCommentArea
       isModalComment={isModalComment}
-      isCommenting={!isModalComment ? isCommenting : (isCommenting = false)}
+      isCommenting={isCommenting}
     >
       <textarea
         disabled={isLoadingComment}
@@ -169,11 +170,18 @@ function InputComment({ textareaRef, postId, isModalComment }) {
         onKeyDown={handleKeyPress}
         className="scrollButtonDisappear"
       />
-      {isCommenting && <Button onClick={handlePostComment}>Post</Button>}
-      {isModalComment && (
-        <Button onClick={handlePostComment} isTyping={isTyping}>
-          Post
-        </Button>
+      {isCommenting ? (
+        <Button onClick={handlePostComment}>Post</Button>
+      ) : (
+        isModalComment && (
+          <Button
+            onClick={handlePostComment}
+            isCommenting={isCommenting}
+            isModalComment={isModalComment}
+          >
+            Post
+          </Button>
+        )
       )}
       <HiOutlineEmojiHappy onClick={toggleEmojiPicker} />
       {isEmojiPickerVisible && (

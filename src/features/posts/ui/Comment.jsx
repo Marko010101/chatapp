@@ -1,7 +1,7 @@
 import CommentSectionModal from "./CommentSectionModal.jsx";
-import { useUserById } from "./useUserById.js";
-import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
-import ErrorText from "../../ui/ErrorText.jsx";
+import { useUserById } from "../hooks/useUserById.js";
+import SpinnerMini from "../../../ui/loaders/SpinnerMini.jsx";
+import ErrorText from "../../../ui/ErrorText.jsx";
 
 function Comment({ comment }) {
   const { message, owner, publishDate } = comment;
@@ -11,9 +11,6 @@ function Comment({ comment }) {
     lastName,
     picture: ownerPicture,
   } = commentOwner; /* This have more parts */
-
-  console.log(isLoading);
-  console.log(owner);
 
   if (!owner)
     return <ErrorText>Comment could not load due to an API error.</ErrorText>;
@@ -26,6 +23,7 @@ function Comment({ comment }) {
       firstName={firstName}
       lastName={lastName}
       text={message}
+      date={publishDate}
     />
   );
 }

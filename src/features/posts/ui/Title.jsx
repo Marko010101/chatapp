@@ -1,4 +1,4 @@
-import { titleFix } from "../../utils/helpers.js";
+import { titleFix } from "../../../utils/helpers.js";
 
 function Title({ text }) {
   return <span>{titleFix(text)}</span>;

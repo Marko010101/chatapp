@@ -1,10 +1,11 @@
 import styled, { css } from "styled-components";
-import { useComments } from "./useComment.js";
+import { NavLink, useParams } from "react-router-dom";
+
+import { useComments } from "../posts/hooks/useComment.js";
 import Modal from "../../ui/Modal.jsx";
-import ModalPost from "../../ui/ModalPost.jsx";
+import ModalPost from "./ModalPost.jsx";
 import ErrorText from "../../ui/ErrorText.jsx";
 import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
-import { NavLink, useParams } from "react-router-dom";
 
 const StyledComments = styled.div``;
 

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { logOutUser } from "../../services/apiAuthFirebase.js";
+import { logOutUser } from "../../../services/apiAuthFirebase.js";
 import toast from "react-hot-toast";
 
 export function useLogout() {

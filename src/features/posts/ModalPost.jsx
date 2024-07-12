@@ -1,25 +1,22 @@
 import styled from "styled-components";
-import { FaRegComment } from "react-icons/fa";
-import { IoMdHeartEmpty } from "react-icons/io";
-import { IoIosSend } from "react-icons/io";
 import { useRef } from "react";
+import { useParams } from "react-router-dom";
 
-import Comment from "../features/posts/Comment.jsx";
-import { useModalPostById } from "../features/posts/useModalPostById.js";
-import SpinnerFullPage from "./loaders/SpinnerFullPage.jsx";
-import OwnerImage from "../features/posts/OwnerImage.jsx";
-import Heading from "./Heading.jsx";
-import ActionButtonDots from "./ActionButtonDots.jsx";
-import { fixedSizeFullName } from "../utils/helpers.js";
-import CommentSectionModal from "../features/posts/CommentSectionModal.jsx";
+import Comment from "./ui/Comment.jsx";
+import { useModalPostById } from "./hooks/useModalPostById.js";
+import SpinnerFullPage from "../../ui/loaders/SpinnerFullPage.jsx";
+import OwnerImage from "./ui/OwnerImage.jsx";
+import Heading from "../../ui/Heading.jsx";
+import ActionButtonDots from "./ui/ActionButtonDots.jsx";
+import { fixedSizeFullName } from "../../utils/helpers.js";
+import CommentSectionModal from "./ui/CommentSectionModal.jsx";
 import InputComment from "./InputComment.jsx";
-import Likes from "../features/posts/Likes.jsx";
-import PostFormatedDate from "../features/posts/PostFormatedDate.jsx";
-import EmojiAction from "../features/posts/EmojiAction.jsx";
-import ErrorText from "./ErrorText.jsx";
-import { useNavigate, useParams } from "react-router-dom";
-import { useComments } from "../features/posts/useComment.js";
-import SpinnerMini from "./loaders/SpinnerMini.jsx";
+import Likes from "./ui/Likes.jsx";
+import PostFormatedDate from "./ui/PostFormatedDate.jsx";
+import ErrorText from "../../ui/ErrorText.jsx";
+import { useComments } from "./hooks/useComment.js";
+import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
+import ActionIcons from "./ui/ActionIcons.jsx";
 
 const StyledModal = styled.main`
   display: grid;
@@ -44,7 +41,7 @@ const PostImage = styled.div`
 
 const PostBody = styled.article`
   display: grid;
-  grid-template-rows: 5rem 1fr 10rem max-content;
+  grid-template-rows: 5rem 1fr 9rem max-content;
   height: 90vh;
 `;
 
@@ -80,29 +77,7 @@ const StyledReactionsPart = styled.div`
 
   display: grid;
   grid-template-rows: 4rem 1.7rem 1rem;
-  padding: 1rem;
-`;
-
-const Icons = styled.section`
-  display: flex;
-  justify-content: space-between;
-
-  & div {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-  }
-
-  & svg {
-    cursor: pointer;
-
-    &:hover {
-      color: var(--color-neutral-400);
-    }
-    &:active {
-      color: var(--color-neutral-600);
-    }
-  }
+  padding: 0rem 1rem;
 `;
 
 function ModalPost() {
@@ -114,9 +89,6 @@ function ModalPost() {
     isLoading: loadingComments,
   } = useComments(postId);
   const { data: commentsData = [] } = comments;
-
-  console.log(loadingComments);
-
   const { post, isLoading, error } = useModalPostById(postId);
 
   const { image, likes, link, owner = {}, publishDate, tags, text } = post;
@@ -130,10 +102,6 @@ function ModalPost() {
   if (isLoading) return <SpinnerFullPage />;
   if (error || commentsError)
     return <ErrorText>{error || commentsError}</ErrorText>;
-
-  const handleFocusTextarea = () => {
-    textareaRef.current.focus();
-  };
 
   return (
     <StyledModal>
@@ -162,6 +130,7 @@ function ModalPost() {
               firstName={firstName}
               lastName={lastName}
               text={text}
+              date={publishDate}
             />
             {sortedComments?.map((comment) => (
               <Comment key={comment.id} comment={comment} />
@@ -170,24 +139,7 @@ function ModalPost() {
         )}
 
         <StyledReactionsPart>
-          <Icons>
-            <div>
-              <span>
-                <EmojiAction emoji={<IoMdHeartEmpty size={28} />} />
-              </span>
-              <span>
-                <EmojiAction
-                  action={handleFocusTextarea}
-                  emoji={<FaRegComment size={24} />}
-                />
-              </span>
-            </div>
-            <div>
-              <span>
-                <EmojiAction emoji={<IoIosSend size={24} />} />
-              </span>
-            </div>
-          </Icons>
+          <ActionIcons textareaRef={textareaRef} post={post} postId={postId} />
           <Likes likes={likes} />
           <PostFormatedDate date={publishDate} isModalComment={true} />
         </StyledReactionsPart>

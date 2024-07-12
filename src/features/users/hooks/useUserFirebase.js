@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getCurrentFirebaseUser } from "../../services/apiAuthFirebase.js";
+import { getCurrentFirebaseUser } from "../../../services/apiAuthFirebase.js";
 
 export function useUserFirebase() {
   const { isLoading, data: user } = useQuery({

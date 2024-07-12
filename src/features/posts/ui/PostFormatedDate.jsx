@@ -1,15 +1,17 @@
 import styled, { css } from "styled-components";
-import { getFormattedDateInfo } from "../../utils/helpers.js";
+import { getFormattedDateInfo } from "../../../utils/helpers.js";
 import { Tooltip } from "react-tooltip";
 
 const StyledFormatedDate = styled.div`
   & a {
     font-size: var(--font-size-small);
     color: var(--color-gray-text);
+    letter-spacing: 0.2px;
+
     ${(props) =>
       props.isModalComment &&
       css`
-        font-size: var(--font-size-mini) !important;
+        font-size: var(--font-size-tiny) !important;
       `}
   }
 `;

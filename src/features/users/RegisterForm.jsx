@@ -6,8 +6,8 @@ import Input from "../../ui/Input.jsx";
 import Form from "../../ui/Form.jsx";
 import FancyButton from "../../ui/Buttons/FancyButton.jsx";
 import Button from "../../ui/Buttons/Button.jsx";
-import { useSignup } from "./useSignup.js";
-import { useFirebaseSignup } from "./useFirebaseSignup.js";
+import { useSignup } from "./hooks/useSignup.js";
+import { useFirebaseSignup } from "./hooks/useFirebaseSignup.js";
 
 function RegisterForm() {
   const {

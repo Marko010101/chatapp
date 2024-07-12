@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-import { useCurrentDummyUser } from "../features/users/useCurrentDummyUser.js";
+import { useCurrentDummyUser } from "../features/users/hooks/useCurrentDummyUser.js";
 import SpinnerFullPage from "../ui/loaders/SpinnerFullPage.jsx";
 import Heading from "../ui/Heading.jsx";
 import ButtonNeutral from "../ui/Buttons/ButtonNeutral.jsx";
 import ErrorFallback from "../ui/ErrorFallback.jsx";
 import { useMoveBack } from "../hooks/useMoveBack.js";
 import Row from "../ui/Row.jsx";
-import { useUserPosts } from "../features/posts/useUsersPosts.js";
+import { useUserPosts } from "../features/posts/hooks/useUsersPosts.js";
 
 const StyledProfile = styled.main`
   display: grid;

@@ -2,7 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import SpinnerFullPage from "./loaders/SpinnerFullPage.jsx";
 import styled from "styled-components";
-import { useUserFirebase } from "../features/users/useUserFirebase.js";
+// import { useUserFirebase } from "../features/users/useUserFirebase.js";
+import { useUserFirebase } from "../features/users/./hooks/useUserFirebase.js";
 
 const FullPage = styled.div`
   height: 100vh;

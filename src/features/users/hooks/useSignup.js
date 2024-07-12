@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { createUser } from "../../services/apiDummyUser.js";
+import { createUser } from "../../../services/apiDummyUser.js";
 
 export function useSignup() {
   const { mutate: signupOnDummy, isLoading } = useMutation({

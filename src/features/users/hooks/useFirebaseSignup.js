@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { registerUser } from "../../services/apiAuthFirebase.js";
+import { registerUser } from "../../../services/apiAuthFirebase.js";
 
 export const useFirebaseSignup = () => {
   return useMutation(registerUser, {

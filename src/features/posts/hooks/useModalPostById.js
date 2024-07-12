@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getPostById } from "../../services/apiPost.js";
+import { getPostById } from "../../../services/apiPost.js";
 
 export function useModalPostById(id) {
   const isValidId = id != undefined;

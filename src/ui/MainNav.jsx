@@ -14,11 +14,8 @@ import { CgProfile } from "react-icons/cg";
 import { RiAddCircleLine, RiAddCircleFill } from "react-icons/ri";
 import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
 import { BiLogOut } from "react-icons/bi";
-import { useLogout } from "../features/users/useLogout.js";
-import { useCurrentDummyUser } from "../features/users/useCurrentDummyUser.js";
-import SpinnerMini from "./loaders/SpinnerMini.jsx";
-
-// import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
+import { useLogout } from "../features/users/hooks/useLogout.js";
+import { useCurrentDummyUser } from "../features/users/hooks/useCurrentDummyUser.js";
 
 const StyledNav = styled.nav`
   display: flex;

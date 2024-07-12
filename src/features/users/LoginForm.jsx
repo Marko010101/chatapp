@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../ui/Buttons/Button.jsx";
 import Form from "../../ui/Form";
 import Input from "../../ui/Input";
-import { useLogin } from "./useLogin.js";
+import { useLogin } from "./hooks/useLogin.js";
 import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
 import FormRowVertical from "../../ui/FormRowVertical.jsx";
 import Row from "../../ui/Row.jsx";

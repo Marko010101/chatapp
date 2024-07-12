@@ -8,9 +8,10 @@ const StyledButton = styled.button`
   cursor: pointer;
 
   ${(props) =>
-    !props.isTyping &&
+    !props.isCommenting &&
+    props.isModalComment &&
     css`
-      pointer-events: none;
+      /* pointer-events: none; */
       color: var(--text-cyan-800);
     `}
 

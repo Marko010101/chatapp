@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 import Heading from "../../ui/Heading.jsx";
 import PostInfo from "./PostInfo.jsx";
-import OwnerImage from "./OwnerImage.jsx";
-import PostFormatedDate from "./PostFormatedDate.jsx";
-import ActionButtonDots from "../../ui/ActionButtonDots.jsx";
+import OwnerImage from "./ui/OwnerImage.jsx";
+import PostFormatedDate from "./ui/PostFormatedDate.jsx";
+import ActionButtonDots from "./ui/ActionButtonDots.jsx";
 import { fixedSizeFullName } from "../../utils/helpers.js";
 
 const StyledPost = styled.ul`
@@ -75,7 +75,7 @@ function Post({ post }) {
         <PostImg>
           <img src={image} alt="Post image" />
         </PostImg>
-        <PostInfo likes={likes} text={text} id={id} />
+        <PostInfo post={post} />
       </PostContainer>
     </StyledPost>
   );
