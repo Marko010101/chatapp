@@ -33,8 +33,6 @@ export function useUpdatePost() {
             ...data,
           });
         }
-
-        toast.success("Post updated successfully");
       },
       onError: (error) => {
         toast.error(`Failed to update post: ${error.message}`);

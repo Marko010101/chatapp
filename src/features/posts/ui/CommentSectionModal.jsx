@@ -27,7 +27,7 @@ const StyledCommentSection = styled.section`
       }
     }
     & > *:last-child {
-      grid-column: 2 / 3; /* Span from column 2 to 3 */
+      grid-column: 2 / 3;
       align-self: center;
       line-height: 1.4rem;
     }

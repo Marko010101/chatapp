@@ -96,7 +96,6 @@ function InputComment({ textareaRef, postId, isModalComment }) {
   const emojiRef = useOutsideClick(() => setEmojiPickerVisible(false), false);
 
   let isCommenting = comment.length > 0;
-  let isTyping = comment.length > 0;
 
   const handleInputChange = (event) => {
     setComment(event.target.value);
@@ -138,11 +137,7 @@ function InputComment({ textareaRef, postId, isModalComment }) {
       postId,
     };
 
-    mutate(payload, {
-      onSuccess: (newComment) => {
-        setComment("");
-      },
-    });
+    mutate(payload);
   };
 
   const handleKeyPress = (event) => {
