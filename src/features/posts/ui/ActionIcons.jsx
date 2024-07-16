@@ -66,6 +66,7 @@ function ActionIcons({ textareaRef, postId, post }) {
   const { likedPosts, toggleLike } = useLike();
 
   const handleToggleLike = () => {
+    if (isLoading) return;
     const updatedLikes = likedPosts[post.id] ? post.likes - 1 : post.likes + 1;
     const updatedPostData = { ...post, likes: updatedLikes };
 
@@ -98,20 +99,16 @@ function ActionIcons({ textareaRef, postId, post }) {
     <StyledIcons>
       <div>
         <span>
-          {isLoading ? (
-            <SpinnerMini />
-          ) : (
-            <EmojiAction
-              action={handleToggleLike}
-              emoji={
-                likedPosts[post.id] ? (
-                  <LikedHeart size={28} />
-                ) : (
-                  <IoMdHeartEmpty size={28} />
-                )
-              }
-            />
-          )}
+          <EmojiAction
+            action={handleToggleLike}
+            emoji={
+              likedPosts[post.id] ? (
+                <LikedHeart size={28} />
+              ) : (
+                <IoMdHeartEmpty size={28} />
+              )
+            }
+          />
         </span>
         <span>
           <EmojiAction

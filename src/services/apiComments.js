@@ -20,14 +20,11 @@ export async function getComments({ postId }) {
 }
 
 export async function createComment(comment, ownerId, postId) {
-  console.log(comment);
   const payload = {
     message: comment,
     owner: ownerId.id,
     post: postId,
   };
-
-  console.log("Payload being sent:", payload);
 
   const response = await fetch(`${DUMMY_API}comment/create`, {
     method: "POST",
@@ -65,8 +62,9 @@ export async function getCommentsByUser({ id }) {
 
   return result;
 }
-export async function deleteComment({ id }) {
-  const response = await fetch(`${DUMMY_API}user/${id}/comment`, {
+
+export async function deleteCommentById(id) {
+  const response = await fetch(`${DUMMY_API}comment/${id}`, {
     headers: {
       "app-id": APP_ID,
     },
@@ -75,7 +73,7 @@ export async function deleteComment({ id }) {
 
   if (!response.ok) {
     throw new Error(
-      `Comments could not be searched, status: ${response.status}`
+      `Comments could not be deleted, status: ${response.status}`
     );
   }
 

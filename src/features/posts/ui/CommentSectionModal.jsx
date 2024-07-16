@@ -1,9 +1,12 @@
 import styled from "styled-components";
+import { TiDeleteOutline } from "react-icons/ti";
+
 import Heading from "../../../ui/Heading.jsx";
 import { fixedSizeFullName } from "../../../utils/helpers.js";
 import OwnerImage from "./OwnerImage.jsx";
 import Title from "./Title.jsx";
 import PostFormatedDate from "./PostFormatedDate.jsx";
+import { useCurrentDummyUser } from "../../users/hooks/useCurrentDummyUser.js";
 
 const StyledCommentSection = styled.section`
   display: flex;
@@ -40,7 +43,10 @@ function CommentSectionModal({
   lastName,
   text,
   date,
+  onDeleteComment,
+  owner,
 }) {
+  const { currentUserById } = useCurrentDummyUser();
   return (
     <StyledCommentSection>
       <article>
@@ -49,6 +55,10 @@ function CommentSectionModal({
           {fixedSizeFullName(firstName, lastName, 30)} <Title text={text} />
         </Heading>
         <PostFormatedDate date={date} isModalComment={true} />
+
+        {currentUserById?.id === owner && (
+          <TiDeleteOutline onClick={onDeleteComment} />
+        )}
       </article>
     </StyledCommentSection>
   );
