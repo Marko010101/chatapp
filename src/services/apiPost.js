@@ -2,7 +2,7 @@ import { APP_ID } from "../constants/APP_ID.js";
 import { DUMMY_API } from "../constants/DUMMY_API.js";
 
 const totalPages = 87;
-const postsPerPage = 10;
+const postsPerPage = 5;
 
 const RandomPageNumber = Math.floor(Math.random() * totalPages) + 1;
 // Total posts are 873

@@ -24,12 +24,15 @@ export async function createUser(firstName, lastName, email) {
   return result;
 }
 
-const LIMIT = 50;
-const PAGE = 2;
+const LIMIT = 8;
+const PAGE = 1;
 
-export async function getUsers() {
-  // const response = await fetch(`${DUMMY_API}user?page=${PAGE}&limit=${LIMIT}`, {
-  const response = await fetch(`${DUMMY_API}user?created=1`, {
+export async function getUsers(realUsers = false) {
+  const url = realUsers
+    ? `${DUMMY_API}user?created=1`
+    : `${DUMMY_API}user?page=${PAGE}&limit=${LIMIT}`;
+
+  const response = await fetch(url, {
     headers: {
       "app-id": APP_ID,
     },
@@ -55,22 +58,19 @@ export async function getUserById(id) {
   }
 
   const result = await response.json();
-
   return result;
 }
 
-export async function updateUser(id, changes) {
-  const { email, ...allowedChanges } = changes; // Exclude email from changes if present
-
-  const body = JSON.stringify(allowedChanges); // Convert allowed changes to JSON
+export async function updateUser({ id, changes = {} }) {
+  const { email, ...allowedChanges } = changes;
+  const body = JSON.stringify(allowedChanges);
 
   try {
-    // Make the PUT request to update the user
     const response = await fetch(`${DUMMY_API}user/${id}`, {
       method: "PUT",
       headers: {
         "app-id": APP_ID,
-        "Content-Type": "application/json", // Ensure content type is JSON
+        "Content-Type": "application/json",
       },
       body: body,
     });
@@ -80,10 +80,10 @@ export async function updateUser(id, changes) {
     }
 
     const result = await response.json();
-    console.log(result);
     return result;
   } catch (error) {
     console.error("Update failed:", error);
+    throw error;
   }
 }
 

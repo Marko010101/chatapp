@@ -9,5 +9,5 @@ export function usePosts() {
 
   const posts = data ? data.data : [];
 
-  return { isLoading, posts, error };
+  return { posts, isLoading, error };
 }

@@ -60,7 +60,7 @@ export const fetchCurrentUsersCollectionUser = async (uid) => {
 export const matchFirebaseAndDummyUsers = async (userUid, dummyUsers) => {
   const currentUser = await fetchCurrentUsersCollectionUser(userUid);
 
-  const matchingUser = await dummyUsers?.data.find(
+  const matchingUser = await dummyUsers?.find(
     (user) => user.id === currentUser
   );
 
