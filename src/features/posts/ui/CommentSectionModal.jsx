@@ -50,7 +50,7 @@ function CommentSectionModal({
   return (
     <StyledCommentSection>
       <article>
-        <OwnerImage ownerPicture={ownerPicture} />
+        <OwnerImage ownerPicture={ownerPicture} haveBorder={true} />
         <Heading as="h5">
           {fixedSizeFullName(firstName, lastName, 30)} <Title text={text} />
         </Heading>

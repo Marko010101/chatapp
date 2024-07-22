@@ -111,7 +111,7 @@ function ModalPost() {
       <PostBody>
         <StyledOwner>
           <div>
-            <OwnerImage ownerPicture={ownerPicture} />
+            <OwnerImage ownerPicture={ownerPicture} haveBorder={true} />
             <Heading as="h5">
               {fixedSizeFullName(firstName, lastName, 40)}
             </Heading>

@@ -61,14 +61,18 @@ const GlobalStyles = createGlobalStyle`
 
   --backdrop-color: rgba(255, 255, 255, 0.1);
 
+  /* Text shadow */
+
+  --text-shadow: 1px 1px 1px var(--color-neutral-700);
+
   /* Font weights */
-  --font-weight-bold: 700;
-  --font-weight-extra-bold: 800;
   --font-weight-extra-light: 200;
   --font-weight-light: 300;
-  --font-weight-medium: 500;
   --font-weight-regular: 400;
+  --font-weight-medium: 500;
   --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
 
 
   --font-size-mini: 1rem;

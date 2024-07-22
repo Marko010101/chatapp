@@ -6,7 +6,7 @@ import { useDeleteComment } from "../hooks/useDeleteComment.js";
 
 function Comment({ comment }) {
   const { message, owner, publishDate, id, post: postId } = comment;
-  const { useById = {}, isLoading, error } = useUserById(owner?.id);
+  const { userById = {}, isLoading, error } = useUserById(owner?.id);
   const { deleteComment } = useDeleteComment(postId);
 
   const handleDeleteComment = () => {
@@ -17,7 +17,7 @@ function Comment({ comment }) {
     firstName,
     lastName,
     picture: ownerPicture,
-  } = useById; /* This have more parts */
+  } = userById; /* This have more parts */
 
   if (!owner)
     return <ErrorText>Comment could not load due to an API error.</ErrorText>;

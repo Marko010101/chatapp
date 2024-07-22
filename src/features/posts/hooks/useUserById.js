@@ -4,11 +4,11 @@ import { getUserById } from "../../../services/apiDummyUser.js";
 export const useUserById = (userId) => {
   const isValidId = userId != undefined;
   const {
-    data: commentOwner,
+    data: userById,
     isLoading,
     error,
   } = useQuery(["userPosts", userId], () => getUserById(userId), {
     enabled: isValidId,
   });
-  return { commentOwner, isLoading, error };
+  return { userById, isLoading, error };
 };

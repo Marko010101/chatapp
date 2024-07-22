@@ -54,14 +54,14 @@ export function getFormattedDateInfo(dateString) {
     relativeTime = `${diffInYears} year${diffInYears !== 1 ? "s" : ""} ago`;
   }
 
-  // Format the date as 21 July 2024
+  // Format the date
   const formattedDate = inputDate.toLocaleDateString("en-GB", {
     day: "2-digit",
     month: "long",
     year: "numeric",
   });
 
-  return { relativeTime, formattedDate };
+  return { relativeTime, formattedDate, diffInMonths };
 }
 
 export function titleFix(str) {
@@ -73,8 +73,15 @@ export function titleFix(str) {
   return str;
 }
 
-export function fixedSizeFullName(firstName, lastName, size = 15) {
-  const fullName = `${firstName} ${lastName}`;
+export function fixedSizeFullName(
+  firstName,
+  lastName,
+  size = 15,
+  useUnderscore = false
+) {
+  const fullName = useUnderscore
+    ? `${firstName}_${lastName}`
+    : `${firstName} ${lastName}`;
 
   if (fullName.length > size) {
     return fullName.slice(0, size) + "...";

@@ -9,21 +9,20 @@ import { useEffect } from "react";
 import { useContext } from "react";
 import ErrorText from "../ui/ErrorText.jsx";
 import { usePosts } from "../features/posts/hooks/usePosts.js";
-import { useCurrentDummyUser } from "../features/users/hooks/useCurrentDummyUser.js";
-import { useUserById } from "../features/users/hooks/useUserById.js";
 import UserSugestions from "../features/users/UserSugestions.jsx";
 
 const StyledPosts = styled.main`
+  margin-top: 2rem;
   width: 100%;
-  display: flex;
-  align-items: start;
-  justify-content: space-between;
-  gap: 15rem;
+  display: grid;
+  grid-template-columns: max-content 23rem;
 `;
 
 const SuggestedFriends = styled.section`
   display: flex;
   flex-direction: column;
+  margin-left: 19rem;
+  width: 29rem;
 `;
 
 function Home() {
@@ -70,11 +69,9 @@ function Home() {
           <Post post={post} key={post.id} />
         ))}
       </div>
-      <div>
-        <SuggestedFriends>
-          <UserSugestions />
-        </SuggestedFriends>
-      </div>
+      <SuggestedFriends>
+        <UserSugestions />
+      </SuggestedFriends>
     </StyledPosts>
   );
 }

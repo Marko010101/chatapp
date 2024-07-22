@@ -22,6 +22,7 @@ import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
 import Modal from "./ui/Modal.jsx";
 import Notifications from "./pages/Notifications.jsx";
+import AllPeople from "./pages/AllPeople.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -54,6 +55,7 @@ function App() {
                     <Route path="/:postId" element={<Home />} />
                     <Route path="search" element={<Search />} />
                     <Route path="explore" element={<Explore />} />
+                    <Route path="explore/people" element={<AllPeople />} />
                     <Route path="reels" element={<Reels />} />
                     <Route path="messages" element={<Messages />} />
                     <Route path="notifications" element={<Notifications />} />
