@@ -62,13 +62,6 @@ function Profile() {
       />
     );
 
-  /*   const openGmail = (email) => {
-    const gmailUrl =
-      "https://mail.google.com/mail/?view=cm&fs=1&to=" +
-      encodeURIComponent(email);
-    window.open(gmailUrl, "_blank");
-  }; */
-
   const { firstName, lastName, email, registerDate } = currentUserById;
   const userPostsAmount = currentUserPosts?.data.length;
   return (
@@ -99,9 +92,6 @@ function Profile() {
           <p>Registered: {new Date(registerDate).toLocaleDateString()}</p>
         </Row>
       </UserDetail>
-      {/* <EmailLink onClick={() => openGmail(email)}>
-        Message {firstName} on email: <span>{email}</span>
-      </EmailLink> */}
     </StyledProfile>
   );
 }
