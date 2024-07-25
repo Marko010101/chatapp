@@ -6,7 +6,7 @@ import FooterLink from "./FooterLink.jsx";
 const StyledFooter = styled.footer`
   padding: 3rem;
   display: grid;
-  grid-template-rows: repeat(3, 1.5rem);
+  grid-template-rows: repeat(3, max-content);
   row-gap: 1rem;
   text-transform: uppercase;
   font-size: var(--font-size-tiny);
