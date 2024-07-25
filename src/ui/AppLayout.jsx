@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Sidebar from "./Sidebar.jsx";
 import { Outlet } from "react-router-dom";
 import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
+import Footer from "./Footer.jsx";
 
 const StyledContainer = styled.div`
   position: inherit;
@@ -24,6 +25,7 @@ function AppLayout() {
       <Main>
         <Outlet />
       </Main>
+      <Footer />
     </StyledContainer>
   );
 }

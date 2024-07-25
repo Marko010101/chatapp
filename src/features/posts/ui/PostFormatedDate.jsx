@@ -16,7 +16,7 @@ const StyledFormatedDate = styled.div`
   }
 `;
 
-const StyledTooltip = styled(Tooltip)`
+export const StyledTooltip = styled(Tooltip)`
   font-size: var(--font-size-tiny) !important;
   padding: 1rem !important;
   border-radius: var(--border-radius-tiny) !important;

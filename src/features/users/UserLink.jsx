@@ -6,6 +6,9 @@ import {
 import Button from "../../ui/Buttons/Button.jsx";
 import { useUserById } from "./hooks/useUserById.js";
 import OwnerImage from "../posts/ui/OwnerImage.jsx";
+import useHover from "../../hooks/useHover.js";
+import UserProfileOnHover from "./UserProfileOnHover.jsx";
+import Row from "../../ui/Row.jsx";
 
 // Keyframes for the wave animation
 const waveAnimation = keyframes`
@@ -23,6 +26,13 @@ const StyledUser = styled.div`
   gap: 1.2rem;
   margin-top: 2rem;
   align-items: center;
+  position: relative;
+
+  ${(props) =>
+    props.suggestedPage &&
+    css`
+      width: 45rem;
+    `}
 
   /* Animation for loading */
   ${(props) =>
@@ -62,10 +72,10 @@ const StyledUser = styled.div`
       }
     `}
 
-  & div {
+  /* & div {
     display: flex;
     flex-direction: column;
-  }
+  } */
 
   & span {
     color: var(--color-neutral-400);
@@ -76,10 +86,16 @@ const StyledUser = styled.div`
 
   & button {
     font-size: var(--font-size-tiny);
+
+    ${(props) =>
+      props.suggestedPage &&
+      css`
+        font-size: var(--font-size-small);
+      `}
   }
 `;
 
-function UserLink({ user, currentUser, isLoadingDummyUsers }) {
+function UserLink({ user, currentUser, isLoadingDummyUsers, suggestedPage }) {
   const {
     firstName,
     id,
@@ -91,11 +107,11 @@ function UserLink({ user, currentUser, isLoadingDummyUsers }) {
     isLoading: isLoadingUserById,
     error,
   } = useUserById(id);
-  const { registerDate } = userById;
+  const { registerDate, location, email } = userById;
 
-  const { relativeTime, formattedDate, diffInMonths } =
-    getFormattedDateInfo(registerDate);
-  console.log(userById);
+  const { isHovered, handleMouseEnter, handleMouseLeave } = useHover();
+
+  const { diffInMonths } = getFormattedDateInfo(registerDate);
 
   if (isLoadingDummyUsers || isLoadingUserById) {
     return (
@@ -108,20 +124,30 @@ function UserLink({ user, currentUser, isLoadingDummyUsers }) {
   }
 
   return (
-    <StyledUser>
-      <OwnerImage ownerPicture={picture} />
-      <div>
-        <h5>{fixedSizeFullName(firstName, lastName, 30, true)}</h5>
-        {!currentUser ? (
-          <span>
-            {diffInMonths > 0.9 ? "Suggested for you" : "New to Petfolio"}
-          </span>
-        ) : (
-          <span>{fixedSizeFullName(firstName, lastName, 30)}</span>
-        )}
-      </div>
-      {!currentUser && <Button>message</Button>}
-    </StyledUser>
+    <>
+      <StyledUser suggestedPage={suggestedPage}>
+        <Row onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+          <OwnerImage ownerPicture={picture} />
+          {!currentUser && isHovered && <UserProfileOnHover user={userById} />}
+        </Row>
+        <Row>
+          <h5>{fixedSizeFullName(firstName, lastName, 30, true)}</h5>
+          {!currentUser ? (
+            <>
+              <span>
+                {diffInMonths > 0.9 ? "Suggested for you" : "New to Petfolio"}
+              </span>
+              {suggestedPage && (
+                <span>{location?.country ? location?.country : email}</span>
+              )}
+            </>
+          ) : (
+            <span>{fixedSizeFullName(firstName, lastName, 30)}</span>
+          )}
+        </Row>
+        {!currentUser && <Button>message</Button>}
+      </StyledUser>
+    </>
   );
 }
 

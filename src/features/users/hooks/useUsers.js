@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getUsers } from "../../../services/apiDummyUser.js";
 
-export function useUsers(realUsers = false) {
+export function useUsers(realUsers = false,) {
   const {
     data: dummyUsers = [],
     isLoading,

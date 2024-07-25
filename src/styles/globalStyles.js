@@ -4,8 +4,10 @@ const GlobalStyles = createGlobalStyle`
 :root {
 
   /* Sky */
+  --color-sky-200: rgb(224 242 254); 
   --color-sky-600: #0284c7; 
-  --text-blue-500: rgb(59 130 246);
+  --text-blue-500: #3b82f6;
+  --text-blue-600: #2F68C5;
 
 
   --text-cyan-800: #155E75;

@@ -32,8 +32,8 @@ const RecreatedBtn = styled(ButtonNeutral)`
 `;
 
 const EmailLink = styled.a`
-  font-weight: var(--font-weight-light) & span {
-
+  font-weight: var(--font-weight-light);
+  & span {
   }
 `;
 

@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import UserProfileOnHover from "../../users/UserProfileOnHover.jsx";
 
 const StyledOwnerImage = styled.div`
   display: flex;
