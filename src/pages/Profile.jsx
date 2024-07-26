@@ -44,6 +44,7 @@ function Profile() {
     isLoading,
     error: errorCurrentUser,
   } = useCurrentDummyUser();
+  console.log(currentUserById);
 
   const {
     currentUserPosts,
@@ -62,14 +63,14 @@ function Profile() {
       />
     );
 
-  const { firstName, lastName, email, registerDate } = currentUserById;
+  const { firstName, lastName, email, registerDate, picture } = currentUserById;
   const userPostsAmount = currentUserPosts?.data.length;
   return (
     <StyledProfile>
       <UserImage>
         <img
           className="image-user"
-          src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg"
+          src={picture}
           alt={`${firstName} ${lastName}`}
         />
       </UserImage>
