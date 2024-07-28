@@ -6,6 +6,11 @@ import OwnerImage from "./ui/OwnerImage.jsx";
 import PostFormatedDate from "./ui/PostFormatedDate.jsx";
 import ActionButtonDots from "./ui/ActionButtonDots.jsx";
 import { fixedSizeFullName } from "../../utils/helpers.js";
+import Row from "../../ui/Row.jsx";
+import useHover from "../../hooks/useHover.js";
+import { useUserById } from "../users/hooks/useUserById.js";
+import UserProfileOnHover from "../users/UserProfileOnHover.jsx";
+import ErrorText from "../../ui/ErrorText.jsx";
 
 const StyledPost = styled.ul``;
 
@@ -17,22 +22,17 @@ const PostContainer = styled.li`
 `;
 
 const HeaderPost = styled.header`
+  position: relative;
   display: grid;
   grid-template-columns: repeat(2, max-content) 1fr max-content;
   align-items: center;
   column-gap: 2rem;
 
-  & p {
+  & h4 {
+    cursor: pointer;
   }
 
-  & span {
-    width: 2.5rem;
-    height: 2.5rem;
-
-    & > svg {
-      width: 100%;
-      height: 100%;
-    }
+  & p {
   }
 `;
 const PostImg = styled.div`
@@ -50,19 +50,32 @@ const PostImg = styled.div`
 
 function Post({ post }) {
   const { image, owner, publishDate } = post;
-
+  const { isHovered, handleMouseEnter, handleMouseLeave } = useHover();
   const {
     firstName: ownerFirstName,
     lastName: ownerLastName,
     picture: ownerPicture,
+    id: ownerId,
   } = owner;
+
+  const { userById, isLoading, error } = useUserById(ownerId);
+
+  if (isLoading) return;
+  if (error) return <ErrorText>{error}</ErrorText>;
 
   return (
     <StyledPost>
       <PostContainer>
         <HeaderPost>
-          <OwnerImage ownerPicture={ownerPicture} haveBorder={true} />
-          <Heading as="h4">
+          <Row onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            <OwnerImage ownerPicture={ownerPicture} haveBorder={true} />
+            {isHovered && <UserProfileOnHover user={userById} />}
+          </Row>
+          <Heading
+            as="h4"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
             {fixedSizeFullName(ownerFirstName, ownerLastName, 25)}
           </Heading>
           <PostFormatedDate date={publishDate} />

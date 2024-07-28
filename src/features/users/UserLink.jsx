@@ -21,12 +21,12 @@ const waveAnimation = keyframes`
 `;
 
 const StyledUser = styled.div`
+  position: relative;
   display: grid;
   grid-template-columns: max-content 1fr 5rem;
   gap: 1.2rem;
   margin-top: 2rem;
   align-items: center;
-  position: relative;
 
   ${(props) =>
     props.suggestedPage &&
@@ -72,10 +72,6 @@ const StyledUser = styled.div`
       }
     `}
 
-  /* & div {
-    display: flex;
-    flex-direction: column;
-  } */
 
   & span {
     color: var(--color-neutral-400);
@@ -131,7 +127,9 @@ function UserLink({ user, currentUser, isLoadingDummyUsers, suggestedPage }) {
           {!currentUser && isHovered && <UserProfileOnHover user={userById} />}
         </Row>
         <Row>
-          <h5>{fixedSizeFullName(firstName, lastName, 30, true)}</h5>
+          <h5 onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            {fixedSizeFullName(firstName, lastName, 30, true)}
+          </h5>
           {!currentUser ? (
             <>
               <span>

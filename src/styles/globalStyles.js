@@ -267,6 +267,7 @@ img {
   object-fit: cover;
   object-position: center center;
   border-radius: 50%;
+  cursor:pointer;
 }
 
 .scrollButtonDisappear::-webkit-scrollbar {

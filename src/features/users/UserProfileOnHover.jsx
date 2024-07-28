@@ -3,6 +3,7 @@ import { calculateAge, fixedSizeFullName } from "../../utils/helpers.js";
 import { useUserPosts } from "../posts/hooks/useUsersPosts.js";
 import Row from "../../ui/Row.jsx";
 import OwnerImage from "../posts/ui/OwnerImage.jsx";
+import ErrorText from "../../ui/ErrorText.jsx";
 
 const StyledHoverPopup = styled.div`
   position: absolute;
@@ -20,6 +21,13 @@ const StyledHoverPopup = styled.div`
   display: grid;
   grid-template-rows: 6rem 1rem 11rem max-content;
   grid-row-gap: 1rem;
+
+  & span {
+    color: var(--color-neutral-400);
+    font-size: var(--font-size-tiny);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 0.1px;
+  }
 
   & button {
     width: 90%;
@@ -50,11 +58,12 @@ const StyledHeader = styled.div`
     height: auto;
   }
 `;
+
 const PersonalInfo = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  gap: 1rem;
+  justify-content: space-around;
+  /* gap: 1rem; */
 `;
 
 const StyledPosts = styled.div`
@@ -88,6 +97,7 @@ function UserProfileOnHover({ user }) {
   const { currentUserPosts, isLoading, error } = useUserPosts(id);
 
   if (isLoading) return;
+  if (error) return <ErrorText>{error}</ErrorText>;
 
   return (
     <StyledHoverPopup>

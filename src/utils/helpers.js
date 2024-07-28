@@ -76,15 +76,15 @@ export function titleFix(str) {
 export function fixedSizeFullName(
   firstName,
   lastName,
-  size = 15,
+  length,
   useUnderscore = false
 ) {
   const fullName = useUnderscore
     ? `${firstName}_${lastName}`
     : `${firstName} ${lastName}`;
 
-  if (fullName.length > size) {
-    return fullName.slice(0, size) + "...";
+  if (fullName.length > length) {
+    return fullName.slice(0, length) + "...";
   }
 
   return fullName;
