@@ -5,7 +5,8 @@ import { updateUser } from "../../../services/apiDummyUser.js";
 export function useUpdateUser() {
   const queryClient = useQueryClient();
 
-  return useMutation(updateUser, {
+  return useMutation({
+    mutationFn: updateUser,
     onSuccess: (data, variables) => {
       queryClient.invalidateQueries(["user", variables.id]);
       toast.success("User updated successfully!");

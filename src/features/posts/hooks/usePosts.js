@@ -1,13 +1,31 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { getPosts } from "../../../services/apiPost.js";
 
 export function usePosts() {
-  const { isLoading, data, error } = useQuery({
+  const {
+    data,
+    isLoading,
+    error,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
     queryKey: ["posts"],
     queryFn: getPosts,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPage) => {
+      console.log({ lastPage, allPage });
+      const nextPage = lastPage.data.length ? allPage.length + 1 : undefined;
+      return nextPage;
+    },
   });
 
-  const posts = data ? data.data : [];
-
-  return { posts, isLoading, error };
+  return {
+    data,
+    isLoading,
+    error,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  };
 }

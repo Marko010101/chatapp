@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useRef } from "react";
 import { useParams } from "react-router-dom";
 
@@ -9,7 +9,6 @@ import OwnerImage from "./ui/OwnerImage.jsx";
 import Heading from "../../ui/Heading.jsx";
 import ActionButtonDots from "./ui/ActionButtonDots.jsx";
 import { fixedSizeFullName } from "../../utils/helpers.js";
-import CommentSectionModal from "./ui/CommentSectionModal.jsx";
 import InputComment from "./InputComment.jsx";
 import Likes from "./ui/Likes.jsx";
 import PostFormatedDate from "./ui/PostFormatedDate.jsx";
@@ -17,6 +16,10 @@ import ErrorText from "../../ui/ErrorText.jsx";
 import { useComments } from "./hooks/useComment.js";
 import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
 import ActionIcons from "./ui/ActionIcons.jsx";
+import useHover from "../../hooks/useHover.js";
+import UserProfileOnHover from "../users/UserProfileOnHover.jsx";
+import Row from "../../ui/Row.jsx";
+import { useUserById } from "../users/hooks/useUserById.js";
 
 const StyledModal = styled.main`
   display: grid;
@@ -64,11 +67,12 @@ const StyledOwner = styled.header`
 const StyledCommentSection = styled.section`
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
   padding: 0 1.5rem;
   margin-top: 2rem;
   max-height: 50rem;
   overflow: auto;
+  ${(props) => (props.isHovered ? "visible" : "auto")}
 `;
 
 const StyledReactionsPart = styled.div`
@@ -80,29 +84,51 @@ const StyledReactionsPart = styled.div`
   padding: 0rem 1rem;
 `;
 
+const StyledRow = styled(Row)`
+  position: relative;
+`;
+
 function ModalPost() {
   let { postId } = useParams();
+
+  const {
+    isHovered: isImageHovered,
+    handleMouseEnter: handleImageMouseEnter,
+    handleMouseLeave: handleImageMouseLeave,
+  } = useHover();
+  const {
+    isHovered: isHeaderHovered,
+    handleMouseEnter: handleHeaderMouseEnter,
+    handleMouseLeave: handleHeaderMouseLeave,
+  } = useHover();
 
   const {
     comments = {},
     error: commentsError,
     isLoading: loadingComments,
   } = useComments(postId);
+
   const { data: commentsData = [] } = comments;
   const { post, isLoading, error } = useModalPostById(postId);
 
-  const { image, likes, link, owner = {}, publishDate, tags, text } = post;
-  const { firstName, lastName, id, picture: ownerPicture, title } = owner;
+  const {
+    userById,
+    isLoading: loadingUserById,
+    error: userByIdError,
+  } = useUserById(post?.owner?.id);
+
   const textareaRef = useRef(null);
 
   const sortedComments = commentsData?.sort(
     (a, b) => new Date(a.publishDate) - new Date(b.publishDate)
   );
 
-  if (isLoading) return <SpinnerFullPage />;
-  if (error || commentsError)
-    return <ErrorText>{error || commentsError}</ErrorText>;
+  if (isLoading || loadingUserById) return <SpinnerFullPage />;
+  if (error || commentsError || userByIdError)
+    return <ErrorText>{error || commentsError || userByIdError}</ErrorText>;
 
+  const { image, likes, link, owner = {}, publishDate, tags, text } = post;
+  const { firstName, lastName, id, picture: ownerPicture, title } = owner;
   return (
     <StyledModal>
       <PostImage>
@@ -111,10 +137,22 @@ function ModalPost() {
       <PostBody>
         <StyledOwner>
           <div>
-            <OwnerImage ownerPicture={ownerPicture} haveBorder={true} />
-            <Heading as="h5">
-              {fixedSizeFullName(firstName, lastName, 40)}
-            </Heading>
+            <StyledRow
+              onMouseEnter={handleImageMouseEnter}
+              onMouseLeave={handleImageMouseLeave}
+            >
+              <OwnerImage ownerPicture={ownerPicture} haveBorder={true} />
+              {isImageHovered && <UserProfileOnHover user={userById} />}
+            </StyledRow>
+            <StyledRow
+              onMouseEnter={handleHeaderMouseEnter}
+              onMouseLeave={handleHeaderMouseLeave}
+            >
+              <Heading as="h5">
+                {fixedSizeFullName(firstName, lastName, 40)}
+                {isHeaderHovered && <UserProfileOnHover user={userById} />}
+              </Heading>
+            </StyledRow>
           </div>
           <div>
             <ActionButtonDots />
@@ -124,14 +162,10 @@ function ModalPost() {
         {loadingComments ? (
           <SpinnerMini />
         ) : (
-          <StyledCommentSection className="scrollButtonDisappear">
-            <CommentSectionModal
-              ownerPicture={ownerPicture}
-              firstName={firstName}
-              lastName={lastName}
-              text={text}
-              date={publishDate}
-            />
+          <StyledCommentSection
+            className="scrollButtonDisappear"
+            isHovered={isImageHovered || isHeaderHovered}
+          >
             {sortedComments?.map((comment) => (
               <Comment key={comment.id} comment={comment} />
             ))}

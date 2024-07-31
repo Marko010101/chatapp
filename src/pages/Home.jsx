@@ -10,6 +10,9 @@ import { useContext } from "react";
 import ErrorText from "../ui/ErrorText.jsx";
 import { usePosts } from "../features/posts/hooks/usePosts.js";
 import UserSugestions from "../features/users/UserSugestions.jsx";
+import SpinnerGrayMini from "../ui/loaders/SpinnerGrayMini.jsx";
+import { useInView } from "react-intersection-observer";
+import Footer from "../ui/Footer.jsx";
 
 const StyledPosts = styled.main`
   margin-top: 2rem;
@@ -25,24 +28,24 @@ const SuggestedFriends = styled.section`
   width: 29rem;
 `;
 
+const CenteredSpinnerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+`;
+
 function Home() {
-  // UPDATE FUNCTIONALITY FOR USER
-  // const { mutate: updateUser } = useUpdateUser();
-
-  // const picture =
-  //   "https://media.gettyimages.com/id/170462856/photo/dog-working-comfortably-from-home.jpg?s=612x612&w=0&k=20&c=bkWU83XcvVdxQBvQmoqVNkM-zLZsGy4BZPWWQQqzMok=";
-
-  // const handleUpdate = () => {
-  //   if (currentUserById) {
-  //     updateUser({ id: currentUserById.id, changes: { picture } });
-  //   } else {
-  //     console.error("User ID is not available");
-  //   }
-  // };
-
-  const { isLoading, posts, error } = usePosts();
+  const {
+    data,
+    isLoading,
+    error,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  } = usePosts();
   let { postId } = useParams();
   const { open } = useContext(ModalContext);
+  const { ref, inView } = useInView();
 
   useEffect(() => {
     if (postId) {
@@ -50,9 +53,25 @@ function Home() {
     }
   }, [postId, open]);
 
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage, isFetchingNextPage]);
+
   if (isLoading) return <SpinnerFullPage />;
-  if (!posts.length) return <Empty resourceName="posts" />;
-  if (error) return <ErrorText>{error}</ErrorText>;
+  if (error) return (<ErrorText>{error.message}</ErrorText>)();
+  if (!data || data.pages.length === 0) return <Empty resourceName="posts" />;
+
+  const content = data.pages.map((page) =>
+    page.data.map((post, index) => {
+      if (page.data.length == index + 1) {
+        return <Post key={post.id} post={post} innerRef={ref} />;
+      } else {
+        return <Post key={post.id} post={post} />;
+      }
+    })
+  );
 
   return (
     <StyledPosts>
@@ -65,13 +84,15 @@ function Home() {
       )}
 
       <div>
-        {posts.map((post) => (
-          <Post post={post} key={post.id} />
-        ))}
+        {content}
+        <CenteredSpinnerWrapper>
+          {isFetchingNextPage && <SpinnerGrayMini />}
+        </CenteredSpinnerWrapper>
       </div>
       <SuggestedFriends>
         <UserSugestions />
       </SuggestedFriends>
+      <Footer />
     </StyledPosts>
   );
 }

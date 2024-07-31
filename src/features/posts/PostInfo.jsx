@@ -3,7 +3,7 @@ import Comments from "./CommentsModal.jsx";
 import InputComment from "./InputComment.jsx";
 import { useRef } from "react";
 import Likes from "./ui/Likes.jsx";
-import Title from "./ui/Title.jsx";
+import Title from "./ui/CommentText.jsx";
 import ActionIcons from "./ui/ActionIcons.jsx";
 
 const StyledPostInfo = styled.div`

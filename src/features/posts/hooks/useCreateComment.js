@@ -4,22 +4,24 @@ import { createComment } from "../../../services/apiComments.js";
 const useCreateComment = () => {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation(
-    async ({ comment, ownerId, postId }) => {
+  const mutation = useMutation({
+    mutationFn: async ({ comment, ownerId, postId }) => {
       const response = await createComment(comment, ownerId, postId);
       return response;
     },
-    {
-      onSuccess: (data, variables) => {
-        queryClient.invalidateQueries(["comments", variables.postId]);
-      },
-      onError: (error) => {
-        console.error("Error posting comment:", error);
-      },
-    }
-  );
+    onSuccess: (data, variables) => {
+      queryClient.invalidateQueries(["comments", variables.postId]);
+    },
+    onError: (error) => {
+      console.error("Error posting comment:", error);
+    },
+  });
 
-  return { mutate: mutation.mutate, isLoading: mutation.isLoading };
+  return {
+    mutate: mutation.mutate,
+    isLoading: mutation.isLoading,
+    error: mutation.error,
+  };
 };
 
 export default useCreateComment;

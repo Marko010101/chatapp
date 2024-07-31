@@ -5,46 +5,59 @@ import toast from "react-hot-toast";
 export function useUpdatePost() {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation(
-    ({ id, updatedPostData }) => updatePost(id, updatedPostData),
-    {
-      onSuccess: (data, variables) => {
-        const { id } = variables;
+  const mutation = useMutation({
+    mutationFn: ({ id, updatedPostData }) => updatePost(id, updatedPostData),
+    onMutate: async (variables) => {
+      const { id, updatedPostData } = variables;
 
-        const currentPosts = queryClient.getQueryData(["posts"]);
-        if (currentPosts && currentPosts.data) {
-          const postIndex = currentPosts.data.findIndex(
-            (post) => post.id === id
-          );
-          if (postIndex !== -1) {
-            const updatedPosts = [...currentPosts.data];
-            updatedPosts[postIndex] = { ...updatedPosts[postIndex], ...data };
-            queryClient.setQueryData(["posts"], {
-              ...currentPosts,
-              data: updatedPosts,
-            });
-          }
-        }
+      await queryClient.cancelQueries(["posts"]);
+      await queryClient.cancelQueries(["ModalPost", id]);
 
-        const currentModalPost = queryClient.getQueryData(["ModalPost", id]);
-        if (currentModalPost) {
-          queryClient.setQueryData(["ModalPost", id], {
-            ...currentModalPost,
-            ...data,
-          });
-        }
-      },
-      onError: (error) => {
-        toast.error(`Failed to update post: ${error.message}`);
-      },
-      onSettled: () => {
-        queryClient.invalidateQueries(["posts"]);
-        queryClient.invalidateQueries(["ModalPost"]);
-      },
-    }
-  );
+      const previousPosts = queryClient.getQueryData(["posts"]);
+      const previousModalPost = queryClient.getQueryData(["ModalPost", id]);
 
-  const { mutate, isLoading, error } = mutation;
+      queryClient.setQueryData(["posts"], (oldData) => {
+        if (!oldData) return oldData;
 
-  return { mutate, isLoading, error };
+        return {
+          ...oldData,
+          pages: oldData.pages.map((page) => ({
+            ...page,
+            data: page.data.map((post) =>
+              post.id === id ? { ...post, ...updatedPostData } : post
+            ),
+          })),
+        };
+      });
+
+      if (previousModalPost) {
+        queryClient.setQueryData(["ModalPost", id], {
+          ...previousModalPost,
+          ...updatedPostData,
+        });
+      }
+
+      return { previousPosts, previousModalPost };
+    },
+    onError: (error, variables, context) => {
+      toast.error(`Failed to update post: ${error.message}`);
+      queryClient.setQueryData(["posts"], context.previousPosts);
+      if (context.previousModalPost) {
+        queryClient.setQueryData(
+          ["ModalPost", variables.id],
+          context.previousModalPost
+        );
+      }
+    },
+    onSettled: (data, error, variables) => {
+      queryClient.invalidateQueries(["posts"]);
+      queryClient.invalidateQueries(["ModalPost", variables.id]);
+    },
+  });
+
+  return {
+    mutate: mutation.mutate,
+    isLoading: mutation.isLoading,
+    error: mutation.error,
+  };
 }

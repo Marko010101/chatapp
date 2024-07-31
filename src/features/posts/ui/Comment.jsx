@@ -32,7 +32,7 @@ function Comment({ comment }) {
       text={message}
       date={publishDate}
       onDeleteComment={handleDeleteComment}
-      owner={owner?.id}
+      owner={userById}
     />
   );
 }

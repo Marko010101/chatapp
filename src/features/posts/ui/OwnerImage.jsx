@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-
 const StyledOwnerImage = styled.div`
   display: flex;
   justify-content: center;

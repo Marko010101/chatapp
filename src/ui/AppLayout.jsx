@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Sidebar from "./Sidebar.jsx";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
 import Footer from "./Footer.jsx";
 
@@ -17,7 +17,9 @@ const StyledContainer = styled.div`
 const Main = styled.div``;
 
 function AppLayout() {
+  const location = useLocation();
   const { isShrunk } = useSidebarShrink();
+  const isHomePage = location.pathname === "/";
 
   return (
     <StyledContainer isShrunk={isShrunk}>
@@ -25,7 +27,7 @@ function AppLayout() {
       <Main>
         <Outlet />
       </Main>
-      <Footer />
+      {!isHomePage && <Footer />}
     </StyledContainer>
   );
 }

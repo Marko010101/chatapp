@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { calculateAge, fixedSizeFullName } from "../../utils/helpers.js";
 import { useUserPosts } from "../posts/hooks/useUsersPosts.js";
 import Row from "../../ui/Row.jsx";
@@ -7,8 +7,10 @@ import ErrorText from "../../ui/ErrorText.jsx";
 
 const StyledHoverPopup = styled.div`
   position: absolute;
-  top: 100%;
-  left: 35%;
+  top: 95%;
+
+  left: ${(props) => props.left || "18rem"};
+
   transform: translateX(-50%);
   width: 35rem;
   height: 27rem;
@@ -21,6 +23,14 @@ const StyledHoverPopup = styled.div`
   display: grid;
   grid-template-rows: 6rem 1rem 11rem max-content;
   grid-row-gap: 1rem;
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
 
   & span {
     color: var(--color-neutral-400);
@@ -52,6 +62,10 @@ const StyledHeader = styled.div`
   padding: 0 1.5rem;
   width: 100%;
 
+  & h4 {
+    cursor: pointer;
+  }
+
   & img {
     width: 6rem;
     scale: 1.25;
@@ -63,7 +77,6 @@ const PersonalInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  /* gap: 1rem; */
 `;
 
 const StyledPosts = styled.div`
@@ -78,7 +91,7 @@ const StyledPosts = styled.div`
   }
 `;
 
-function UserProfileOnHover({ user }) {
+function UserProfileOnHover({ user, left }) {
   const {
     dateOfBirth,
     email,
@@ -96,11 +109,11 @@ function UserProfileOnHover({ user }) {
 
   const { currentUserPosts, isLoading, error } = useUserPosts(id);
 
-  if (isLoading) return;
+  if (isLoading) return null;
   if (error) return <ErrorText>{error}</ErrorText>;
 
   return (
-    <StyledHoverPopup>
+    <StyledHoverPopup left={left}>
       <StyledHeader>
         <OwnerImage ownerPicture={picture} />
         <h4>

@@ -93,7 +93,7 @@ function ActionIcons({ textareaRef, postId, post }) {
       });
   };
 
-  if (error) return <ErrorText>{error}</ErrorText>;
+  if (error) return <ErrorText>{error.message}</ErrorText>;
 
   return (
     <StyledIcons>

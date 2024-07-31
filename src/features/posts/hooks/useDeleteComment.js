@@ -9,17 +9,15 @@ export function useDeleteComment(postId) {
     mutate: deleteComment,
     isLoading,
     error,
-  } = useMutation(
-    async (id) => {
+  } = useMutation({
+    mutationFn: async (id) => {
       await deleteCommentById(id);
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["comments", postId]);
-        toast.success("Comment successfully deleted!");
-      },
-    }
-  );
+    onSuccess: () => {
+      queryClient.invalidateQueries(["comments", postId]);
+      toast.success("Comment successfully deleted!");
+    },
+  });
 
   return { deleteComment, isLoading, error };
 }

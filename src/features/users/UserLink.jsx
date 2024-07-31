@@ -73,6 +73,11 @@ const StyledUser = styled.div`
     `}
 
 
+   & h5 {
+    position: relative;
+    cursor: pointer;
+  }
+
   & span {
     color: var(--color-neutral-400);
     font-size: var(--font-size-tiny);
@@ -91,6 +96,10 @@ const StyledUser = styled.div`
   }
 `;
 
+const StyledRow = styled(Row)`
+  position: relative;
+`;
+
 function UserLink({ user, currentUser, isLoadingDummyUsers, suggestedPage }) {
   const {
     firstName,
@@ -105,7 +114,16 @@ function UserLink({ user, currentUser, isLoadingDummyUsers, suggestedPage }) {
   } = useUserById(id);
   const { registerDate, location, email } = userById;
 
-  const { isHovered, handleMouseEnter, handleMouseLeave } = useHover();
+  const {
+    isHovered: isImageHovered,
+    handleMouseEnter: handleImageMouseEnter,
+    handleMouseLeave: handleImageMouseLeave,
+  } = useHover();
+  const {
+    isHovered: isHeaderHovered,
+    handleMouseEnter: handleHeaderMouseEnter,
+    handleMouseLeave: handleHeaderMouseLeave,
+  } = useHover();
 
   const { diffInMonths } = getFormattedDateInfo(registerDate);
 
@@ -122,26 +140,39 @@ function UserLink({ user, currentUser, isLoadingDummyUsers, suggestedPage }) {
   return (
     <>
       <StyledUser suggestedPage={suggestedPage}>
-        <Row onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <Row
+          onMouseEnter={handleImageMouseEnter}
+          onMouseLeave={handleImageMouseLeave}
+        >
           <OwnerImage ownerPicture={picture} />
-          {!currentUser && isHovered && <UserProfileOnHover user={userById} />}
+          {!currentUser && isImageHovered && (
+            <UserProfileOnHover user={userById} left={"7rem"} />
+          )}
         </Row>
         <Row>
-          <h5 onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            {fixedSizeFullName(firstName, lastName, 30, true)}
-          </h5>
-          {!currentUser ? (
-            <>
-              <span>
-                {diffInMonths > 0.9 ? "Suggested for you" : "New to Petfolio"}
-              </span>
-              {suggestedPage && (
-                <span>{location?.country ? location?.country : email}</span>
-              )}
-            </>
-          ) : (
-            <span>{fixedSizeFullName(firstName, lastName, 30)}</span>
-          )}
+          <StyledRow
+            onMouseEnter={handleHeaderMouseEnter}
+            onMouseLeave={handleHeaderMouseLeave}
+          >
+            <h5>{fixedSizeFullName(firstName, lastName, 30, true)}</h5>
+            {!currentUser && isHeaderHovered && (
+              <UserProfileOnHover user={userById} left={"7rem"} />
+            )}
+          </StyledRow>
+          <span>
+            {!currentUser ? (
+              <>
+                <span>
+                  {diffInMonths > 0.9 ? "Suggested for you" : "New to Petfolio"}
+                </span>
+                {suggestedPage && (
+                  <span>{location?.country ? location?.country : email}</span>
+                )}
+              </>
+            ) : (
+              <span>{fixedSizeFullName(firstName, lastName, 30)}</span>
+            )}
+          </span>
         </Row>
         {!currentUser && <Button>message</Button>}
       </StyledUser>

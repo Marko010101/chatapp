@@ -6,7 +6,7 @@ const EmojiPickerContainer = styled.div`
   position: absolute;
   bottom: 3rem;
   left: 45rem;
-  z-index: 1000;
+  z-index: 700;
 
   ${(props) =>
     props.isModalEmojiPicker &&

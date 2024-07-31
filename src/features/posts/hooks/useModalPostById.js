@@ -2,18 +2,15 @@ import { useQuery } from "@tanstack/react-query";
 import { getPostById } from "../../../services/apiPost.js";
 
 export function useModalPostById(id) {
-  const isValidId = id != undefined;
   const {
     isLoading,
-    data: post = {},
+    data: post,
     error,
-  } = useQuery(
-    {
-      queryFn: () => getPostById(id),
-      queryKey: ["ModalPost", id],
-    },
-    { enabled: isValidId }
-  );
+  } = useQuery({
+    queryKey: ["ModalPost", id],
+    queryFn: () => getPostById(id),
+    enabled: !!id,
+  });
 
   return { post, isLoading, error };
 }

@@ -133,14 +133,16 @@ const LeftDiv = styled(SideDiv)`
   right: 66%;
 `;
 
-const FancyButton = ({ children, onClick, ...props }) => {
+const FancyButton = ({ children, onClick, disabled, ref, ...props }) => {
   return (
     <StyledButton
       style={{
         "--content": `"${children}"`,
       }}
       onClick={onClick}
+      ref={ref}
       {...props}
+      disabled={disabled}
     >
       <LeftDiv className="left" />
       {children}

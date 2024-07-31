@@ -8,14 +8,16 @@ export function useCurrentDummyUser() {
   const { dummyUsers } = useUsers(realUser);
   const { user } = useUserFirebase();
   const userUid = user?.uid;
+
   const {
     data: currentUserById,
     isLoading,
     error,
-  } = useQuery(
-    ["currentUser", userUid, dummyUsers],
-    async () => await matchFirebaseAndDummyUsers(userUid, dummyUsers?.data)
-  );
+  } = useQuery({
+    queryKey: ["currentUser", userUid, dummyUsers],
+    queryFn: async () =>
+      await matchFirebaseAndDummyUsers(userUid, dummyUsers?.data),
+  });
 
   return { currentUserById, isLoading, error };
 }

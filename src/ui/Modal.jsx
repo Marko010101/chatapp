@@ -37,7 +37,7 @@ const Overlay = styled.div`
   width: 100%;
   height: 100vh;
   backdrop-filter: blur(3px);
-  z-index: 1000;
+  z-index: 600;
   transition: all 0.5s;
 `;
 

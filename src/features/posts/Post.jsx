@@ -47,10 +47,22 @@ const PostImg = styled.div`
     border-radius: var(--border-radius-tiny);
   }
 `;
+const StyledRow = styled(Row)`
+  position: relative;
+`;
 
-function Post({ post }) {
+function Post({ post, innerRef }) {
   const { image, owner, publishDate } = post;
-  const { isHovered, handleMouseEnter, handleMouseLeave } = useHover();
+  const {
+    isHovered: isImageHovered,
+    handleMouseEnter: handleImageMouseEnter,
+    handleMouseLeave: handleImageMouseLeave,
+  } = useHover();
+  const {
+    isHovered: isHeaderHovered,
+    handleMouseEnter: handleHeaderMouseEnter,
+    handleMouseLeave: handleHeaderMouseLeave,
+  } = useHover();
   const {
     firstName: ownerFirstName,
     lastName: ownerLastName,
@@ -66,18 +78,23 @@ function Post({ post }) {
   return (
     <StyledPost>
       <PostContainer>
-        <HeaderPost>
-          <Row onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            <OwnerImage ownerPicture={ownerPicture} haveBorder={true} />
-            {isHovered && <UserProfileOnHover user={userById} />}
-          </Row>
-          <Heading
-            as="h4"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+        <HeaderPost ref={innerRef}>
+          <StyledRow
+            onMouseEnter={handleImageMouseEnter}
+            onMouseLeave={handleImageMouseLeave}
           >
-            {fixedSizeFullName(ownerFirstName, ownerLastName, 25)}
-          </Heading>
+            <OwnerImage ownerPicture={ownerPicture} haveBorder={true} />
+            {isImageHovered && <UserProfileOnHover user={userById} />}
+          </StyledRow>
+          <StyledRow
+            onMouseEnter={handleHeaderMouseEnter}
+            onMouseLeave={handleHeaderMouseLeave}
+          >
+            <Heading as="h4">
+              {fixedSizeFullName(ownerFirstName, ownerLastName, 25)}
+            </Heading>
+            {isHeaderHovered && <UserProfileOnHover user={userById} />}
+          </StyledRow>
           <PostFormatedDate date={publishDate} />
           <ActionButtonDots />
         </HeaderPost>

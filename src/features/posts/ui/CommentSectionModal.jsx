@@ -4,35 +4,54 @@ import { TiDeleteOutline } from "react-icons/ti";
 import Heading from "../../../ui/Heading.jsx";
 import { fixedSizeFullName } from "../../../utils/helpers.js";
 import OwnerImage from "./OwnerImage.jsx";
-import Title from "./Title.jsx";
+import Title from "./CommentText.jsx";
 import PostFormatedDate from "./PostFormatedDate.jsx";
 import { useCurrentDummyUser } from "../../users/hooks/useCurrentDummyUser.js";
+import useHover from "../../../hooks/useHover.js";
+import UserProfileOnHover from "../../users/UserProfileOnHover.jsx";
 
 const StyledCommentSection = styled.section`
+  position: relative;
+  display: flex;
+  align-items: start;
+  gap: 1.5rem;
+  max-height: 20rem;
+`;
+
+const StyledCommentBody = styled.div`
   display: flex;
   flex-direction: column;
+  max-width: 38rem;
+  line-break: anywhere;
+`;
 
-  & > article {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    grid-template-rows: max-content 1fr;
-    grid-column-gap: 1.5rem;
+const RelativePositionWrapper = styled.div`
+  position: relative;
+  display: inline;
 
-    & h5 {
-      line-height: 1.4rem;
-      font-size: var(--font-size-small);
-      font-weight: var(--font-weight-medium);
-      align-self: center;
-      & > span {
-        font-weight: var(--font-weight-light);
-        margin-left: 0.3rem;
-        color: var(--color-gray-0);
-      }
+  & h5 {
+    width: max-content;
+    display: inline;
+
+    &:hover {
+      color: var(--color-neutral-400);
+      cursor: pointer;
     }
-    & > *:last-child {
-      grid-column: 2 / 3;
-      align-self: center;
-      line-height: 1.4rem;
+  }
+`;
+
+const StyledDeleteSvg = styled.span`
+  position: absolute;
+  right: 0;
+
+  & svg {
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-neutral-400);
+    }
+    &:active {
+      color: var(--color-neutral-500);
     }
   }
 `;
@@ -47,19 +66,50 @@ function CommentSectionModal({
   owner,
 }) {
   const { currentUserById } = useCurrentDummyUser();
+
+  const {
+    isHovered: isImageHovered,
+    handleMouseEnter: handleImageMouseEnter,
+    handleMouseLeave: handleImageMouseLeave,
+  } = useHover();
+
+  const {
+    isHovered: isHeaderHovered,
+    handleMouseEnter: handleHeaderMouseEnter,
+    handleMouseLeave: handleHeaderMouseLeave,
+  } = useHover();
+
   return (
     <StyledCommentSection>
-      <article>
+      <RelativePositionWrapper
+        onMouseEnter={handleImageMouseEnter}
+        onMouseLeave={handleImageMouseLeave}
+      >
         <OwnerImage ownerPicture={ownerPicture} haveBorder={true} />
+        {isImageHovered && <UserProfileOnHover user={owner} />}
+      </RelativePositionWrapper>
+
+      <StyledCommentBody>
         <Heading as="h5">
-          {fixedSizeFullName(firstName, lastName, 30)} <Title text={text} />
+          <RelativePositionWrapper
+            onMouseEnter={handleHeaderMouseEnter}
+            onMouseLeave={handleHeaderMouseLeave}
+          >
+            <Heading as="h5">
+              {fixedSizeFullName(firstName, lastName, 30)}
+            </Heading>
+            {isHeaderHovered && <UserProfileOnHover user={owner} />}
+          </RelativePositionWrapper>
+          <Title text={text} />
         </Heading>
         <PostFormatedDate date={date} isModalComment={true} />
+      </StyledCommentBody>
 
-        {currentUserById?.id === owner && (
+      <StyledDeleteSvg>
+        {currentUserById?.id === owner.id && (
           <TiDeleteOutline onClick={onDeleteComment} />
         )}
-      </article>
+      </StyledDeleteSvg>
     </StyledCommentSection>
   );
 }
