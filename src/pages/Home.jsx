@@ -59,16 +59,16 @@ function Home() {
     }
   }, [inView, hasNextPage, fetchNextPage, isFetchingNextPage]);
 
-  if (isLoading) return <SpinnerFullPage />;
+  if (isLoading || !data) return <SpinnerFullPage />;
   if (error) return (<ErrorText>{error.message}</ErrorText>)();
   if (!data || data.pages.length === 0) return <Empty resourceName="posts" />;
 
   const content = data.pages.map((page) =>
-    page.data.map((post, index) => {
-      if (page.data.length == index + 1) {
-        return <Post key={post.id} post={post} innerRef={ref} />;
+    page?.data?.map((post, index) => {
+      if (page?.data?.length == index + 1) {
+        return <Post key={post?.id} post={post} innerRef={ref} />;
       } else {
-        return <Post key={post.id} post={post} />;
+        return <Post key={post?.id} post={post} />;
       }
     })
   );

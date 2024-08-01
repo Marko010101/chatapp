@@ -1,5 +1,6 @@
 import { APP_ID } from "../constants/APP_ID.js";
 import { DUMMY_API } from "../constants/DUMMY_API.js";
+import { POST_PER_PAGE } from "../constants/POST.js";
 
 // const totalPosts = 873;
 // const postsPerPage = 10;
@@ -21,38 +22,9 @@ export async function getPostsTotalLength() {
   return result.total;
 }
 
-/* export async function getPosts() {
-  const totalPosts = await getPostsTotalLength();
-  const postsPerPage = 10;
-
-  const lastPage = Math.floor(totalPosts / postsPerPage);
-
-  const response = await fetch(
-    `${DUMMY_API}post?page=${lastPage}&limit=${postsPerPage}`,
-    {
-      headers: {
-        "app-id": APP_ID,
-      },
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error(`Posts could not be completed, status: ${response.status}`);
-  }
-
-  const result = await response.json();
-
-  return result;
-} */
-
-// const postsPerPage = 10;
-// const totalPosts = await getPostsTotalLength();
-// const RandomPageNumber =
-//   Math.floor((Math.random() * totalPosts) / postsPerPage) + 1;
-
 export async function getPosts({ pageParam }) {
   const response = await fetch(
-    `${DUMMY_API}post?page=${pageParam}&limit=${10}`,
+    `${DUMMY_API}post?page=${pageParam}&limit=${POST_PER_PAGE}`,
     {
       headers: {
         "app-id": APP_ID,

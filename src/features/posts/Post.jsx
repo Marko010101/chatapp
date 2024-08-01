@@ -78,7 +78,7 @@ function Post({ post, innerRef }) {
   return (
     <StyledPost>
       <PostContainer>
-        <HeaderPost ref={innerRef}>
+        <HeaderPost>
           <StyledRow
             onMouseEnter={handleImageMouseEnter}
             onMouseLeave={handleImageMouseLeave}
@@ -98,7 +98,7 @@ function Post({ post, innerRef }) {
           <PostFormatedDate date={publishDate} />
           <ActionButtonDots />
         </HeaderPost>
-        <PostImg>
+        <PostImg ref={innerRef}>
           <img src={image} alt="Post image" />
         </PostImg>
         <PostInfo post={post} />
