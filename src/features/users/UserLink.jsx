@@ -9,6 +9,9 @@ import OwnerImage from "../posts/ui/OwnerImage.jsx";
 import useHover from "../../hooks/useHover.js";
 import UserProfileOnHover from "./UserProfileOnHover.jsx";
 import Row from "../../ui/Row.jsx";
+import UserName from "./ui/UserName.jsx";
+import { RelativeDiv } from "../../ui/RelativeDiv.jsx";
+import Heading from "../../ui/Heading.jsx";
 
 // Keyframes for the wave animation
 const waveAnimation = keyframes`
@@ -76,6 +79,7 @@ const StyledUser = styled.div`
    & h5 {
     position: relative;
     cursor: pointer;
+    width: max-content;
   }
 
   & span {
@@ -83,6 +87,7 @@ const StyledUser = styled.div`
     font-size: var(--font-size-tiny);
     font-weight: var(--font-weight-medium);
     letter-spacing: 0.1px;
+    /* display: block; */
   }
 
   & button {
@@ -94,10 +99,6 @@ const StyledUser = styled.div`
         font-size: var(--font-size-small);
       `}
   }
-`;
-
-const StyledRow = styled(Row)`
-  position: relative;
 `;
 
 function UserLink({ user, currentUser, isLoadingDummyUsers, suggestedPage }) {
@@ -149,30 +150,42 @@ function UserLink({ user, currentUser, isLoadingDummyUsers, suggestedPage }) {
             <UserProfileOnHover user={userById} left={"7rem"} />
           )}
         </Row>
-        <Row>
-          <StyledRow
+        <Row type="vertical">
+          <RelativeDiv
             onMouseEnter={handleHeaderMouseEnter}
             onMouseLeave={handleHeaderMouseLeave}
           >
-            <h5>{fixedSizeFullName(firstName, lastName, 30, true)}</h5>
+            <UserName
+              firstName={firstName}
+              lastName={lastName}
+              length={30}
+              isUnderscore
+              heading="h5"
+            />
             {!currentUser && isHeaderHovered && (
               <UserProfileOnHover user={userById} left={"7rem"} />
             )}
-          </StyledRow>
-          <span>
-            {!currentUser ? (
-              <>
-                <span>
-                  {diffInMonths > 0.9 ? "Suggested for you" : "New to Petfolio"}
-                </span>
-                {suggestedPage && (
-                  <span>{location?.country ? location?.country : email}</span>
-                )}
-              </>
-            ) : (
-              <span>{fixedSizeFullName(firstName, lastName, 30)}</span>
-            )}
-          </span>
+          </RelativeDiv>
+          <Row>
+            <span>
+              {!currentUser ? (
+                <>
+                  <span>
+                    {diffInMonths > 0.9
+                      ? "Suggested for you"
+                      : "New to Petfolio"}
+                  </span>
+                  {suggestedPage && (
+                    <Heading as="h6">
+                      {location?.country ? location?.country : email}
+                    </Heading>
+                  )}
+                </>
+              ) : (
+                <h5>{fixedSizeFullName(firstName, lastName, 30)}</h5>
+              )}
+            </span>
+          </Row>
         </Row>
         {!currentUser && <Button>message</Button>}
       </StyledUser>

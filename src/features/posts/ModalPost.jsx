@@ -6,9 +6,7 @@ import Comment from "./ui/Comment.jsx";
 import { useModalPostById } from "./hooks/useModalPostById.js";
 import SpinnerFullPage from "../../ui/loaders/SpinnerFullPage.jsx";
 import OwnerImage from "./ui/OwnerImage.jsx";
-import Heading from "../../ui/Heading.jsx";
 import ActionButtonDots from "./ui/ActionButtonDots.jsx";
-import { fixedSizeFullName } from "../../utils/helpers.js";
 import InputComment from "./InputComment.jsx";
 import Likes from "./ui/Likes.jsx";
 import PostFormatedDate from "./ui/PostFormatedDate.jsx";
@@ -20,6 +18,8 @@ import useHover from "../../hooks/useHover.js";
 import UserProfileOnHover from "../users/UserProfileOnHover.jsx";
 import Row from "../../ui/Row.jsx";
 import { useUserById } from "../users/hooks/useUserById.js";
+import { RelativeDiv } from "../../ui/RelativeDiv.jsx";
+import UserName from ".././users/ui/UserName.jsx";
 
 const StyledModal = styled.main`
   display: grid;
@@ -148,10 +148,14 @@ function ModalPost() {
               onMouseEnter={handleHeaderMouseEnter}
               onMouseLeave={handleHeaderMouseLeave}
             >
-              <Heading as="h5">
-                {fixedSizeFullName(firstName, lastName, 40)}
+              <RelativeDiv>
+                <UserName
+                  firstName={firstName}
+                  lastName={lastName}
+                  length={40}
+                />
                 {isHeaderHovered && <UserProfileOnHover user={userById} />}
-              </Heading>
+              </RelativeDiv>
             </StyledRow>
           </div>
           <div>

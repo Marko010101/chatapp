@@ -33,7 +33,6 @@ export function usePosts() {
     queryFn: ({ pageParam = initialPage }) => getPosts({ pageParam }),
     initialPageParam: initialPage,
     getNextPageParam: (lastPage, allPage) => {
-      console.log({ lastPage, allPage });
       const nextPage =
         initialPageCalc > allPage.length
           ? initialPage - allPage.length

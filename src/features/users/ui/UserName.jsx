@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { fixedSizeFullName } from "../../../utils/helpers.js";
+import Heading from "../../../ui/Heading.jsx";
 
-const StyledUserName = styled.h5`
+const StyledUserName = styled(Heading)`
   cursor: pointer;
 `;
 
@@ -9,16 +10,12 @@ function UserName({
   firstName,
   lastName,
   length = 15,
-  useUnderscore = false,
-  handleMouseEnter,
-  handleMouseLeave,
+  isUnderscore = false,
+  heading = "h4",
 }) {
   return (
-    <StyledUserName
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      {fixedSizeFullName(firstName, lastName, length, useUnderscore)}
+    <StyledUserName as={heading}>
+      {fixedSizeFullName(firstName, lastName, length, isUnderscore)}
     </StyledUserName>
   );
 }

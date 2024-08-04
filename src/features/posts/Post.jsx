@@ -1,16 +1,16 @@
 import styled from "styled-components";
 
-import Heading from "../../ui/Heading.jsx";
 import PostInfo from "./PostInfo.jsx";
 import OwnerImage from "./ui/OwnerImage.jsx";
 import PostFormatedDate from "./ui/PostFormatedDate.jsx";
 import ActionButtonDots from "./ui/ActionButtonDots.jsx";
-import { fixedSizeFullName } from "../../utils/helpers.js";
 import Row from "../../ui/Row.jsx";
 import useHover from "../../hooks/useHover.js";
 import { useUserById } from "../users/hooks/useUserById.js";
 import UserProfileOnHover from "../users/UserProfileOnHover.jsx";
 import ErrorText from "../../ui/ErrorText.jsx";
+import UserName from "../users/ui/UserName.jsx";
+import { RelativeDiv } from "../../ui/RelativeDiv.jsx";
 
 const StyledPost = styled.ul``;
 
@@ -78,7 +78,7 @@ function Post({ post, innerRef }) {
   return (
     <StyledPost>
       <PostContainer>
-        <HeaderPost>
+        <HeaderPost ref={innerRef}>
           <StyledRow
             onMouseEnter={handleImageMouseEnter}
             onMouseLeave={handleImageMouseLeave}
@@ -86,19 +86,22 @@ function Post({ post, innerRef }) {
             <OwnerImage ownerPicture={ownerPicture} haveBorder={true} />
             {isImageHovered && <UserProfileOnHover user={userById} />}
           </StyledRow>
-          <StyledRow
+          <RelativeDiv
             onMouseEnter={handleHeaderMouseEnter}
             onMouseLeave={handleHeaderMouseLeave}
           >
-            <Heading as="h4">
-              {fixedSizeFullName(ownerFirstName, ownerLastName, 25)}
-            </Heading>
+            <UserName
+              firstName={ownerFirstName}
+              lastName={ownerLastName}
+              length={25}
+              heading="h4"
+            />
             {isHeaderHovered && <UserProfileOnHover user={userById} />}
-          </StyledRow>
+          </RelativeDiv>
           <PostFormatedDate date={publishDate} />
           <ActionButtonDots />
         </HeaderPost>
-        <PostImg ref={innerRef}>
+        <PostImg>
           <img src={image} alt="Post image" />
         </PostImg>
         <PostInfo post={post} />

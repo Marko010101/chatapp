@@ -2,13 +2,14 @@ import styled from "styled-components";
 import { TiDeleteOutline } from "react-icons/ti";
 
 import Heading from "../../../ui/Heading.jsx";
-import { fixedSizeFullName } from "../../../utils/helpers.js";
 import OwnerImage from "./OwnerImage.jsx";
 import Title from "./CommentText.jsx";
 import PostFormatedDate from "./PostFormatedDate.jsx";
 import { useCurrentDummyUser } from "../../users/hooks/useCurrentDummyUser.js";
 import useHover from "../../../hooks/useHover.js";
 import UserProfileOnHover from "../../users/UserProfileOnHover.jsx";
+import { RelativeDiv } from "../../../ui/RelativeDiv.jsx";
+import UserName from "../../users/ui/UserName.jsx";
 
 const StyledCommentSection = styled.section`
   position: relative;
@@ -25,8 +26,7 @@ const StyledCommentBody = styled.div`
   line-break: anywhere;
 `;
 
-const RelativePositionWrapper = styled.div`
-  position: relative;
+const RelativePositionWrapper = styled(RelativeDiv)`
   display: inline;
 
   & h5 {
@@ -95,9 +95,12 @@ function CommentSectionModal({
             onMouseEnter={handleHeaderMouseEnter}
             onMouseLeave={handleHeaderMouseLeave}
           >
-            <Heading as="h5">
-              {fixedSizeFullName(firstName, lastName, 30)}
-            </Heading>
+            <UserName
+              firstName={firstName}
+              lastName={lastName}
+              length={30}
+              heading="h5"
+            />
             {isHeaderHovered && <UserProfileOnHover user={owner} />}
           </RelativePositionWrapper>
           <Title text={text} />

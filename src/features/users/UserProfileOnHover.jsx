@@ -1,9 +1,10 @@
 import styled, { css } from "styled-components";
-import { calculateAge, fixedSizeFullName } from "../../utils/helpers.js";
+import { calculateAge } from "../../utils/helpers.js";
 import { useUserPosts } from "../posts/hooks/useUsersPosts.js";
 import Row from "../../ui/Row.jsx";
 import OwnerImage from "../posts/ui/OwnerImage.jsx";
 import ErrorText from "../../ui/ErrorText.jsx";
+import UserName from "./ui/UserName.jsx";
 
 const StyledHoverPopup = styled.div`
   position: absolute;
@@ -58,17 +59,18 @@ const StyledHoverPopup = styled.div`
 const StyledHeader = styled.div`
   display: flex;
   align-items: center;
-  gap: 1.2rem;
+  gap: 1.5rem;
   padding: 0 1.5rem;
   width: 100%;
 
   & h4 {
     cursor: pointer;
+    margin-left: -1rem;
   }
 
   & img {
     width: 6rem;
-    scale: 1.25;
+    scale: 1.3;
     height: auto;
   }
 `;
@@ -116,10 +118,14 @@ function UserProfileOnHover({ user, left }) {
     <StyledHoverPopup left={left}>
       <StyledHeader>
         <OwnerImage ownerPicture={picture} />
-        <h4>
-          {title && <span>{title}</span>}{" "}
-          {fixedSizeFullName(firstName, lastName, 25, true)}
-        </h4>
+        {title && <span>{title}</span>}{" "}
+        <UserName
+          firstName={firstName}
+          lastName={lastName}
+          length={25}
+          isUnderscore={true}
+          heading="h4"
+        />
       </StyledHeader>
 
       {gender && dateOfBirth ? (

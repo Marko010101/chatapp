@@ -1,1 +1,1 @@
-export const APP_ID = "6650b8e02e95842fdb93f60f";
+export const APP_ID = import.meta.env.REACT_APP_APP_ID;
