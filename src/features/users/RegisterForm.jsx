@@ -92,6 +92,7 @@ function RegisterForm() {
           type="password"
           id="password"
           disabled={isLoading1 || isLoading2}
+          autoComplete="true"
           {...register("password", {
             required: "This field is required",
             minLength: {
@@ -106,6 +107,7 @@ function RegisterForm() {
           type="password"
           id="passwordConfirm"
           disabled={isLoading1 || isLoading2}
+          autoComplete="true"
           {...register("passwordConfirm", {
             required: "This field is required",
             validate: (value) =>

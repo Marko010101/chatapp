@@ -3,7 +3,8 @@ import toast from "react-hot-toast";
 import { registerUser } from "../../../services/apiAuthFirebase.js";
 
 export const useFirebaseSignup = () => {
-  return useMutation(registerUser, {
+  return useMutation({
+    mutationFn: registerUser,
     onSuccess: (user) => {
       toast.success("You have registered successfully! ✅");
       console.log("Registered user:", user);
