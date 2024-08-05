@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 import FormRow from "../../ui/FormRow.jsx";
 import Input from "../../ui/Input.jsx";
@@ -17,6 +18,8 @@ function RegisterForm() {
     getValues,
     reset,
   } = useForm();
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isRepeatPasswordVisible, setIsRepeatPasswordVisible] = useState(false);
 
   // Dummy api user uploading
   const { signupOnDummy, isLoading: isLoading2 } = useSignup();
@@ -27,6 +30,14 @@ function RegisterForm() {
 
   const navigate = useNavigate();
 
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
+
+  const toggleRepeatPasswordVisibility = () => {
+    setIsRepeatPasswordVisible(!isRepeatPasswordVisible);
+  };
+  console.log(isPasswordVisible);
   // creating the dummyUser, on its success creating firebase user and passing id to it, ensuring that the dummyUser's ID matches firebase user's id
 
   function onSubmit({ firstName, lastName, email, password }) {
@@ -87,9 +98,12 @@ function RegisterForm() {
       <FormRow
         label="Password (min 8 characters)"
         error={errors?.password?.message}
+        isPassword={true}
+        isPasswordVisible={isPasswordVisible}
+        onClick={togglePasswordVisibility}
       >
         <Input
-          type="password"
+          type={isPasswordVisible ? "text" : "password"}
           id="password"
           disabled={isLoading1 || isLoading2}
           autoComplete="true"
@@ -102,9 +116,15 @@ function RegisterForm() {
           })}
         />
       </FormRow>
-      <FormRow label="Repeat password" error={errors?.passwordConfirm?.message}>
+      <FormRow
+        label="Repeat password"
+        error={errors?.passwordConfirm?.message}
+        isPassword={true}
+        isPasswordVisible={isRepeatPasswordVisible}
+        onClick={toggleRepeatPasswordVisibility}
+      >
         <Input
-          type="password"
+          type={isRepeatPasswordVisible ? "text" : "password"}
           id="passwordConfirm"
           disabled={isLoading1 || isLoading2}
           autoComplete="true"
@@ -129,7 +149,6 @@ function RegisterForm() {
         <FancyButton type="submit" disabled={isLoading1 || isLoading2}>
           Join us!
         </FancyButton>
-        {/* Add type="submit" to submit button */}
       </FormRow>
     </Form>
   );

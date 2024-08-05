@@ -1,6 +1,23 @@
 import styled, { css } from "styled-components";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 import ErrorText from "./ErrorText.jsx";
+
+const ToggleButton = styled.span`
+  position: absolute;
+  right: 2.3rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+  }
+`;
 
 const StyledFormRow = styled.div`
   display: grid;
@@ -8,6 +25,8 @@ const StyledFormRow = styled.div`
   grid-template-columns: 15rem 25rem;
   grid-template-rows: max-content 3rem;
   gap: 1.2rem;
+  width: 40rem;
+  max-width: 40rem;
 
   padding: 1rem 0;
 
@@ -16,6 +35,10 @@ const StyledFormRow = styled.div`
     css`
       grid-template-columns: 15rem 30rem;
     `}
+
+  & span {
+    position: relative;
+  }
 
   & p {
     grid-column: 2/3;
@@ -39,7 +62,7 @@ const StyledFormRow = styled.div`
     gap: 1.2rem;
   }
 
-  /* @media (max-width: 768px) {
+  /*   @media (max-width: 768px) {
     grid-template-columns: 90%;
     justify-content: center;
     font-size: 1.5rem;
@@ -54,27 +77,36 @@ const StyledFormRow = styled.div`
   @media (max-width: 320px) {
     gap: 1.1rem;
     padding: 1.5rem 0;
-  } */
+  }   */
 `;
 
 const Label = styled.label`
   font-weight: var(--font-weight-medium);
+  justify-self: flex-start;
 `;
 
-function FormRow({ label, error, children }) {
+function FormRow({
+  label,
+  error,
+  children,
+  isPassword = false,
+  isPasswordVisible,
+  onClick,
+}) {
   return (
-    <StyledFormRow>
+    <StyledFormRow isPassword={isPassword}>
       {label && <Label htmlFor={children.props.id}>{label}</Label>}
-      {children}
+      <span>
+        {children}
+        {isPassword && (
+          <ToggleButton onClick={onClick}>
+            {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+          </ToggleButton>
+        )}
+      </span>
       {error && <ErrorText>{error}</ErrorText>}
     </StyledFormRow>
   );
 }
 
 export default FormRow;
-
-// const Error = styled.span`
-//   font-size: var(--font-size-tiny);
-//   color: var(--color-red-700);
-//   grid-column: 2/3;
-// `;
