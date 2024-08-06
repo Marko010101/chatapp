@@ -14,7 +14,6 @@ import { getUserById } from "./apiDummyUser.js";
 
 export const registerUser = async ({ email, password, dummyId }) => {
   // Create a new user with email and password
-  console.log("register user dummyid", dummyId);
   const userCredential = await createUserWithEmailAndPassword(
     auth,
     email,

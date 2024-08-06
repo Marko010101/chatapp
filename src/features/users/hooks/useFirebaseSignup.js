@@ -7,7 +7,6 @@ export const useFirebaseSignup = () => {
     mutationFn: registerUser,
     onSuccess: (user) => {
       toast.success("You have registered successfully! ✅");
-      console.log("Registered user:", user);
     },
     onError: (error) => {
       toast.error(`Registration failed: ${error.message}`);
