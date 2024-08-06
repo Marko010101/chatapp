@@ -37,7 +37,6 @@ function RegisterForm() {
   const toggleRepeatPasswordVisibility = () => {
     setIsRepeatPasswordVisible(!isRepeatPasswordVisible);
   };
-  console.log(isPasswordVisible);
   // creating the dummyUser, on its success creating firebase user and passing id to it, ensuring that the dummyUser's ID matches firebase user's id
 
   function onSubmit({ firstName, lastName, email, password }) {
@@ -46,7 +45,6 @@ function RegisterForm() {
       {
         onSuccess: async (data) => {
           const { id: dummyId } = await data;
-          console.log("dummyId", dummyId);
           return signupWithFirebase(
             { email, password, dummyId },
             {

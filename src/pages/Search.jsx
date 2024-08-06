@@ -16,8 +16,6 @@ function Search() {
     refetch();
   };
 
-  console.log(data);
-
   if (isLoading) return <SpinnerFullPage />;
 
   return (

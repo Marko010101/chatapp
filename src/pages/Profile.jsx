@@ -44,7 +44,6 @@ function Profile() {
     isLoading,
     error: errorCurrentUser,
   } = useCurrentDummyUser();
-  console.log(currentUserById);
 
   const {
     currentUserPosts,

@@ -13,7 +13,8 @@ import FancyButton from "../../ui/Buttons/FancyButton.jsx";
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, isLoading } = useLogin();
+  const { login, isLoading, error } = useLogin();
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const navigate = useNavigate();
 
   function handleSubmit(e) {
@@ -29,6 +30,9 @@ function LoginForm() {
       }
     );
   }
+  function handleTogglePasswordVisible() {
+    setIsPasswordVisible(!isPasswordVisible);
+  }
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -42,9 +46,14 @@ function LoginForm() {
           disabled={isLoading}
         />
       </FormRowVertical>
-      <FormRowVertical label="Password">
+      <FormRowVertical
+        label="Password"
+        isPassword={true}
+        isPasswordVisible={isPasswordVisible}
+        onClick={handleTogglePasswordVisible}
+      >
         <Input
-          type="password"
+          type={isPasswordVisible ? "text" : "password"}
           id="password"
           autoComplete="current-password"
           value={password}
@@ -53,13 +62,14 @@ function LoginForm() {
         />
       </FormRowVertical>
       <FormRowVertical>
-        <Row type="horizontal">
+        <Row type="horizontal" >
           {!isLoading ? (
             <FancyButton disabled={isLoading}>Sign in</FancyButton>
           ) : (
             <SpinnerMini />
           )}
           <Button
+          
             onClick={(e) => {
               e.preventDefault();
               navigate("/register");
