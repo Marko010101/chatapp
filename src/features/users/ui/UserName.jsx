@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+
 import { fixedSizeFullName } from "../../../utils/helpers.js";
 import Heading from "../../../ui/Heading.jsx";
 
@@ -12,11 +14,14 @@ function UserName({
   length = 15,
   isUnderscore = false,
   heading = "h4",
+  id,
 }) {
   return (
-    <StyledUserName as={heading}>
-      {fixedSizeFullName(firstName, lastName, length, isUnderscore)}
-    </StyledUserName>
+    <Link to={`/profile/${id}`}>
+      <StyledUserName as={heading}>
+        {fixedSizeFullName(firstName, lastName, length, isUnderscore)}
+      </StyledUserName>
+    </Link>
   );
 }
 

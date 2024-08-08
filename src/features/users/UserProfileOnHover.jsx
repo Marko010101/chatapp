@@ -117,7 +117,7 @@ function UserProfileOnHover({ user, left }) {
   return (
     <StyledHoverPopup left={left}>
       <StyledHeader>
-        <OwnerImage ownerPicture={picture} />
+        <OwnerImage ownerPicture={picture} id={id} />
         {title && <span>{title}</span>}{" "}
         <UserName
           firstName={firstName}
@@ -125,6 +125,7 @@ function UserProfileOnHover({ user, left }) {
           length={25}
           isUnderscore={true}
           heading="h4"
+          id={id}
         />
       </StyledHeader>
 

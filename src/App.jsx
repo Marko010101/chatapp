@@ -11,7 +11,7 @@ import Home from "./pages/Home.jsx";
 import Explore from "./pages/Explore.jsx";
 import Reels from "./pages/Reels.jsx";
 import Messages from "./pages/Messages.jsx";
-import Profile from "./pages/Profile.jsx";
+import CurrentUserProfile from "./pages/CurrentUserProfile.jsx";
 import PageNotFound from "./pages/PageNotFound.jsx";
 import { SidebarShrinkProvider } from "./context/SidebarShrinkingContext.jsx";
 import { LikeProvider } from "./context/LikesContext.jsx";
@@ -60,7 +60,10 @@ function App() {
                     <Route path="messages" element={<Messages />} />
                     <Route path="notifications" element={<Notifications />} />
                     <Route path="create" element={<Create />} />
-                    <Route path="profile/:user" element={<Profile />} />
+                    <Route
+                      path="profile/:userId"
+                      element={<CurrentUserProfile />}
+                    />
                     <Route path="*" element={<PageNotFound />} />
                   </Route>
                   <Route path="register" element={<Register />} />

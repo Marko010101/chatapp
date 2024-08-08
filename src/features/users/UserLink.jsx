@@ -145,7 +145,7 @@ function UserLink({ user, currentUser, isLoadingDummyUsers, suggestedPage }) {
           onMouseEnter={handleImageMouseEnter}
           onMouseLeave={handleImageMouseLeave}
         >
-          <OwnerImage ownerPicture={picture} />
+          <OwnerImage ownerPicture={picture} id={id} />
           {!currentUser && isImageHovered && (
             <UserProfileOnHover user={userById} left={"7rem"} />
           )}
@@ -161,6 +161,7 @@ function UserLink({ user, currentUser, isLoadingDummyUsers, suggestedPage }) {
               length={30}
               isUnderscore
               heading="h5"
+              id={id}
             />
             {!currentUser && isHeaderHovered && (
               <UserProfileOnHover user={userById} left={"7rem"} />

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 const StyledOwnerImage = styled.div`
   display: flex;
@@ -22,15 +23,17 @@ const StyledOwnerImage = styled.div`
     `}
 `;
 
-function OwnerImage({ ownerPicture, haveBorder = false }) {
+function OwnerImage({ ownerPicture, haveBorder = false, id }) {
   return (
-    <StyledOwnerImage haveBorder={haveBorder}>
-      <img
-        className="image-user"
-        src={ownerPicture || "../../../public/default-user.jpg"}
-        alt="Owner image"
-      />
-    </StyledOwnerImage>
+    <Link to={`/profile/${id}`}>
+      <StyledOwnerImage haveBorder={haveBorder}>
+        <img
+          className="image-user"
+          src={ownerPicture || "../../../public/default-user.jpg"}
+          alt="Owner image"
+        />
+      </StyledOwnerImage>
+    </Link>
   );
 }
 

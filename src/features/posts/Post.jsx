@@ -83,7 +83,11 @@ function Post({ post, innerRef }) {
             onMouseEnter={handleImageMouseEnter}
             onMouseLeave={handleImageMouseLeave}
           >
-            <OwnerImage ownerPicture={ownerPicture} haveBorder={true} />
+            <OwnerImage
+              ownerPicture={ownerPicture}
+              haveBorder={true}
+              id={ownerId}
+            />
             {isImageHovered && <UserProfileOnHover user={userById} />}
           </StyledRow>
           <RelativeDiv
@@ -95,6 +99,7 @@ function Post({ post, innerRef }) {
               lastName={ownerLastName}
               length={25}
               heading="h4"
+              id={ownerId}
             />
             {isHeaderHovered && <UserProfileOnHover user={userById} />}
           </RelativeDiv>

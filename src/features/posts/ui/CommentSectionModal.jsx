@@ -85,7 +85,11 @@ function CommentSectionModal({
         onMouseEnter={handleImageMouseEnter}
         onMouseLeave={handleImageMouseLeave}
       >
-        <OwnerImage ownerPicture={ownerPicture} haveBorder={true} />
+        <OwnerImage
+          ownerPicture={ownerPicture}
+          haveBorder={true}
+          id={owner?.id}
+        />
         {isImageHovered && <UserProfileOnHover user={owner} />}
       </RelativePositionWrapper>
 
@@ -100,6 +104,7 @@ function CommentSectionModal({
               lastName={lastName}
               length={30}
               heading="h5"
+              id={owner?.id}
             />
             {isHeaderHovered && <UserProfileOnHover user={owner} />}
           </RelativePositionWrapper>

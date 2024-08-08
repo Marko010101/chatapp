@@ -141,7 +141,11 @@ function ModalPost() {
               onMouseEnter={handleImageMouseEnter}
               onMouseLeave={handleImageMouseLeave}
             >
-              <OwnerImage ownerPicture={ownerPicture} haveBorder={true} />
+              <OwnerImage
+                ownerPicture={ownerPicture}
+                haveBorder={true}
+                id={id}
+              />
               {isImageHovered && <UserProfileOnHover user={userById} />}
             </StyledRow>
             <StyledRow
@@ -153,6 +157,7 @@ function ModalPost() {
                   firstName={firstName}
                   lastName={lastName}
                   length={40}
+                  id={id}
                 />
                 {isHeaderHovered && <UserProfileOnHover user={userById} />}
               </RelativeDiv>
