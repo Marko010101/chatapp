@@ -10,20 +10,8 @@ import Row from "../ui/Row.jsx";
 import { useUserPosts } from "../features/posts/hooks/useUsersPosts.js";
 import SearchedUserProfile from "./SearchedUserProfile.jsx";
 import { useParams } from "react-router-dom";
-
-const StyledProfile = styled.main`
-  display: grid;
-  grid-template-columns: 40rem max-content;
-  align-items: start;
-  border-bottom: var(--border);
-`;
-
-const UserImage = styled.div`
-  width: 20rem;
-
-  & img {
-  }
-`;
+import ProfileImage from "../features/users/ui/ProfileImage.jsx";
+import { StyledProfile } from "../features/users/ui/StyledProfile.jsx";
 
 const UserDetail = styled.div`
   margin-top: 3rem;
@@ -31,12 +19,6 @@ const UserDetail = styled.div`
 
 const RecreatedBtn = styled(ButtonNeutral)`
   margin-left: 3rem;
-`;
-
-const EmailLink = styled.a`
-  font-weight: var(--font-weight-light);
-  & span {
-  }
 `;
 
 function Profile() {
@@ -47,16 +29,15 @@ function Profile() {
     isLoading,
     error: errorCurrentUser,
   } = useCurrentDummyUser();
-  const isCurrentUser = currentUserById?.id === userId;
 
-  const userPosts =
-    currentUserById?.id === userId ? currentUserById?.id : userId;
+  const user = currentUserById?.id === userId ? currentUserById?.id : userId;
+  const isCurrentUser = currentUserById?.id === userId;
 
   const {
     currentUserPosts,
     isLoading: isLoadingUserPost,
     error,
-  } = useUserPosts(userPosts);
+  } = useUserPosts(user);
 
   if (isLoading || !currentUserById || isLoadingUserPost)
     return <SpinnerFullPage />;
@@ -69,13 +50,45 @@ function Profile() {
       />
     );
 
-  if (!isCurrentUser) return <SearchedUserProfile />;
+  if (!isCurrentUser)
+    return <SearchedUserProfile user={userId} posts={currentUserPosts} />;
 
   const { firstName, lastName, email, registerDate, picture } = currentUserById;
   const userPostsAmount = currentUserPosts?.data.length;
 
   return (
     <StyledProfile>
+      <ProfileImage
+        firstName={firstName}
+        lastName={lastName}
+        picture={picture}
+      />
+
+      <UserDetail>
+        <Row type="horizontal">
+          <Heading as="h3">
+            {firstName}_{lastName}
+          </Heading>
+          <RecreatedBtn>Edit profile</RecreatedBtn>
+        </Row>
+        <Row type="horizontal" mt="5rem">
+          <p>
+            {userPostsAmount === 0 ? (
+              <ButtonNeutral>Add Post</ButtonNeutral>
+            ) : (
+              userPostsAmount
+            )}
+          </p>
+          <p>Registered: {new Date(registerDate).toLocaleDateString()}</p>
+        </Row>
+      </UserDetail>
+    </StyledProfile>
+  );
+}
+
+export default Profile;
+
+/*  <StyledProfile>
       <UserImage>
         <img
           className="image-user"
@@ -102,8 +115,4 @@ function Profile() {
           <p>Registered: {new Date(registerDate).toLocaleDateString()}</p>
         </Row>
       </UserDetail>
-    </StyledProfile>
-  );
-}
-
-export default Profile;
+    </StyledProfile> */
