@@ -90,6 +90,7 @@ const StyledRow = styled(Row)`
 
 function ModalPost() {
   let { postId } = useParams();
+  console.log(postId);
 
   const {
     isHovered: isImageHovered,

@@ -10,6 +10,12 @@ const Row = styled.div`
       align-items: center;
     `}
   ${(props) =>
+    props.type === "horizontal-around" &&
+    css`
+      justify-content: space-around;
+      align-items: center;
+    `}
+  ${(props) =>
     props.type === "vertical" &&
     css`
       flex-direction: column;

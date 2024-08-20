@@ -65,7 +65,7 @@ function CommentSectionModal({
   onDeleteComment,
   owner,
 }) {
-  const { currentUserById } = useCurrentDummyUser();
+  const { currentUser } = useCurrentDummyUser();
 
   const {
     isHovered: isImageHovered,
@@ -114,7 +114,7 @@ function CommentSectionModal({
       </StyledCommentBody>
 
       <StyledDeleteSvg>
-        {currentUserById?.id === owner.id && (
+        {currentUser?.id === owner.id && (
           <TiDeleteOutline onClick={onDeleteComment} />
         )}
       </StyledDeleteSvg>

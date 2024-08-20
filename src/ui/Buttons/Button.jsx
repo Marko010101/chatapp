@@ -11,7 +11,6 @@ const StyledButton = styled.button`
     !props.isCommenting &&
     props.isModalComment &&
     css`
-      /* pointer-events: none; */
       color: var(--text-cyan-800);
     `}
 
@@ -30,7 +29,6 @@ const StyledButton = styled.button`
     outline: none;
   }
 
-  /* Additional styles for the disabled state */
   &:disabled {
     cursor: not-allowed;
     opacity: 0.5;

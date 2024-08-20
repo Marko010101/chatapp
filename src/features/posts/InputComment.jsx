@@ -81,7 +81,7 @@ const StyledCommentArea = styled.div`
 `;
 
 function InputComment({ textareaRef, postId, isModalComment }) {
-  const { currentUserById, isLoading, error } = useCurrentDummyUser();
+  const { currentUser, isLoading, error } = useCurrentDummyUser();
   const { mutate, isLoading: isLoadingComment } = useCreateComment();
   const [comment, setComment] = useState("");
   const [isEmojiPickerVisible, setEmojiPickerVisible] = useState(false);
@@ -120,13 +120,13 @@ function InputComment({ textareaRef, postId, isModalComment }) {
   const handlePostComment = () => {
     if (comment.trim() === "") return;
 
-    if (!currentUserById || !postId) {
+    if (!currentUser || !postId) {
       return;
     }
 
     const payload = {
       comment: comment,
-      ownerId: currentUserById,
+      ownerId: currentUser,
       postId,
     };
 

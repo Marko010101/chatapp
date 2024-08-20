@@ -12,7 +12,7 @@ function AllPeople() {
   return (
     <StyledSugestions>
       <h4>Suggested</h4>
-      <DummyUsersList suggestedPage={true} />
+      <DummyUsersList isSuggestedPage={true} />
     </StyledSugestions>
   );
 }

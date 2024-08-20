@@ -11,7 +11,6 @@ import Home from "./pages/Home.jsx";
 import Explore from "./pages/Explore.jsx";
 import Reels from "./pages/Reels.jsx";
 import Messages from "./pages/Messages.jsx";
-import CurrentUserProfile from "./pages/CurrentUserProfile.jsx";
 import PageNotFound from "./pages/PageNotFound.jsx";
 import { SidebarShrinkProvider } from "./context/SidebarShrinkingContext.jsx";
 import { LikeProvider } from "./context/LikesContext.jsx";
@@ -23,6 +22,7 @@ import Login from "./pages/Login.jsx";
 import Modal from "./ui/Modal.jsx";
 import Notifications from "./pages/Notifications.jsx";
 import AllPeople from "./pages/AllPeople.jsx";
+import Profile from "./pages/Profile.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -60,9 +60,10 @@ function App() {
                     <Route path="messages" element={<Messages />} />
                     <Route path="notifications" element={<Notifications />} />
                     <Route path="create" element={<Create />} />
+                    <Route path="profile/:userId" element={<Profile />} />
                     <Route
-                      path="profile/:userId"
-                      element={<CurrentUserProfile />}
+                      path="profile/:userId/:postId"
+                      element={<Profile />}
                     />
                     <Route path="*" element={<PageNotFound />} />
                   </Route>
