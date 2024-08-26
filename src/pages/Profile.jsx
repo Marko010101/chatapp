@@ -70,7 +70,7 @@ function Profile() {
     firstName,
     lastName,
     registerDate,
-    picture,
+    picture = "/public/default-user.jpg",
     dateOfBirth,
     gender,
     title,

@@ -106,7 +106,7 @@ function UserLink({ user, currentUser, isLoadingDummyUsers, isSuggestedPage }) {
     firstName,
     id,
     lastName,
-    picture = "../../../public/default-user.jpg",
+    picture = "/public/default-user.jpg",
   } = user;
   const {
     userById = {},

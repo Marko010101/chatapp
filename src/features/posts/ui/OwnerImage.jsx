@@ -29,7 +29,7 @@ function OwnerImage({ ownerPicture, haveBorder = false, id }) {
       <StyledOwnerImage haveBorder={haveBorder}>
         <img
           className="image-user"
-          src={ownerPicture || "../../../public/default-user.jpg"}
+          src={ownerPicture || "/public/default-user.jpg"}
           alt="Owner image"
         />
       </StyledOwnerImage>
