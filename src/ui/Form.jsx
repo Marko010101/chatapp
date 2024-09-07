@@ -15,6 +15,7 @@ const Form = styled.form`
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      width: 60rem;
     `}
 
   @media (max-width: 768px) {

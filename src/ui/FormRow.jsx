@@ -8,22 +8,22 @@ import { ToggleButton } from "./Buttons/ToggleButton.jsx";
 const StyledFormRow = styled.div`
   display: grid;
   align-items: center;
-  grid-template-columns: 15rem 25rem;
+  grid-template-columns: 15rem 1fr;
   grid-template-rows: max-content 3rem;
   gap: 1.2rem;
-  width: 40rem;
-  max-width: 40rem;
+  width: max-content;
 
   padding: 1rem 0;
 
   ${(props) =>
     props.type === "register" &&
     css`
-      grid-template-columns: 15rem 30rem;
+      /* grid-template-columns: 15rem 30rem; */
     `}
 
   & span {
     position: relative;
+    justify-self: center;
   }
 
   & p {
