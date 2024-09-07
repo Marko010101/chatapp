@@ -32,7 +32,7 @@ const StyledUser = styled.div`
   align-items: center;
 
   ${(props) =>
-    props.suggestedPage &&
+    props.isSuggestedPage &&
     css`
       width: 45rem;
     `}
@@ -94,19 +94,19 @@ const StyledUser = styled.div`
     font-size: var(--font-size-tiny);
 
     ${(props) =>
-      props.suggestedPage &&
+      props.isSuggestedPage &&
       css`
         font-size: var(--font-size-small);
       `}
   }
 `;
 
-function UserLink({ user, currentUser, isLoadingDummyUsers, suggestedPage }) {
+function UserLink({ user, currentUser, isLoadingDummyUsers, isSuggestedPage }) {
   const {
     firstName,
     id,
     lastName,
-    picture = "../../../public/default-user.jpg",
+    picture = "/public/default-user.jpg",
   } = user;
   const {
     userById = {},
@@ -140,7 +140,7 @@ function UserLink({ user, currentUser, isLoadingDummyUsers, suggestedPage }) {
 
   return (
     <>
-      <StyledUser suggestedPage={suggestedPage}>
+      <StyledUser isSuggestedPage={isSuggestedPage}>
         <Row
           onMouseEnter={handleImageMouseEnter}
           onMouseLeave={handleImageMouseLeave}
@@ -176,7 +176,7 @@ function UserLink({ user, currentUser, isLoadingDummyUsers, suggestedPage }) {
                       ? "Suggested for you"
                       : "New to Petfolio"}
                   </span>
-                  {suggestedPage && (
+                  {isSuggestedPage && (
                     <Heading as="h6">
                       {location?.country ? location?.country : email}
                     </Heading>

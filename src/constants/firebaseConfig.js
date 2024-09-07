@@ -3,7 +3,8 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: import.meta.env.REACT_APP_FIREBASE_API_KEY,
+  // apiKey: import.meta.env.REACT_APP_FIREBASE_API_KEY,
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "petfolio-f29a4.firebaseapp.com",
   projectId: "petfolio-f29a4",
   storageBucket: "petfolio-f29a4.appspot.com",

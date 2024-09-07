@@ -96,7 +96,7 @@ const StyledNavLink = styled(NavLink)`
 function MainNav() {
   const { isShrunk } = useSidebarShrink();
   const { logout } = useLogout();
-  const { currentUserById, isLoading: currentUserIsLoading } =
+  const { currentUser, isLoading: currentUserIsLoading } =
     useCurrentDummyUser();
 
   return (
@@ -172,9 +172,9 @@ function MainNav() {
       </div>
       <div>
         <NavList isShrunk={isShrunk}>
-          {currentUserById?.id ? (
+          {currentUser?.id ? (
             <li>
-              <StyledNavLink to={`/profile/${currentUserById?.id}`}>
+              <StyledNavLink to={`/profile/${currentUser?.id}`}>
                 <CgProfile />
                 <span>Profile</span>
               </StyledNavLink>

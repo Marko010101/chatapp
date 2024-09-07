@@ -4,13 +4,12 @@ import { useUserFirebase } from "../hooks/useUserFirebase.js";
 import { useUsers } from "./useUsers.js";
 
 export function useCurrentDummyUser() {
-  const realUser = true;
-  const { dummyUsers } = useUsers(realUser);
+  const { dummyUsers } = useUsers(true);
   const { user } = useUserFirebase();
   const userUid = user?.uid;
 
   const {
-    data: currentUserById,
+    data: currentUser,
     isLoading,
     error,
   } = useQuery({
@@ -19,5 +18,5 @@ export function useCurrentDummyUser() {
       await matchFirebaseAndDummyUsers(userUid, dummyUsers?.data),
   });
 
-  return { currentUserById, isLoading, error };
+  return { currentUser, isLoading, error };
 }

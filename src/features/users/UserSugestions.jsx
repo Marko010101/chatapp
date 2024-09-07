@@ -34,11 +34,11 @@ const StyledHeading = styled.div`
 
 function UserSugestions() {
   const {
-    currentUserById,
+    currentUser,
     isLoading: currentUserIsLoading,
     error: errorCurrentUser,
   } = useCurrentDummyUser();
-  const { userById = {}, isLoading, error } = useUserById(currentUserById?.id);
+  const { userById = {}, isLoading, error } = useUserById(currentUser?.id);
 
   if (errorCurrentUser || error)
     return <ErrorText>{errorCurrentUser || error}</ErrorText>;

@@ -7,7 +7,9 @@ import ModalPost from "./ModalPost.jsx";
 import ErrorText from "../../ui/ErrorText.jsx";
 import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
 
-const StyledComments = styled.div``;
+const StyledComments = styled.div`
+  width: max-content;
+`;
 
 const Text = styled.p`
   & NavLink {

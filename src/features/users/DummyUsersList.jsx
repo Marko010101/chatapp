@@ -4,7 +4,7 @@ import UserLink from "./UserLink.jsx";
 
 function DummyUsersList({
   isLoading = false,
-  suggestedPage = false,
+  isSuggestedPage = false,
   slicedNumber,
 }) {
   const {
@@ -35,7 +35,7 @@ function DummyUsersList({
             <UserLink
               user={user}
               key={user?.id}
-              suggestedPage={suggestedPage}
+              isSuggestedPage={isSuggestedPage}
               isLoadingDummyUsers={
                 isLoading || isLoadingDummyUsers || isLoadingRealUsers
               }

@@ -73,7 +73,7 @@ function Modal({ children }) {
   const navigate = useNavigate();
   const close = () => {
     setOpenName("");
-    navigate("/");
+    navigate(-1);
   };
   const open = setOpenName;
 

@@ -1,10 +1,11 @@
 import styled, { css } from "styled-components";
-import { calculateAge } from "../../utils/helpers.js";
+
 import { useUserPosts } from "../posts/hooks/useUsersPosts.js";
 import Row from "../../ui/Row.jsx";
 import OwnerImage from "../posts/ui/OwnerImage.jsx";
 import ErrorText from "../../ui/ErrorText.jsx";
 import UserName from "./ui/UserName.jsx";
+import PersonalInfo from "./ui/PersonalInfo.jsx";
 
 const StyledHoverPopup = styled.div`
   position: absolute;
@@ -75,11 +76,11 @@ const StyledHeader = styled.div`
   }
 `;
 
-const PersonalInfo = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-`;
+// const PersonalInfo = styled.div`
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-around;
+// `;
 
 const StyledPosts = styled.div`
   display: flex;
@@ -94,24 +95,11 @@ const StyledPosts = styled.div`
 `;
 
 function UserProfileOnHover({ user, left }) {
-  const {
-    dateOfBirth,
-    email,
-    firstName,
-    gender,
-    id,
-    lastName,
-    location,
-    phone,
-    picture,
-    registerDate,
-    title,
-    updatedDate,
-  } = user;
+  const { dateOfBirth, firstName, gender, id, lastName, picture, title } = user;
 
   const { currentUserPosts, isLoading, error } = useUserPosts(id);
 
-  if (isLoading) return null;
+  if (isLoading) return;
   if (error) return <ErrorText>{error}</ErrorText>;
 
   return (
@@ -130,11 +118,11 @@ function UserProfileOnHover({ user, left }) {
       </StyledHeader>
 
       {gender && dateOfBirth ? (
-        <PersonalInfo>
-          <h6>Posts {currentUserPosts?.data?.length}</h6>
-          <span>{gender}</span>
-          <span>{calculateAge(dateOfBirth)} Years old</span>
-        </PersonalInfo>
+        <PersonalInfo
+          postLength={currentUserPosts?.data?.length}
+          gender={gender}
+          dateOfBirth={dateOfBirth}
+        />
       ) : (
         <div></div>
       )}

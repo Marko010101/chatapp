@@ -74,7 +74,7 @@ function Home() {
   );
 
   return (
-    <StyledPosts>
+    <>
       {postId && (
         <div>
           <Modal.Window name="modalPost">
@@ -83,17 +83,19 @@ function Home() {
         </div>
       )}
 
-      <div>
-        {content}
-        <CenteredSpinnerWrapper>
-          {isFetchingNextPage && <SpinnerGrayMini />}
-        </CenteredSpinnerWrapper>
-      </div>
-      <SuggestedFriends>
-        <UserSugestions />
-      </SuggestedFriends>
-      <Footer />
-    </StyledPosts>
+      <StyledPosts>
+        <div>
+          {content}
+          <CenteredSpinnerWrapper>
+            {isFetchingNextPage && <SpinnerGrayMini />}
+          </CenteredSpinnerWrapper>
+        </div>
+        <SuggestedFriends>
+          <UserSugestions />
+        </SuggestedFriends>
+        <Footer />
+      </StyledPosts>
+    </>
   );
 }
 

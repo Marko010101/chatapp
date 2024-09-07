@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 const UserImage = styled.div`
+  align-self: center;
+  justify-self: center;
   width: 15rem;
 
   & img {
