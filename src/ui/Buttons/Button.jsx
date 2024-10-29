@@ -6,6 +6,7 @@ const StyledButton = styled.button`
   font-weight: var(--font-weight-medium);
   border: none;
   cursor: pointer;
+  min-width: 7rem;
 
   ${(props) =>
     !props.isCommenting &&

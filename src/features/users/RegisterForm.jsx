@@ -9,6 +9,8 @@ import FancyButton from "../../ui/Buttons/FancyButton.jsx";
 import Button from "../../ui/Buttons/Button.jsx";
 import { useSignup } from "./hooks/useSignup.js";
 import { useFirebaseSignup } from "./hooks/useFirebaseSignup.js";
+import ErrorText from "../../ui/ErrorText.jsx";
+import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
 
 function RegisterForm() {
   const {
@@ -22,10 +24,9 @@ function RegisterForm() {
   const [isRepeatPasswordVisible, setIsRepeatPasswordVisible] = useState(false);
 
   // Dummy api user uploading
-  const { signupOnDummy, isLoading: isLoading2 } = useSignup();
-
+  const { signupOnDummy, isPending: isLoading2, error } = useSignup();
   // Firebase registration
-  const { mutate: signupWithFirebase, isLoading: isLoading1 } =
+  const { mutate: signupWithFirebase, isPending: isLoading1 } =
     useFirebaseSignup();
 
   const navigate = useNavigate();
@@ -133,6 +134,9 @@ function RegisterForm() {
           })}
         />
       </FormRow>
+      <ErrorText>
+        {error?.message && "Could not register user, please try again."}
+      </ErrorText>
       <FormRow>
         <Button
           type="reset"
@@ -142,10 +146,10 @@ function RegisterForm() {
             navigate("/login");
           }}
         >
-          Cancel
+          {isLoading2 || isLoading1 ? <SpinnerMini /> : "Cancel"}
         </Button>
         <FancyButton type="submit" disabled={isLoading1 || isLoading2}>
-          Join us!
+          {isLoading2 || isLoading1 ? <SpinnerMini /> : "Join us!"}
         </FancyButton>
       </FormRow>
     </Form>

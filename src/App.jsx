@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
@@ -7,22 +7,10 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import GlobalStyles from "./styles/globalStyles.js";
 import AppLayout from "./ui/AppLayout.jsx";
 import SpinnerFullPage from "./ui/loaders/SpinnerFullPage.jsx";
-import Home from "./pages/Home.jsx";
-import Explore from "./pages/Explore.jsx";
-import Reels from "./pages/Reels.jsx";
-import Messages from "./pages/Messages.jsx";
-import PageNotFound from "./pages/PageNotFound.jsx";
 import { SidebarShrinkProvider } from "./context/SidebarShrinkingContext.jsx";
 import { LikeProvider } from "./context/LikesContext.jsx";
-import Search from "./pages/Search.jsx";
-import Create from "./pages/Create.jsx";
 import ProtectedRoute from "./ui/ProtectedRoute.jsx";
-import Register from "./pages/Register.jsx";
-import Login from "./pages/Login.jsx";
 import Modal from "./ui/Modal.jsx";
-import Notifications from "./pages/Notifications.jsx";
-import AllPeople from "./pages/AllPeople.jsx";
-import Profile from "./pages/Profile.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,6 +20,19 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+const Home = lazy(() => import("./pages/Home.jsx"));
+const Explore = lazy(() => import("./pages/Explore.jsx"));
+const Reels = lazy(() => import("./pages/Reels.jsx"));
+const Messages = lazy(() => import("./pages/Messages.jsx"));
+const PageNotFound = lazy(() => import("./pages/PageNotFound.jsx"));
+const Search = lazy(() => import("./pages/Search.jsx"));
+const Create = lazy(() => import("./pages/Create.jsx"));
+const Register = lazy(() => import("./pages/Register.jsx"));
+const Login = lazy(() => import("./pages/Login.jsx"));
+const Notifications = lazy(() => import("./pages/Notifications.jsx"));
+const AllPeople = lazy(() => import("./pages/AllPeople.jsx"));
+const Profile = lazy(() => import("./pages/Profile.jsx"));
 
 function App() {
   return (
