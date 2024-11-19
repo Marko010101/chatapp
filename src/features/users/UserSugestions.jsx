@@ -6,7 +6,9 @@ import { useUserById } from "./hooks/useUserById.js";
 import { useCurrentDummyUser } from "./hooks/useCurrentDummyUser.js";
 import { Link } from "react-router-dom";
 import DummyUsersList from "./DummyUsersList.jsx";
-const StyledUserSuggestions = styled.div``;
+const StyledUserSuggestions = styled.div`
+  /* cursor: ${(props) => (props.currentUserIsLoading ? "wait" : "pointer")}; */
+`;
 
 const StyledHeading = styled.div`
   display: flex;

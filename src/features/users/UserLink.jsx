@@ -1,4 +1,5 @@
 import styled, { keyframes, css } from "styled-components";
+
 import {
   fixedSizeFullName,
   getFormattedDateInfo,
@@ -12,6 +13,7 @@ import Row from "../../ui/Row.jsx";
 import UserName from "./ui/UserName.jsx";
 import { RelativeDiv } from "../../ui/RelativeDiv.jsx";
 import Heading from "../../ui/Heading.jsx";
+import defaultUserImg from "../../assets/default-user.jpg";
 
 // Keyframes for the wave animation
 const waveAnimation = keyframes`
@@ -87,7 +89,6 @@ const StyledUser = styled.div`
     font-size: var(--font-size-tiny);
     font-weight: var(--font-weight-medium);
     letter-spacing: 0.1px;
-    /* display: block; */
   }
 
   & button {
@@ -102,19 +103,9 @@ const StyledUser = styled.div`
 `;
 
 function UserLink({ user, currentUser, isLoadingDummyUsers, isSuggestedPage }) {
-  const {
-    firstName,
-    id,
-    lastName,
-    picture = "/public/default-user.jpg",
-  } = user;
-  const {
-    userById = {},
-    isLoading: isLoadingUserById,
-    error,
-  } = useUserById(id);
+  const { firstName, id, lastName, picture = defaultUserImg } = user;
+  const { userById = {}, isLoading: isLoadingUserById } = useUserById(id);
   const { registerDate, location, email } = userById;
-
   const {
     isHovered: isImageHovered,
     handleMouseEnter: handleImageMouseEnter,
@@ -127,7 +118,6 @@ function UserLink({ user, currentUser, isLoadingDummyUsers, isSuggestedPage }) {
   } = useHover();
 
   const { diffInMonths } = getFormattedDateInfo(registerDate);
-
   if (isLoadingDummyUsers || isLoadingUserById) {
     return (
       <StyledUser isLoading={true}>

@@ -6,6 +6,7 @@ import OwnerImage from "../posts/ui/OwnerImage.jsx";
 import ErrorText from "../../ui/ErrorText.jsx";
 import UserName from "./ui/UserName.jsx";
 import PersonalInfo from "./ui/PersonalInfo.jsx";
+import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
 
 const StyledHoverPopup = styled.div`
   position: absolute;
@@ -85,7 +86,7 @@ const StyledHeader = styled.div`
 const StyledPosts = styled.div`
   display: flex;
   gap: 0.3rem;
-  align-items: end;
+  align-items: ${(props) => (props.isLoading ? "center" : "end")};
   justify-content: center;
   & img {
     width: calc(100% / 3);
@@ -99,7 +100,6 @@ function UserProfileOnHover({ user, left }) {
 
   const { currentUserPosts, isLoading, error } = useUserPosts(id);
 
-  if (isLoading) return;
   if (error) return <ErrorText>{error}</ErrorText>;
 
   return (
@@ -126,16 +126,15 @@ function UserProfileOnHover({ user, left }) {
       ) : (
         <div></div>
       )}
-      <StyledPosts>
-        {currentUserPosts?.data.length ? (
-          currentUserPosts?.data
-            ?.slice(0, 3)
-            .map((post) => (
-              <img key={post?.id} src={post?.image} alt={`Post ${post.id}`} />
-            ))
-        ) : (
-          <span>No posts yet</span>
-        )}
+      <StyledPosts isLoading={isLoading}>
+        {isLoading && <SpinnerMini />}
+        {currentUserPosts?.data.length
+          ? currentUserPosts?.data
+              ?.slice(0, 3)
+              .map((post) => (
+                <img key={post?.id} src={post?.image} alt={`Post ${post.id}`} />
+              ))
+          : !isLoading && <span>No posts yet</span>}
       </StyledPosts>
       <Row>
         <button>Message</button>

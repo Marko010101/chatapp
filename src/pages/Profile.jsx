@@ -14,6 +14,7 @@ import UserDetails from "../features/users/ui/UserDetails.jsx";
 import ProfilePosts from "../features/posts/ui/ProfilePosts.jsx";
 import Modal, { ModalContext } from "../ui/Modal.jsx";
 import ModalPost from "../features/posts/ModalPost.jsx";
+import defaultUserImg from "../assets/default-user.jpg";
 
 const StyledProfile = styled.main`
   display: grid;
@@ -70,7 +71,7 @@ function Profile() {
     firstName,
     lastName,
     registerDate,
-    picture = "/public/default-user.jpg",
+    picture = defaultUserImg,
     dateOfBirth,
     gender,
     title,

@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
+
+import defaultUserImg from "../../../assets/default-user.jpg";
+
 const StyledOwnerImage = styled.div`
   display: flex;
   justify-content: center;
@@ -29,7 +32,7 @@ function OwnerImage({ ownerPicture, haveBorder = false, id }) {
       <StyledOwnerImage haveBorder={haveBorder}>
         <img
           className="image-user"
-          src={ownerPicture || "/public/default-user.jpg"}
+          src={ownerPicture || defaultUserImg}
           alt="Owner image"
         />
       </StyledOwnerImage>
