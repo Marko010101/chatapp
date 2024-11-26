@@ -13,26 +13,7 @@ import UserSugestions from "../features/users/UserSugestions.jsx";
 import SpinnerGrayMini from "../ui/loaders/SpinnerGrayMini.jsx";
 import { useInView } from "react-intersection-observer";
 import Footer from "../ui/Footer.jsx";
-
-const StyledPosts = styled.main`
-  margin-top: 2rem;
-  width: 100%;
-  display: grid;
-  grid-template-columns: max-content 23rem;
-`;
-
-const SuggestedFriends = styled.section`
-  display: flex;
-  flex-direction: column;
-  margin-left: 19rem;
-  width: 29rem;
-`;
-
-const CenteredSpinnerWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
-`;
+import useWindowWidth from "../hooks/useWindowWidth.js";
 
 function Home() {
   const {
@@ -46,6 +27,7 @@ function Home() {
   let { postId } = useParams();
   const { open } = useContext(ModalContext);
   const { ref, inView } = useInView();
+  const { windowWidth } = useWindowWidth();
 
   useEffect(() => {
     if (postId) {
@@ -90,9 +72,11 @@ function Home() {
             {isFetchingNextPage && <SpinnerGrayMini />}
           </CenteredSpinnerWrapper>
         </div>
-        <SuggestedFriends>
-          <UserSugestions />
-        </SuggestedFriends>
+        {windowWidth >= 992 && (
+          <SuggestedFriends>
+            <UserSugestions />
+          </SuggestedFriends>
+        )}
         <Footer />
       </StyledPosts>
     </>
@@ -100,3 +84,37 @@ function Home() {
 }
 
 export default Home;
+
+const StyledPosts = styled.main`
+  margin-top: 2rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: max-content 23rem;
+
+  @media (max-width: 1200px) {
+    gap: 4rem;
+  }
+  @media (max-width: 992px) {
+    grid-template-columns: max-content;
+  }
+  @media (max-width: 768px) {
+    padding-left: 8rem;
+  }
+`;
+
+const SuggestedFriends = styled.section`
+  display: flex;
+  flex-direction: column;
+  margin-left: 19rem;
+  width: 29rem;
+
+  @media (max-width: 1200px) {
+    margin-left: 0rem;
+  }
+`;
+
+const CenteredSpinnerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+`;

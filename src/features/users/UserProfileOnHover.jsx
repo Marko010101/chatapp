@@ -8,6 +8,56 @@ import UserName from "./ui/UserName.jsx";
 import PersonalInfo from "./ui/PersonalInfo.jsx";
 import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
 
+function UserProfileOnHover({ user, left }) {
+  const { dateOfBirth, firstName, gender, id, lastName, picture, title } = user;
+
+  const { currentUserPosts, isLoading, error } = useUserPosts(id);
+
+  if (error) return <ErrorText>{error}</ErrorText>;
+
+  return (
+    <StyledHoverPopup left={left}>
+      <StyledHeader>
+        <OwnerImage ownerPicture={picture} id={id} />
+        {title && <span>{title}</span>}{" "}
+        <UserName
+          firstName={firstName}
+          lastName={lastName}
+          length={25}
+          isUnderscore={true}
+          heading="h4"
+          id={id}
+        />
+      </StyledHeader>
+
+      {gender && dateOfBirth ? (
+        <PersonalInfo
+          postLength={currentUserPosts?.data?.length}
+          gender={gender}
+          dateOfBirth={dateOfBirth}
+        />
+      ) : (
+        <div></div>
+      )}
+      <StyledPosts isLoading={isLoading}>
+        {isLoading && <SpinnerMini />}
+        {currentUserPosts?.data.length
+          ? currentUserPosts?.data
+              ?.slice(0, 3)
+              .map((post) => (
+                <img key={post?.id} src={post?.image} alt={`Post ${post.id}`} />
+              ))
+          : !isLoading && <span>No posts yet</span>}
+      </StyledPosts>
+      <Row>
+        <button>Message</button>
+      </Row>
+    </StyledHoverPopup>
+  );
+}
+
+export default UserProfileOnHover;
+
 const StyledHoverPopup = styled.div`
   position: absolute;
   top: 95%;
@@ -94,53 +144,3 @@ const StyledPosts = styled.div`
     object-fit: cover;
   }
 `;
-
-function UserProfileOnHover({ user, left }) {
-  const { dateOfBirth, firstName, gender, id, lastName, picture, title } = user;
-
-  const { currentUserPosts, isLoading, error } = useUserPosts(id);
-
-  if (error) return <ErrorText>{error}</ErrorText>;
-
-  return (
-    <StyledHoverPopup left={left}>
-      <StyledHeader>
-        <OwnerImage ownerPicture={picture} id={id} />
-        {title && <span>{title}</span>}{" "}
-        <UserName
-          firstName={firstName}
-          lastName={lastName}
-          length={25}
-          isUnderscore={true}
-          heading="h4"
-          id={id}
-        />
-      </StyledHeader>
-
-      {gender && dateOfBirth ? (
-        <PersonalInfo
-          postLength={currentUserPosts?.data?.length}
-          gender={gender}
-          dateOfBirth={dateOfBirth}
-        />
-      ) : (
-        <div></div>
-      )}
-      <StyledPosts isLoading={isLoading}>
-        {isLoading && <SpinnerMini />}
-        {currentUserPosts?.data.length
-          ? currentUserPosts?.data
-              ?.slice(0, 3)
-              .map((post) => (
-                <img key={post?.id} src={post?.image} alt={`Post ${post.id}`} />
-              ))
-          : !isLoading && <span>No posts yet</span>}
-      </StyledPosts>
-      <Row>
-        <button>Message</button>
-      </Row>
-    </StyledHoverPopup>
-  );
-}
-
-export default UserProfileOnHover;

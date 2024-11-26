@@ -2,6 +2,26 @@ import styled, { css } from "styled-components";
 import { getFormattedDateInfo } from "../../../utils/helpers.js";
 import { Tooltip } from "react-tooltip";
 
+function PostFormatedDate({ date, isModalComment }) {
+  const { relativeTime, formattedDate } = getFormattedDateInfo(date);
+  return (
+    <StyledFormatedDate isModalComment={isModalComment}>
+      <a data-tooltip-id="formatedDate" data-tooltip-content={formattedDate}>
+        {relativeTime}
+      </a>
+      <StyledTooltip
+        isModalComment={isModalComment}
+        id="formatedDate"
+        place={isModalComment ? "right-start" : "top"}
+        effect="solid"
+        delayShow={400}
+      />
+    </StyledFormatedDate>
+  );
+}
+
+export default PostFormatedDate;
+
 const StyledFormatedDate = styled.div`
   & a {
     font-size: var(--font-size-small);
@@ -37,23 +57,3 @@ export const StyledTooltip = styled(Tooltip)`
     padding: 0 !important;
   }
 `;
-
-function PostFormatedDate({ date, isModalComment }) {
-  const { relativeTime, formattedDate } = getFormattedDateInfo(date);
-  return (
-    <StyledFormatedDate isModalComment={isModalComment}>
-      <a data-tooltip-id="formatedDate" data-tooltip-content={formattedDate}>
-        {relativeTime}
-      </a>
-      <StyledTooltip
-        isModalComment={isModalComment}
-        id="formatedDate"
-        place={isModalComment ? "right-start" : "top"}
-        effect="solid"
-        delayShow={400}
-      />
-    </StyledFormatedDate>
-  );
-}
-
-export default PostFormatedDate;

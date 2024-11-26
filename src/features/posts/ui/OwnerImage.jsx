@@ -3,6 +3,22 @@ import styled, { css } from "styled-components";
 
 import defaultUserImg from "../../../assets/default-user.jpg";
 
+function OwnerImage({ ownerPicture, haveBorder = false, id }) {
+  return (
+    <Link to={`/profile/${id}`}>
+      <StyledOwnerImage haveBorder={haveBorder}>
+        <img
+          className="image-user"
+          src={ownerPicture || defaultUserImg}
+          alt="Owner image"
+        />
+      </StyledOwnerImage>
+    </Link>
+  );
+}
+
+export default OwnerImage;
+
 const StyledOwnerImage = styled.div`
   display: flex;
   justify-content: center;
@@ -25,19 +41,3 @@ const StyledOwnerImage = styled.div`
       }
     `}
 `;
-
-function OwnerImage({ ownerPicture, haveBorder = false, id }) {
-  return (
-    <Link to={`/profile/${id}`}>
-      <StyledOwnerImage haveBorder={haveBorder}>
-        <img
-          className="image-user"
-          src={ownerPicture || defaultUserImg}
-          alt="Owner image"
-        />
-      </StyledOwnerImage>
-    </Link>
-  );
-}
-
-export default OwnerImage;

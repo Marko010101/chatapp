@@ -4,6 +4,26 @@ import { useMoveBack } from "../hooks/useMoveBack";
 import Heading from "../ui/Heading";
 import Footer from "../ui/Footer.jsx";
 
+function PageNotFound() {
+  const moveBack = useMoveBack();
+
+  return (
+    <StyledPageNotFound>
+      <Heading as="h1">Sorry, this page isn't available.</Heading>
+      <p>
+        The link you followed may be broken, or the page may have been removed.
+        <span onClick={moveBack}>
+          {" "}
+          Go back to <span>PetFolio.</span>
+        </span>
+      </p>
+      <Footer />
+    </StyledPageNotFound>
+  );
+}
+
+export default PageNotFound;
+
 const StyledPageNotFound = styled.main`
   height: 100vh;
   background-color: var(--color-black);
@@ -35,23 +55,3 @@ const StyledPageNotFound = styled.main`
     align-self: center;
   }
 `;
-
-function PageNotFound() {
-  const moveBack = useMoveBack();
-
-  return (
-    <StyledPageNotFound>
-      <Heading as="h1">Sorry, this page isn't available.</Heading>
-      <p>
-        The link you followed may be broken, or the page may have been removed.
-        <span onClick={moveBack}>
-          {" "}
-          Go back to <span>PetFolio.</span>
-        </span>
-      </p>
-      <Footer />
-    </StyledPageNotFound>
-  );
-}
-
-export default PageNotFound;

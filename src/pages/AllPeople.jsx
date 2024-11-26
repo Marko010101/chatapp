@@ -1,12 +1,5 @@
 import styled from "styled-components";
 import DummyUsersList from "../features/users/DummyUsersList.jsx";
-const StyledSugestions = styled.div`
-  padding: 5rem 0rem;
-
-  h4 {
-    font-weight: var(--font-weight-semibold);
-  }
-`;
 
 function AllPeople() {
   return (
@@ -18,3 +11,11 @@ function AllPeople() {
 }
 
 export default AllPeople;
+
+const StyledSugestions = styled.div`
+  padding: 5rem 0rem;
+
+  h4 {
+    font-weight: var(--font-weight-semibold);
+  }
+`;

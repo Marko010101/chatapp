@@ -7,27 +7,6 @@ import ModalPost from "./ModalPost.jsx";
 import ErrorText from "../../ui/ErrorText.jsx";
 import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
 
-const StyledComments = styled.div`
-  width: max-content;
-`;
-
-const Text = styled.p`
-  & NavLink {
-    font-size: var(--font-size-small);
-    color: var(--color-gray-text);
-
-    ${(props) =>
-      props.isComments &&
-      css`
-        cursor: pointer;
-
-        &:active {
-          color: var(--color-gray-active);
-        }
-      `}
-  }
-`;
-
 function CommentsModal({ postIdComment, textareaRef }) {
   let { postId } = useParams();
 
@@ -77,3 +56,24 @@ function CommentsModal({ postIdComment, textareaRef }) {
 }
 
 export default CommentsModal;
+
+const StyledComments = styled.div`
+  width: max-content;
+`;
+
+const Text = styled.p`
+  & NavLink {
+    font-size: var(--font-size-small);
+    color: var(--color-gray-text);
+
+    ${(props) =>
+      props.isComments &&
+      css`
+        cursor: pointer;
+
+        &:active {
+          color: var(--color-gray-active);
+        }
+      `}
+  }
+`;

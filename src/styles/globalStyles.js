@@ -279,7 +279,12 @@ img {
 }
 
 
-/* @media (max-width: 992px) {
+@media (max-width: 1200px) {
+  html {
+    font-size: 60%;
+  }
+}
+@media (max-width: 992px) {
   html {
     font-size: 55%;
   }
@@ -287,15 +292,15 @@ img {
 
 @media (max-width: 768px) {
   html {
-    font-size: 50%;
+    font-size: 52.5%;
   }
 }
 
 @media (max-width: 576px) {
   html {
-    font-size: 45%;
+    font-size: 50%;
   }
-} */
+}
 
 
 

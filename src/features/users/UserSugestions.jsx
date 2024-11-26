@@ -6,33 +6,6 @@ import { useUserById } from "./hooks/useUserById.js";
 import { useCurrentDummyUser } from "./hooks/useCurrentDummyUser.js";
 import { Link } from "react-router-dom";
 import DummyUsersList from "./DummyUsersList.jsx";
-const StyledUserSuggestions = styled.div`
-  /* cursor: ${(props) => (props.currentUserIsLoading ? "wait" : "pointer")}; */
-`;
-
-const StyledHeading = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 2rem;
-
-  & h4 {
-    font-size: var(--font-size-small);
-    color: var(--color-neutral-400);
-    letter-spacing: 0.2px;
-    font-weight: var(--font-weight-medium);
-  }
-
-  & a {
-    color: var(--color-neutral-50);
-    font-size: var(--font-size-tiny);
-    font-weight: var(--font-weight-semibold);
-    text-shadow: var(--text-shadow);
-    &:hover {
-      color: var(--color-neutral-500);
-    }
-  }
-`;
 
 function UserSugestions() {
   const {
@@ -65,3 +38,31 @@ function UserSugestions() {
 }
 
 export default UserSugestions;
+
+const StyledUserSuggestions = styled.div`
+  /* cursor: ${(props) => (props.currentUserIsLoading ? "wait" : "pointer")}; */
+`;
+
+const StyledHeading = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+
+  & h4 {
+    font-size: var(--font-size-small);
+    color: var(--color-neutral-400);
+    letter-spacing: 0.2px;
+    font-weight: var(--font-weight-medium);
+  }
+
+  & a {
+    color: var(--color-neutral-50);
+    font-size: var(--font-size-tiny);
+    font-weight: var(--font-weight-semibold);
+    text-shadow: var(--text-shadow);
+    &:hover {
+      color: var(--color-neutral-500);
+    }
+  }
+`;

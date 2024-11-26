@@ -6,6 +6,7 @@ import { cloneElement, createContext, useContext, useState } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick.js";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import useWindowWidth from "../hooks/useWindowWidth.js";
 
 const slideDown = keyframes`
   0% {
@@ -59,9 +60,6 @@ const Button = styled.button`
   & svg {
     width: 2.4rem;
     height: 2.4rem;
-    /* Sometimes we need both */
-    /* fill: var(--color-grey-500);
-    stroke: var(--color-grey-500); */
     color: var(--color-grey-500);
   }
 `;
@@ -91,6 +89,7 @@ function Open({ children, opens: opensWindowName }) {
 }
 
 function Window({ children, name }) {
+  const { windowWidth } = useWindowWidth();
   const { openName, close } = useContext(ModalContext);
   const ref = useOutsideClick(close);
 
@@ -116,9 +115,11 @@ function Window({ children, name }) {
       <StyledModal ref={ref}>
         <div>{cloneElement(children, { onCloseModal: close })}</div>
       </StyledModal>
-      <Button onClick={close}>
-        <HiXMark />
-      </Button>
+      {windowWidth >= 993 && (
+        <Button onClick={close}>
+          <HiXMark />
+        </Button>
+      )}
     </Overlay>,
     document.body
   );

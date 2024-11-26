@@ -10,76 +10,6 @@ import { useCurrentDummyUser } from "../users/hooks/useCurrentDummyUser.js";
 import useCreateComment from "./hooks/useCreateComment.js";
 import ErrorText from "../../ui/ErrorText.jsx";
 
-const StyledCommentArea = styled.div`
-  position: relative;
-  display: grid;
-  place-items: center;
-  padding: 0.3rem 0.3rem 1rem;
-  border-bottom: var(--border);
-  min-height: 5rem;
-
-  ${(props) =>
-    !props.isModalComment && props.isCommenting
-      ? css`
-          grid-template-columns: 1fr 5rem 2rem;
-        `
-      : css`
-          grid-template-columns: 1fr 2rem;
-        `}
-
-  ${(props) =>
-    props.isModalComment &&
-    css`
-      grid-template-columns: 4rem 1fr 5rem;
-    `}
-
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-
-  color: var(--color-gray-text);
-  cursor: pointer;
-
-  &:hover {
-    color: var(--color-gray-active);
-  }
-  &:active {
-    color: var(--text-stone-700);
-  }
-
-  & svg {
-    ${(props) =>
-      props.isModalComment &&
-      css`
-        color: var(--color-gray-0);
-        font-size: 2.5rem;
-        grid-column: 1/2;
-        grid-row: 1/-1;
-      `}
-  }
-
-  & textarea {
-    background-color: transparent;
-    max-height: 8.5rem;
-    width: 100%;
-    border: none;
-    outline: none;
-    resize: none;
-    overflow: auto;
-    color: var(--color-text);
-    font-size: var(--font-size-small);
-
-    &::placeholder {
-      color: var(--color-gray-text);
-    }
-
-    &:focus {
-      outline: none;
-    }
-  }
-`;
-
 function InputComment({ textareaRef, postId, isModalComment }) {
   const { currentUser, isLoading, error } = useCurrentDummyUser();
   const { mutate, isLoading: isLoadingComment } = useCreateComment();
@@ -188,3 +118,73 @@ function InputComment({ textareaRef, postId, isModalComment }) {
 }
 
 export default InputComment;
+
+const StyledCommentArea = styled.div`
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 0.3rem 0.3rem 1rem;
+  border-bottom: var(--border);
+  min-height: 5rem;
+
+  ${(props) =>
+    !props.isModalComment && props.isCommenting
+      ? css`
+          grid-template-columns: 1fr 5rem 2rem;
+        `
+      : css`
+          grid-template-columns: 1fr 2rem;
+        `}
+
+  ${(props) =>
+    props.isModalComment &&
+    css`
+      grid-template-columns: 4rem 1fr 5rem;
+    `}
+
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+  color: var(--color-gray-text);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-gray-active);
+  }
+  &:active {
+    color: var(--text-stone-700);
+  }
+
+  & svg {
+    ${(props) =>
+      props.isModalComment &&
+      css`
+        color: var(--color-gray-0);
+        font-size: 2.5rem;
+        grid-column: 1/2;
+        grid-row: 1/-1;
+      `}
+  }
+
+  & textarea {
+    background-color: transparent;
+    max-height: 8.5rem;
+    width: 100%;
+    border: none;
+    outline: none;
+    resize: none;
+    overflow: auto;
+    color: var(--color-text);
+    font-size: var(--font-size-small);
+
+    &::placeholder {
+      color: var(--color-gray-text);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+`;

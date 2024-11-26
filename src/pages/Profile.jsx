@@ -16,14 +16,6 @@ import Modal, { ModalContext } from "../ui/Modal.jsx";
 import ModalPost from "../features/posts/ModalPost.jsx";
 import defaultUserImg from "../assets/default-user.jpg";
 
-const StyledProfile = styled.main`
-  display: grid;
-  grid-template-columns: 30rem 45rem;
-  align-items: start;
-  border-bottom: var(--border);
-  padding: 2rem 0;
-`;
-
 function Profile() {
   const moveBack = useMoveBack();
   let { postId } = useParams();
@@ -110,3 +102,11 @@ function Profile() {
 }
 
 export default Profile;
+
+const StyledProfile = styled.main`
+  display: grid;
+  grid-template-columns: 30rem 45rem;
+  align-items: start;
+  border-bottom: var(--border);
+  padding: 2rem 0;
+`;

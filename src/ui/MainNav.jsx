@@ -14,8 +14,12 @@ import { CgProfile } from "react-icons/cg";
 import { RiAddCircleLine, RiAddCircleFill } from "react-icons/ri";
 import { useSidebarShrink } from "../context/SidebarShrinkingContext.jsx";
 import { BiLogOut } from "react-icons/bi";
+import { MdOutlinePeopleAlt } from "react-icons/md";
+import { MdPeopleAlt } from "react-icons/md";
+
 import { useLogout } from "../features/users/hooks/useLogout.js";
 import { useCurrentDummyUser } from "../features/users/hooks/useCurrentDummyUser.js";
+import useWindowWidth from "../hooks/useWindowWidth.js";
 
 const StyledNav = styled.nav`
   display: flex;
@@ -98,6 +102,7 @@ function MainNav() {
   const { logout } = useLogout();
   const { currentUser, isLoading: currentUserIsLoading } =
     useCurrentDummyUser();
+  const { windowWidth } = useWindowWidth();
 
   return (
     <StyledNav>
@@ -168,6 +173,17 @@ function MainNav() {
               />
             </StyledNavLink>
           </li>
+          {windowWidth <= 992 && (
+            <li>
+              <StyledNavLink to="/explore/people">
+                <NavLinkItem
+                  icon={<MdOutlinePeopleAlt />}
+                  iconActive={<MdPeopleAlt />}
+                  title="explore/people"
+                />
+              </StyledNavLink>
+            </li>
+          )}
         </NavList>
       </div>
       <div>

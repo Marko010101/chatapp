@@ -2,17 +2,6 @@ import styled from "styled-components";
 import { calculateAge } from "../../../utils/helpers.js";
 import Heading from "../../../ui/Heading.jsx";
 
-const StyledPersonalInfo = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-
-  & span {
-    font-size: var(--font-size-small);
-    color: var(--color-neutral-200);
-  }
-`;
-
 function PersonalInfo({ postLength, gender, dateOfBirth, registerDate }) {
   return (
     <StyledPersonalInfo>
@@ -36,3 +25,14 @@ function PersonalInfo({ postLength, gender, dateOfBirth, registerDate }) {
 }
 
 export default PersonalInfo;
+
+const StyledPersonalInfo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  & span {
+    font-size: var(--font-size-small);
+    color: var(--color-neutral-200);
+  }
+`;

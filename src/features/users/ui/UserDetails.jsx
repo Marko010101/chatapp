@@ -6,36 +6,6 @@ import Heading from "../../../ui/Heading.jsx";
 import Button from "../../../ui/Buttons/Button.jsx";
 import PersonalInfo from "./PersonalInfo.jsx";
 
-const UserDetail = styled.div`
-  margin-top: 3rem;
-
-  & h3 {
-    font-weight: var(--font-weight-regular);
-  }
-`;
-
-const RecreatedBtn = styled(({ isCurrentUser, ...props }) =>
-  isCurrentUser ? <ButtonNeutral {...props} /> : <Button {...props} />
-)`
-  margin-left: 3rem;
-`;
-
-const StyledRow = styled(Row)`
-  width: 100%;
-  margin-top: 5rem;
-
-  & h6 {
-    font-size: var(--font-size-small);
-  }
-`;
-
-const StyledHeading = styled(Heading)`
-  & span {
-    font-size: var(--font-size-small);
-    color: var(--color-neutral-300);
-  }
-`;
-
 function UserDetails({
   firstName,
   lastName,
@@ -69,3 +39,33 @@ function UserDetails({
 }
 
 export default UserDetails;
+
+const UserDetail = styled.div`
+  margin-top: 3rem;
+
+  & h3 {
+    font-weight: var(--font-weight-regular);
+  }
+`;
+
+const RecreatedBtn = styled(({ isCurrentUser, ...props }) =>
+  isCurrentUser ? <ButtonNeutral {...props} /> : <Button {...props} />
+)`
+  margin-left: 3rem;
+`;
+
+const StyledRow = styled(Row)`
+  width: 100%;
+  margin-top: 5rem;
+
+  & h6 {
+    font-size: var(--font-size-small);
+  }
+`;
+
+const StyledHeading = styled(Heading)`
+  & span {
+    font-size: var(--font-size-small);
+    color: var(--color-neutral-300);
+  }
+`;

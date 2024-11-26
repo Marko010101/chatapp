@@ -7,6 +7,37 @@ import { FaComment } from "react-icons/fa";
 import { ModalContext } from "../../../ui/Modal.jsx";
 import { useComments } from "../hooks/useComment.js";
 
+function SearchedUserPost({ post }) {
+  const { open } = useContext(ModalContext);
+  const { isLoading, comments } = useComments(post?.id);
+
+  function handleModalOpen() {
+    open("ProfilePost");
+  }
+
+  if (isLoading) return null;
+
+  return (
+    <StyledPost to={post?.id}>
+      <img
+        onClick={handleModalOpen}
+        src={post?.image}
+        alt={`Post by ${post?.user}`}
+      />
+      <p>
+        <span>
+          <FaHeart /> {post?.likes}
+        </span>
+        <span>
+          <FaComment /> {comments?.data?.length}
+        </span>
+      </p>
+    </StyledPost>
+  );
+}
+
+export default SearchedUserPost;
+
 const StyledPost = styled(NavLink)`
   position: relative;
   display: flex;
@@ -51,34 +82,3 @@ const StyledPost = styled(NavLink)`
     opacity: 1;
   }
 `;
-
-function SearchedUserPost({ post }) {
-  const { open } = useContext(ModalContext);
-  const { isLoading, comments } = useComments(post?.id);
-
-  function handleModalOpen() {
-    open("ProfilePost");
-  }
-
-  if (isLoading) return null;
-
-  return (
-    <StyledPost to={post?.id}>
-      <img
-        onClick={handleModalOpen}
-        src={post?.image}
-        alt={`Post by ${post?.user}`}
-      />
-      <p>
-        <span>
-          <FaHeart /> {post?.likes}
-        </span>
-        <span>
-          <FaComment /> {comments?.data?.length}
-        </span>
-      </p>
-    </StyledPost>
-  );
-}
-
-export default SearchedUserPost;

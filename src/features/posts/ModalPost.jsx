@@ -1,6 +1,6 @@
-import styled, { css } from "styled-components";
-import { useRef } from "react";
-import { useParams } from "react-router-dom";
+import styled from "styled-components";
+import { useRef, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Comment from "./ui/Comment.jsx";
 import { useModalPostById } from "./hooks/useModalPostById.js";
@@ -20,78 +20,15 @@ import Row from "../../ui/Row.jsx";
 import { useUserById } from "../users/hooks/useUserById.js";
 import { RelativeDiv } from "../../ui/RelativeDiv.jsx";
 import UserName from ".././users/ui/UserName.jsx";
-
-const StyledModal = styled.main`
-  display: grid;
-  grid-template-columns: 60rem minmax(50rem, 1fr);
-`;
-const PostImage = styled.div`
-  height: 90vh;
-  max-height: 90vh;
-  background-color: var(--color-black);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-right: var(--border);
-  max-width: 70rem;
-
-  & img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-  }
-`;
-
-const PostBody = styled.article`
-  display: grid;
-  grid-template-rows: 5rem 1fr 9rem max-content;
-  height: 90vh;
-`;
-
-const StyledOwner = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: var(--border);
-
-  border-radius: var(--border-radius-sm);
-  padding: 3rem 1.5rem;
-
-  & > div {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-  }
-`;
-
-const StyledCommentSection = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  padding: 0 1.5rem;
-  margin-top: 2rem;
-  max-height: 50rem;
-  overflow: auto;
-  ${(props) => (props.isHovered ? "visible" : "auto")}
-`;
-
-const StyledReactionsPart = styled.div`
-  border-bottom: var(--border);
-  border-top: var(--border);
-
-  display: grid;
-  grid-template-rows: 4rem 1.7rem 1rem;
-  padding: 0rem 1rem;
-`;
-
-const StyledRow = styled(Row)`
-  position: relative;
-`;
+import useWindowWidth from "../../hooks/useWindowWidth.js";
+import { IoIosArrowBack } from "react-icons/io";
+import { ModalContext } from "../../ui/Modal.jsx";
 
 function ModalPost() {
   let { postId } = useParams();
-  console.log(postId);
-
+  const { windowWidth } = useWindowWidth();
+  const { close } = useContext(ModalContext);
+  const isSmallerDevice = windowWidth <= 992;
   const {
     isHovered: isImageHovered,
     handleMouseEnter: handleImageMouseEnter,
@@ -127,11 +64,16 @@ function ModalPost() {
   if (isLoading || loadingUserById) return <SpinnerFullPage />;
   if (error || commentsError || userByIdError)
     return <ErrorText>{error || commentsError || userByIdError}</ErrorText>;
-
   const { image, likes, link, owner = {}, publishDate, tags, text } = post;
   const { firstName, lastName, id, picture: ownerPicture, title } = owner;
   return (
     <StyledModal>
+      {isSmallerDevice && (
+        <StyledDesc>
+          <IoIosArrowBack size={26} onClick={close} />
+          <p>Comments</p>
+        </StyledDesc>
+      )}
       <PostImage>
         <img src={image} alt="" />
       </PostImage>
@@ -160,13 +102,16 @@ function ModalPost() {
                   length={40}
                   id={id}
                 />
+                {isSmallerDevice && <span>{post?.text}</span>}
                 {isHeaderHovered && <UserProfileOnHover user={userById} />}
               </RelativeDiv>
             </StyledRow>
           </div>
-          <div>
-            <ActionButtonDots />
-          </div>
+          {!isSmallerDevice && (
+            <div>
+              <ActionButtonDots />
+            </div>
+          )}
         </StyledOwner>
 
         {loadingComments ? (
@@ -199,3 +144,118 @@ function ModalPost() {
 }
 
 export default ModalPost;
+
+const StyledModal = styled.main`
+  display: grid;
+  grid-template-columns: 60rem minmax(50rem, 1fr);
+
+  @media (max-width: 1200px) {
+    grid-template-columns: 50rem minmax(50rem, 1fr);
+  }
+  @media (max-width: 992px) {
+    grid-template-columns: 60rem;
+  }
+  @media (max-width: 576px) {
+    grid-template-columns: 100vw;
+  }
+`;
+
+const StyledDesc = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-bottom: var(--border);
+  padding: 1rem 0;
+
+  & svg {
+    position: absolute;
+    left: 0;
+    cursor: pointer;
+  }
+
+  & p {
+    margin: 0 auto; /* Centers the text horizontally */
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-big);
+  }
+`;
+
+const PostImage = styled.div`
+  height: 90vh;
+  max-height: 90vh;
+  background-color: var(--color-black);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: var(--border);
+  max-width: 70rem;
+
+  & img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  @media (max-width: 992px) {
+    display: none;
+  }
+`;
+
+const PostBody = styled.article`
+  display: grid;
+  grid-template-rows: 5rem 1fr 9rem max-content;
+  height: 90vh;
+
+  @media (max-width: 992px) {
+    grid-template-rows: max-content 1fr 9rem max-content;
+  }
+`;
+
+const StyledOwner = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: var(--border);
+
+  border-radius: var(--border-radius-sm);
+  padding: 3rem 1.5rem;
+
+  & > div {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  @media (max-width: 992px) {
+    padding: 1rem;
+  }
+`;
+
+const StyledCommentSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 0 1.5rem;
+  margin-top: 2rem;
+  max-height: 50rem;
+  overflow: auto;
+  ${(props) => (props.isHovered ? "visible" : "auto")}
+`;
+
+const StyledReactionsPart = styled.div`
+  border-bottom: var(--border);
+  border-top: var(--border);
+
+  display: grid;
+  grid-template-rows: 4rem 1.7rem 1rem;
+  padding: 0rem 1rem;
+`;
+
+const StyledRow = styled(Row)`
+  position: relative;
+
+  & a {
+    display: inline-block;
+  }
+  & span {
+    margin-left: 1rem;
+  }
+`;

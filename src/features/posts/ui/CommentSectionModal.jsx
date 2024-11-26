@@ -11,51 +11,6 @@ import UserProfileOnHover from "../../users/UserProfileOnHover.jsx";
 import { RelativeDiv } from "../../../ui/RelativeDiv.jsx";
 import UserName from "../../users/ui/UserName.jsx";
 
-const StyledCommentSection = styled.section`
-  position: relative;
-  display: flex;
-  align-items: start;
-  gap: 1.5rem;
-  max-height: 20rem;
-`;
-
-const StyledCommentBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  max-width: 38rem;
-  line-break: anywhere;
-`;
-
-const RelativePositionWrapper = styled(RelativeDiv)`
-  display: inline;
-
-  & h5 {
-    width: max-content;
-    display: inline;
-
-    &:hover {
-      color: var(--color-neutral-400);
-      cursor: pointer;
-    }
-  }
-`;
-
-const StyledDeleteSvg = styled.span`
-  position: absolute;
-  right: 0;
-
-  & svg {
-    cursor: pointer;
-
-    &:hover {
-      color: var(--color-neutral-400);
-    }
-    &:active {
-      color: var(--color-neutral-500);
-    }
-  }
-`;
-
 function CommentSectionModal({
   ownerPicture,
   firstName,
@@ -123,3 +78,48 @@ function CommentSectionModal({
 }
 
 export default CommentSectionModal;
+
+const StyledCommentSection = styled.section`
+  position: relative;
+  display: flex;
+  align-items: start;
+  gap: 1.5rem;
+  max-height: 20rem;
+`;
+
+const StyledCommentBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-width: 38rem;
+  line-break: anywhere;
+`;
+
+const RelativePositionWrapper = styled(RelativeDiv)`
+  display: inline;
+
+  & h5 {
+    width: max-content;
+    display: inline;
+
+    &:hover {
+      color: var(--color-neutral-400);
+      cursor: pointer;
+    }
+  }
+`;
+
+const StyledDeleteSvg = styled.span`
+  position: absolute;
+  right: 0;
+
+  & svg {
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-neutral-400);
+    }
+    &:active {
+      color: var(--color-neutral-500);
+    }
+  }
+`;

@@ -15,6 +15,90 @@ import { RelativeDiv } from "../../ui/RelativeDiv.jsx";
 import Heading from "../../ui/Heading.jsx";
 import defaultUserImg from "../../assets/default-user.jpg";
 
+function UserLink({ user, currentUser, isLoadingDummyUsers, isSuggestedPage }) {
+  const { firstName, id, lastName, picture = defaultUserImg } = user;
+  const { userById = {}, isLoading: isLoadingUserById } = useUserById(id);
+  const { registerDate, location, email } = userById;
+  const {
+    isHovered: isImageHovered,
+    handleMouseEnter: handleImageMouseEnter,
+    handleMouseLeave: handleImageMouseLeave,
+  } = useHover();
+  const {
+    isHovered: isHeaderHovered,
+    handleMouseEnter: handleHeaderMouseEnter,
+    handleMouseLeave: handleHeaderMouseLeave,
+  } = useHover();
+
+  const { diffInMonths } = getFormattedDateInfo(registerDate);
+  if (isLoadingDummyUsers || isLoadingUserById) {
+    return (
+      <StyledUser isLoading={true}>
+        <div className="image-user" />
+        <div className="text-loader" />
+        {!currentUser && <div className="button-loader" />}
+      </StyledUser>
+    );
+  }
+
+  return (
+    <>
+      <StyledUser isSuggestedPage={isSuggestedPage}>
+        <Row
+          onMouseEnter={handleImageMouseEnter}
+          onMouseLeave={handleImageMouseLeave}
+        >
+          <OwnerImage ownerPicture={picture} id={id} />
+          {!currentUser && isImageHovered && (
+            <UserProfileOnHover user={userById} left={"7rem"} />
+          )}
+        </Row>
+        <Row type="vertical">
+          <RelativeDiv
+            onMouseEnter={handleHeaderMouseEnter}
+            onMouseLeave={handleHeaderMouseLeave}
+          >
+            <UserName
+              firstName={firstName}
+              lastName={lastName}
+              length={30}
+              isUnderscore
+              heading="h5"
+              id={id}
+            />
+            {!currentUser && isHeaderHovered && (
+              <UserProfileOnHover user={userById} left={"7rem"} />
+            )}
+          </RelativeDiv>
+          <Row>
+            <span>
+              {!currentUser ? (
+                <>
+                  <span>
+                    {diffInMonths > 0.9
+                      ? "Suggested for you"
+                      : "New to Petfolio"}
+                  </span>
+                  {isSuggestedPage && (
+                    <Heading as="h6">
+                      {location?.country ? location?.country : email}
+                    </Heading>
+                  )}
+                </>
+              ) : (
+                <h5>{fixedSizeFullName(firstName, lastName, 30)}</h5>
+              )}
+            </span>
+          </Row>
+        </Row>
+        {!currentUser && <Button>message</Button>}
+      </StyledUser>
+    </>
+  );
+}
+
+export default UserLink;
+
 // Keyframes for the wave animation
 const waveAnimation = keyframes`
   0% {
@@ -101,87 +185,3 @@ const StyledUser = styled.div`
       `}
   }
 `;
-
-function UserLink({ user, currentUser, isLoadingDummyUsers, isSuggestedPage }) {
-  const { firstName, id, lastName, picture = defaultUserImg } = user;
-  const { userById = {}, isLoading: isLoadingUserById } = useUserById(id);
-  const { registerDate, location, email } = userById;
-  const {
-    isHovered: isImageHovered,
-    handleMouseEnter: handleImageMouseEnter,
-    handleMouseLeave: handleImageMouseLeave,
-  } = useHover();
-  const {
-    isHovered: isHeaderHovered,
-    handleMouseEnter: handleHeaderMouseEnter,
-    handleMouseLeave: handleHeaderMouseLeave,
-  } = useHover();
-
-  const { diffInMonths } = getFormattedDateInfo(registerDate);
-  if (isLoadingDummyUsers || isLoadingUserById) {
-    return (
-      <StyledUser isLoading={true}>
-        <div className="image-user" />
-        <div className="text-loader" />
-        {!currentUser && <div className="button-loader" />}
-      </StyledUser>
-    );
-  }
-
-  return (
-    <>
-      <StyledUser isSuggestedPage={isSuggestedPage}>
-        <Row
-          onMouseEnter={handleImageMouseEnter}
-          onMouseLeave={handleImageMouseLeave}
-        >
-          <OwnerImage ownerPicture={picture} id={id} />
-          {!currentUser && isImageHovered && (
-            <UserProfileOnHover user={userById} left={"7rem"} />
-          )}
-        </Row>
-        <Row type="vertical">
-          <RelativeDiv
-            onMouseEnter={handleHeaderMouseEnter}
-            onMouseLeave={handleHeaderMouseLeave}
-          >
-            <UserName
-              firstName={firstName}
-              lastName={lastName}
-              length={30}
-              isUnderscore
-              heading="h5"
-              id={id}
-            />
-            {!currentUser && isHeaderHovered && (
-              <UserProfileOnHover user={userById} left={"7rem"} />
-            )}
-          </RelativeDiv>
-          <Row>
-            <span>
-              {!currentUser ? (
-                <>
-                  <span>
-                    {diffInMonths > 0.9
-                      ? "Suggested for you"
-                      : "New to Petfolio"}
-                  </span>
-                  {isSuggestedPage && (
-                    <Heading as="h6">
-                      {location?.country ? location?.country : email}
-                    </Heading>
-                  )}
-                </>
-              ) : (
-                <h5>{fixedSizeFullName(firstName, lastName, 30)}</h5>
-              )}
-            </span>
-          </Row>
-        </Row>
-        {!currentUser && <Button>message</Button>}
-      </StyledUser>
-    </>
-  );
-}
-
-export default UserLink;

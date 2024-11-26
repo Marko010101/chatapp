@@ -1,6 +1,18 @@
 import styled from "styled-components";
 import LoginForm from "../features/users/LoginForm.jsx";
 import LogoText from "../ui/LogoText";
+
+function Login() {
+  return (
+    <LoginLayout>
+      <LogoText />
+      <LoginForm />
+    </LoginLayout>
+  );
+}
+
+export default Login;
+
 const LoginLayout = styled.main`
   min-height: 100vh;
 
@@ -24,14 +36,3 @@ const LoginLayout = styled.main`
     grid-template-columns: 0.95fr;
   } */
 `;
-
-function Login() {
-  return (
-    <LoginLayout>
-      <LogoText />
-      <LoginForm />
-    </LoginLayout>
-  );
-}
-
-export default Login;
