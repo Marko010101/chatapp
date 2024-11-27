@@ -82,6 +82,7 @@ const GlobalStyles = createGlobalStyle`
   --font-size-small: 1.4rem;
   --font-size-medium: 1.6rem;
   --font-size-big: 1.8rem;
+  --font-size-huge: 2.2rem;
 
 
 

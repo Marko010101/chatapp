@@ -16,14 +16,11 @@ const Form = styled.form`
       justify-content: center;
       align-items: center;
       width: 60rem;
-    `}
 
-  @media (max-width: 768px) {
-    /* width: 100%; */
-  }
-  @media (max-width: 576px) {
-    padding: 2rem 1.2rem;
-  }
+      @media (max-width: 576px) {
+        width: max-content;
+      }
+    `}
 `;
 
 export default Form;

@@ -2,11 +2,11 @@ import { TypeAnimation } from "react-type-animation";
 import styled from "styled-components";
 
 const StyledLogo = styled.header`
-  border-top: var(--border);
   border-bottom: var(--border);
-  margin: 0 auto;
+  border-radius: 1.5rem;
   font-weight: var(--font-weight-medium);
-  margin-bottom: 6rem;
+  margin-top: 2rem;
+  text-align: center;
   background: linear-gradient(
     to bottom right,
     rgb(0, 0, 255) 0%,
@@ -17,6 +17,12 @@ const StyledLogo = styled.header`
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+    margin-top: 0rem;
+    filter: brightness(1.8);
+  }
 `;
 
 function LogoText() {
