@@ -12,7 +12,7 @@ import ProfileImage from "../features/users/ui/ProfileImage.jsx";
 import { useUserById } from "../features/users/hooks/useUserById.js";
 import UserDetails from "../features/users/ui/UserDetails.jsx";
 import ProfilePosts from "../features/posts/ui/ProfilePosts.jsx";
-import Modal, { ModalContext } from "../ui/Modal.jsx";
+import Modal, { ModalContext } from "../ui/modal/Modal.jsx";
 import ModalPost from "../features/posts/ModalPost.jsx";
 import defaultUserImg from "../assets/default-user.jpg";
 

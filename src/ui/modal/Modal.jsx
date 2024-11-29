@@ -3,66 +3,13 @@ import styled, { keyframes } from "styled-components";
 import { HiXMark } from "react-icons/hi2";
 import { createPortal } from "react-dom";
 import { cloneElement, createContext, useContext, useState } from "react";
-import { useOutsideClick } from "../hooks/useOutsideClick.js";
+import { useOutsideClick } from "../../hooks/useOutsideClick.js";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useWindowWidth from "../hooks/useWindowWidth.js";
-
-const slideDown = keyframes`
-  0% {
-    transform: translate(-50%, -100%);
-    opacity: 0;
-  }
-  100% {
-    transform: translate(-50%, -50%);
-    opacity: 1;
-  }
-`;
-
-const StyledModal = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-lg);
-  transition: all 0.5s;
-  background-color: var(--color-black);
-  animation: ${slideDown} 0.2s ease-out;
-`;
-
-const Overlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  backdrop-filter: blur(3px);
-  z-index: 600;
-  transition: all 0.5s;
-`;
-
-const Button = styled.button`
-  background: none;
-  border: none;
-  padding: 0.4rem;
-  border-radius: var(--border-radius-sm);
-  transform: translateX(0.8rem);
-  transition: all 0.2s;
-  position: absolute;
-  top: 1.2rem;
-  right: 1.9rem;
-
-  &:hover {
-    background-color: var(--color-neutral-900);
-  }
-
-  & svg {
-    width: 2.4rem;
-    height: 2.4rem;
-    color: var(--color-grey-500);
-  }
-`;
+import useWindowWidth from "../../hooks/useWindowWidth.js";
+import StyledModalButton from "./StyledModalButton.jsx";
+import StyledOverlay from "./StyledOverlay.jsx";
+import StyledModal from "./StyledModal.jsx";
 
 const ModalContext = createContext();
 
@@ -111,16 +58,16 @@ function Window({ children, name }) {
   if (name !== openName) return null;
 
   return createPortal(
-    <Overlay>
+    <StyledOverlay>
       <StyledModal ref={ref}>
         <div>{cloneElement(children, { onCloseModal: close })}</div>
       </StyledModal>
       {windowWidth >= 993 && (
-        <Button onClick={close}>
+        <StyledModalButton onClick={close}>
           <HiXMark />
-        </Button>
+        </StyledModalButton>
       )}
-    </Overlay>,
+    </StyledOverlay>,
     document.body
   );
 }

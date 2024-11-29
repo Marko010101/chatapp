@@ -22,7 +22,7 @@ import { RelativeDiv } from "../../ui/RelativeDiv.jsx";
 import UserName from ".././users/ui/UserName.jsx";
 import useWindowWidth from "../../hooks/useWindowWidth.js";
 import { IoIosArrowBack } from "react-icons/io";
-import { ModalContext } from "../../ui/Modal.jsx";
+import { ModalContext } from "../../ui/modal/Modal.jsx";
 
 function ModalPost() {
   let { postId } = useParams();

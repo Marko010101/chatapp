@@ -10,7 +10,7 @@ import SpinnerFullPage from "./ui/loaders/SpinnerFullPage.jsx";
 import { SidebarShrinkProvider } from "./context/SidebarShrinkingContext.jsx";
 import { LikeProvider } from "./context/LikesContext.jsx";
 import ProtectedRoute from "./ui/ProtectedRoute.jsx";
-import Modal from "./ui/Modal.jsx";
+import Modal from "./ui/modal/Modal.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -60,7 +60,6 @@ function App() {
                     <Route path="reels" element={<Reels />} />
                     <Route path="messages" element={<Messages />} />
                     <Route path="notifications" element={<Notifications />} />
-                    <Route path="create" element={<Create />} />
                     <Route path="profile/:userId" element={<Profile />} />
                     <Route
                       path="profile/:userId/:postId"

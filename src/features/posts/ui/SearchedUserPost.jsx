@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { FaComment } from "react-icons/fa";
 
-import { ModalContext } from "../../../ui/Modal.jsx";
+import { ModalContext } from "../../../ui/modal/Modal.jsx";
 import { useComments } from "../hooks/useComment.js";
 
 function SearchedUserPost({ post }) {

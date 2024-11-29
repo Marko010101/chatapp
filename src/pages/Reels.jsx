@@ -1,5 +1,5 @@
 function Reels() {
-  return <div>Reels</div>;
+  return <div>In development...</div>;
 }
 
 export default Reels;

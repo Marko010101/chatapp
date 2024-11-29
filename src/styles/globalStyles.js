@@ -287,19 +287,19 @@ img {
 }
 @media (max-width: 992px) {
   html {
-    font-size: 55%;
+    font-size: 57.5%;
   }
 }
 
 @media (max-width: 768px) {
   html {
-    font-size: 52.5%;
+    font-size: 55%;
   }
 }
 
 @media (max-width: 576px) {
   html {
-    font-size: 50%;
+    font-size: 52.5%;
   }
 }
 

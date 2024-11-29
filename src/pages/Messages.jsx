@@ -1,5 +1,5 @@
 function Messages() {
-  return <div>Chat</div>;
+  return <div>In development...</div>;
 }
 
 export default Messages;

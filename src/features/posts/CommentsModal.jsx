@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { NavLink, useParams } from "react-router-dom";
 
 import { useComments } from "../posts/hooks/useComment.js";
-import Modal from "../../ui/Modal.jsx";
+import Modal from "../../ui/modal/Modal.jsx";
 import ModalPost from "./ModalPost.jsx";
 import ErrorText from "../../ui/ErrorText.jsx";
 import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";

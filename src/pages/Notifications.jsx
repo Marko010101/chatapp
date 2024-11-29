@@ -1,5 +1,5 @@
 function Notifications() {
-  return <div>Notifications</div>;
+  return <div>In development...</div>;
 }
 
 export default Notifications;

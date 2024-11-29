@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.1",
     "@tanstack/react-query": "^5.51.16",
     "@tanstack/react-query-devtools": "^5.51.16",
     "emoji-picker-react": "^4.9.3",
@@ -18,7 +19,7 @@
     "match-sorter": "^6.3.4",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.13",
-    "react-hook-form": "^7.51.5",
+    "react-hook-form": "^7.53.2",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^5.2.1",
     "react-intersection-observer": "^9.13.0",
@@ -29,7 +30,8 @@
     "react-type-animation": "^3.2.0",
     "sort-by": "^0.0.2",
     "styled-components": "^5",
-    "vite-plugin-env-compatible": "^2.0.1"
+    "vite-plugin-env-compatible": "^2.0.1",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
@@ -39,6 +41,7 @@
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
-    "vite": "^5.2.11"
+    "vite": "^5.2.11",
+    "vite-plugin-svgr": "^4.3.0"
   }
 }

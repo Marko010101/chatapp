@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import NavLinkItem from "./NavLinkItem.jsx";
 import styled, { css } from "styled-components";
+import { useState } from "react";
 
 import messageIcon from "../../public/messages.svg";
 import activeMessageIcon from "../../public/messagesActive.svg";
@@ -20,6 +21,130 @@ import { MdPeopleAlt } from "react-icons/md";
 import { useLogout } from "../features/users/hooks/useLogout.js";
 import { useCurrentDummyUser } from "../features/users/hooks/useCurrentDummyUser.js";
 import useWindowWidth from "../hooks/useWindowWidth.js";
+import CreatePost from "../features/posts/CreatePost.jsx";
+
+function MainNav() {
+  const { isShrunk } = useSidebarShrink();
+  const { logout } = useLogout();
+  const { currentUser, isLoading: currentUserIsLoading } =
+    useCurrentDummyUser();
+  const { windowWidth } = useWindowWidth();
+  const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
+
+  const handleCreatePostToggle = () => {
+    setIsCreatePostOpen((isOpen) => !isOpen);
+  };
+
+  return (
+    <StyledNav>
+      {isCreatePostOpen && <CreatePost onClose={handleCreatePostToggle} />}
+      <div>
+        <NavList isShrunk={isShrunk}>
+          <li>
+            <StyledNavLink to="/">
+              <NavLinkItem
+                icon={<IoHomeOutline />}
+                iconActive={<IoHomeSharp />}
+                title=""
+              />
+            </StyledNavLink>
+          </li>
+          <li>
+            <StyledNavLink to="/search">
+              <NavLinkItem
+                icon={<IoIosSearch />}
+                iconActive={<IoSearchSharp />}
+                title="search"
+              />
+            </StyledNavLink>
+          </li>
+          <li>
+            <StyledNavLink to="/explore">
+              <NavLinkItem
+                icon={<MdOutlineExplore />}
+                iconActive={<MdExplore />}
+                title="explore"
+              />
+            </StyledNavLink>
+          </li>
+          <li>
+            <StyledNavLink to="/reels">
+              <NavLinkItem
+                icon={<PiFilmReelLight />}
+                iconActive={<PiFilmReelFill />}
+                title="reels"
+              />
+            </StyledNavLink>
+          </li>
+          <li>
+            <StyledNavLink to="/messages">
+              <NavLinkItem
+                icon={<img src={messageIcon} alt="message icon" />}
+                iconActive={
+                  <img src={activeMessageIcon} alt="Active messages image" />
+                }
+                title="messages"
+              />
+            </StyledNavLink>
+          </li>
+          <li>
+            <StyledNavLink to="/notifications">
+              <NavLinkItem
+                icon={<IoMdHeartEmpty />}
+                iconActive={<IoMdHeart />}
+                title="notifications"
+              />
+            </StyledNavLink>
+          </li>
+          <li>
+            <StyledNavButton onClick={handleCreatePostToggle}>
+              {isCreatePostOpen ? <RiAddCircleFill /> : <RiAddCircleLine />}
+              <span>Create</span>
+            </StyledNavButton>
+          </li>
+          {windowWidth <= 992 && (
+            <li>
+              <StyledNavLink to="/explore/people">
+                <NavLinkItem
+                  icon={<MdOutlinePeopleAlt />}
+                  iconActive={<MdPeopleAlt />}
+                  title="explore/people"
+                />
+              </StyledNavLink>
+            </li>
+          )}
+        </NavList>
+      </div>
+      <div>
+        <NavList isShrunk={isShrunk}>
+          {currentUser?.id ? (
+            <li>
+              <StyledNavLink to={`/profile/${currentUser?.id}`}>
+                <CgProfile />
+                <span>Profile</span>
+              </StyledNavLink>
+            </li>
+          ) : (
+            <li>
+              <StyledNavLink>
+                <CgProfile />
+                <span>Profile</span>
+              </StyledNavLink>
+            </li>
+          )}
+          <li>
+            <StyledNavLink onClick={logout} to="/">
+              <BiLogOut style={{ marginLeft: "-0.3rem" }} />
+              <span>Logout</span>
+            </StyledNavLink>
+          </li>
+        </NavList>
+      </div>
+    </StyledNav>
+  );
+}
+
+export default MainNav;
 
 const StyledNav = styled.nav`
   display: flex;
@@ -96,123 +221,32 @@ const StyledNavLink = styled(NavLink)`
     scale: 110%;
   }
 `;
+const StyledNavButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 1.4rem;
 
-function MainNav() {
-  const { isShrunk } = useSidebarShrink();
-  const { logout } = useLogout();
-  const { currentUser, isLoading: currentUserIsLoading } =
-    useCurrentDummyUser();
-  const { windowWidth } = useWindowWidth();
+  color: var(--color-gray-300);
+  font-size: 1.6rem;
+  font-weight: var(--font-weight-regular);
+  padding: 1rem 1.2rem;
+  transition: all 0.3s;
+  cursor: pointer;
 
-  return (
-    <StyledNav>
-      <div>
-        <NavList isShrunk={isShrunk}>
-          <li>
-            <StyledNavLink to="/">
-              <NavLinkItem
-                icon={<IoHomeOutline />}
-                iconActive={<IoHomeSharp />}
-                title=""
-              />
-            </StyledNavLink>
-          </li>
-          <li>
-            <StyledNavLink to="/search">
-              <NavLinkItem
-                icon={<IoIosSearch />}
-                iconActive={<IoSearchSharp />}
-                title="search"
-              />
-            </StyledNavLink>
-          </li>
-          <li>
-            <StyledNavLink to="/explore">
-              <NavLinkItem
-                icon={<MdOutlineExplore />}
-                iconActive={<MdExplore />}
-                title="explore"
-              />
-            </StyledNavLink>
-          </li>
-          <li>
-            <StyledNavLink to="/reels">
-              <NavLinkItem
-                icon={<PiFilmReelLight />}
-                iconActive={<PiFilmReelFill />}
-                title="reels"
-              />
-            </StyledNavLink>
-          </li>
-          <li>
-            <StyledNavLink to="/messages">
-              <NavLinkItem
-                icon={<img src={messageIcon} alt="message icon" />}
-                iconActive={
-                  <img src={activeMessageIcon} alt="Active messages image" />
-                }
-                title="messages"
-              />
-            </StyledNavLink>
-          </li>
-          <li>
-            <StyledNavLink to="/notifications">
-              <NavLinkItem
-                icon={<IoMdHeartEmpty />}
-                iconActive={<IoMdHeart />}
-                title="notifications"
-              />
-            </StyledNavLink>
-          </li>
-          <li>
-            <StyledNavLink to="/create">
-              <NavLinkItem
-                icon={<RiAddCircleLine />}
-                iconActive={<RiAddCircleFill />}
-                title="create"
-              />
-            </StyledNavLink>
-          </li>
-          {windowWidth <= 992 && (
-            <li>
-              <StyledNavLink to="/explore/people">
-                <NavLinkItem
-                  icon={<MdOutlinePeopleAlt />}
-                  iconActive={<MdPeopleAlt />}
-                  title="explore/people"
-                />
-              </StyledNavLink>
-            </li>
-          )}
-        </NavList>
-      </div>
-      <div>
-        <NavList isShrunk={isShrunk}>
-          {currentUser?.id ? (
-            <li>
-              <StyledNavLink to={`/profile/${currentUser?.id}`}>
-                <CgProfile />
-                <span>Profile</span>
-              </StyledNavLink>
-            </li>
-          ) : (
-            <li>
-              <StyledNavLink>
-                <CgProfile />
-                <span>Profile</span>
-              </StyledNavLink>
-            </li>
-          )}
-          <li>
-            <StyledNavLink onClick={logout} to="/">
-              <BiLogOut style={{ marginLeft: "-0.3rem" }} />
-              <span>Logout</span>
-            </StyledNavLink>
-          </li>
-        </NavList>
-      </div>
-    </StyledNav>
-  );
-}
+  &:hover {
+    background-color: var(--backdrop-color);
+    border-radius: var(--border-radius-lg);
+  }
 
-export default MainNav;
+  & svg {
+    width: 2.8rem;
+    height: 2.8rem;
+    color: var(--color-gray-50);
+    transition: all 0.2s;
+  }
+
+  &:hover svg {
+    scale: 110%;
+  }
+`;

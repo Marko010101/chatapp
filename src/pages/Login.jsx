@@ -103,8 +103,8 @@ const LoginBox = styled.div`
 const StyledSpan = styled.span`
   position: absolute;
   z-index: 10;
-  bottom: 12rem;
   left: 8rem;
+  bottom: ${(props) => (props.isSmallDevice ? "5rem" : "12rem")};
   width: max-content;
   padding: 0.5rem;
   rotate: -15deg;

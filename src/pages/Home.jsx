@@ -4,7 +4,7 @@ import Post from "../features/posts/Post.jsx";
 import Empty from "../ui/Empty.jsx";
 import { useParams } from "react-router-dom";
 import ModalPost from "../features/posts/ModalPost.jsx";
-import Modal, { ModalContext } from "../ui/Modal.jsx";
+import Modal, { ModalContext } from "../ui/modal/Modal.jsx";
 import { useEffect } from "react";
 import { useContext } from "react";
 import ErrorText from "../ui/ErrorText.jsx";
@@ -108,6 +108,9 @@ const SuggestedFriends = styled.section`
   margin-left: 19rem;
   width: 29rem;
 
+  @media (max-width: 1600px) {
+    margin-left: 10rem;
+  }
   @media (max-width: 1200px) {
     margin-left: 0rem;
   }
