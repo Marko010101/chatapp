@@ -75,6 +75,30 @@ export async function getPostById(id) {
   return result;
 }
 
+// services/postService.js
+export const createPost = async (postData) => {
+  console.log("postData", postData);
+  try {
+    const response = await fetch(`${DUMMY_API}post/create`, {
+      headers: {
+        "Content-Type": "application/json",
+        "app-id": APP_ID,
+      },
+      method: "POST",
+      body: JSON.stringify(postData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to create post: ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error creating post:", error);
+    throw new Error("Unable to create post. Please try again.");
+  }
+};
+
 export async function updatePost(id, updatedPostData) {
   const response = await fetch(`${DUMMY_API}post/${id}`, {
     headers: {

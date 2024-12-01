@@ -48,7 +48,7 @@ function ModalPost() {
 
   const { data: commentsData = [] } = comments;
   const { post, isLoading, error } = useModalPostById(postId);
-
+  console.log(post);
   const {
     userById,
     isLoading: loadingUserById,

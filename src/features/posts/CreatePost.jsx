@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import styled from "styled-components";
-import { z } from "zod";
+import { object, z } from "zod";
 import { useForm } from "react-hook-form";
 
 import { HiXMark } from "react-icons/hi2";
@@ -13,12 +13,22 @@ import { useOutsideClick } from "../../hooks/useOutsideClick.js";
 import StyledModalButton from "../../ui/modal/StyledModalButton.jsx";
 import Upload from "../../ui/Upload.jsx";
 import FancyButton from "../../ui/Buttons/FancyButton.jsx";
+import { useCurrentDummyUser } from "../users/hooks/useCurrentDummyUser.js";
+import { uploadFileToCloudinary } from "../../constants/Cloudinary.js";
+import { useCreatePost } from "./hooks/useCreatePost.js";
 
 const schema = z.object({
   image: z
-    .string()
-    .url({ message: "Image must be a valid URL" })
-    .nonempty({ message: "Image is required" }),
+    .instanceof(File)
+    .refine((file) => file.size > 0, {
+      message: "Image is required",
+    })
+    .refine(
+      (file) => ["image/jpeg", "image/png", "image/webp"].includes(file.type),
+      {
+        message: "Only .jpeg, .png, or .webp files are allowed",
+      }
+    ),
   text: z
     .string()
     .min(6, { message: "Minimum 6 characters required" })
@@ -27,8 +37,12 @@ const schema = z.object({
 
 const CreatePost = ({ onClose }) => {
   const ref = useOutsideClick(onClose);
-
+  const { currentUser, isLoading, error } = useCurrentDummyUser();
+  const { createUserPost, isLoading: isLoadingCreateUser } = useCreatePost(
+    currentUser.id
+  );
   const {
+    watch,
     register,
     handleSubmit,
     setValue,
@@ -39,9 +53,7 @@ const CreatePost = ({ onClose }) => {
     resolver: zodResolver(schema),
   });
 
-  console.log(errors);
-
-  const [previewImage, setPreviewImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(watch("image"));
 
   const handleFileChange = (file) => {
     if (file) {
@@ -54,14 +66,36 @@ const CreatePost = ({ onClose }) => {
   const handleFileDelete = () => {
     setPreviewImage(null);
     setValue("image", null);
-    setError("image", { message: "File is required" });
+    setError("image", { message: "Image is required" });
   };
 
-  const onSubmit = (data) => {
-    console.log("Form Submitted:", data);
-    onClose();
-  };
+  const onSubmit = async (formData) => {
+    console.log("formData", formData);
+    try {
+      const { image, text } = formData;
 
+      if (!image) {
+        throw new Error("No image selected.");
+      }
+
+      // Upload image to Cloudinary or other service
+      const imageUrl = await uploadFileToCloudinary(image);
+
+      const postPayload = {
+        text,
+        image: imageUrl,
+        likes: 0,
+        tags: ["example-tag"],
+        owner: currentUser.id,
+      };
+
+      await createUserPost(postPayload);
+
+      onClose();
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
+  };
   return (
     <StyledOverlay>
       <StyledModal ref={ref}>
@@ -77,6 +111,7 @@ const CreatePost = ({ onClose }) => {
               name="image-upload"
               isError={Boolean(errors.image)}
               setError={(error) => setError("image", { message: error })}
+              register={register}
             />
             {errors.image && (
               <ErrorMessage>{errors.image.message}</ErrorMessage>
@@ -96,7 +131,7 @@ const CreatePost = ({ onClose }) => {
             </div>
           </div>
 
-          <FancyButton type="submit" disabled={isSubmitting}>
+          <FancyButton type="submit" disabled={isSubmitting || isLoading}>
             Create post
           </FancyButton>
         </StyledBox>
