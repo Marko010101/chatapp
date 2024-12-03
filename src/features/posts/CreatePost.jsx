@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import styled from "styled-components";
-import { object, z } from "zod";
 import { useForm } from "react-hook-form";
 
 import { HiXMark } from "react-icons/hi2";
@@ -16,30 +15,15 @@ import FancyButton from "../../ui/Buttons/FancyButton.jsx";
 import { useCurrentDummyUser } from "../users/hooks/useCurrentDummyUser.js";
 import { uploadFileToCloudinary } from "../../constants/Cloudinary.js";
 import { useCreatePost } from "./hooks/useCreatePost.js";
-
-const schema = z.object({
-  image: z
-    .instanceof(File)
-    .refine((file) => file.size > 0, {
-      message: "Image is required",
-    })
-    .refine(
-      (file) => ["image/jpeg", "image/png", "image/webp"].includes(file.type),
-      {
-        message: "Only .jpeg, .png, or .webp files are allowed",
-      }
-    ),
-  text: z
-    .string()
-    .min(6, { message: "Minimum 6 characters required" })
-    .max(50, { message: "Maximum 50 characters allowed" }),
-});
+import postSchema from "../../validation/postSchema.js";
+import Row from "../../ui/Row.jsx";
+import StyledErrorText from "../../ui/StyledErrorText.jsx";
 
 const CreatePost = ({ onClose }) => {
   const ref = useOutsideClick(onClose);
   const { currentUser, isLoading, error } = useCurrentDummyUser();
-  const { createUserPost, isLoading: isLoadingCreateUser } = useCreatePost(
-    currentUser.id
+  const { createUserPost, isLoading: isLoadingCreatePost } = useCreatePost(
+    currentUser?.id
   );
   const {
     watch,
@@ -50,9 +34,8 @@ const CreatePost = ({ onClose }) => {
     clearErrors,
     formState: { errors, isSubmitting },
   } = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(postSchema),
   });
-
   const [previewImage, setPreviewImage] = useState(watch("image"));
 
   const handleFileChange = (file) => {
@@ -70,7 +53,6 @@ const CreatePost = ({ onClose }) => {
   };
 
   const onSubmit = async (formData) => {
-    console.log("formData", formData);
     try {
       const { image, text } = formData;
 
@@ -100,10 +82,14 @@ const CreatePost = ({ onClose }) => {
     <StyledOverlay>
       <StyledModal ref={ref}>
         <StyledBox onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <label htmlFor="image-upload">
+          <Row type="vertical">
+            <StyledLabel
+              as="label"
+              type="horizontal-center"
+              htmlFor="image-upload"
+            >
               Upload Image <FaRegArrowAltCircleDown size={18} />
-            </label>
+            </StyledLabel>
             <Upload
               value={previewImage}
               onChange={handleFileChange}
@@ -116,12 +102,19 @@ const CreatePost = ({ onClose }) => {
             {errors.image && (
               <ErrorMessage>{errors.image.message}</ErrorMessage>
             )}
-          </div>
+          </Row>
 
-          <div>
-            <label>Description:</label>
+          <Row type="vertical">
+            <StyledLabel
+              htmlFor="description"
+              as="label"
+              type="horizontal-center"
+            >
+              Description:
+            </StyledLabel>
             <div>
               <textarea
+                id="description"
                 {...register("text")}
                 placeholder="Add a description..."
               />
@@ -129,9 +122,12 @@ const CreatePost = ({ onClose }) => {
                 <ErrorMessage>{errors.text.message}</ErrorMessage>
               )}
             </div>
-          </div>
+          </Row>
 
-          <FancyButton type="submit" disabled={isSubmitting || isLoading}>
+          <FancyButton
+            type="submit"
+            disabled={isSubmitting || isLoading || isLoadingCreatePost}
+          >
             Create post
           </FancyButton>
         </StyledBox>
@@ -153,22 +149,10 @@ const StyledBox = styled.form`
   grid-template-rows: 1fr 6rem;
 
   & > div {
-    display: flex;
-    flex-direction: column;
     padding: 3rem 2rem;
 
     & > div {
       margin: auto 0;
-    }
-
-    & > label {
-      display: flex;
-      align-items: center;
-      margin: 0 auto;
-      width: max-content;
-      gap: 2rem;
-      padding-bottom: 1rem;
-      cursor: pointer;
     }
   }
 
@@ -202,9 +186,15 @@ const StyledBox = styled.form`
   }
 `;
 
-const ErrorMessage = styled.p`
-  color: var(--color-red-400);
-  font-size: var(--font-size-small);
-  padding: 1rem;
-  align-self: center;
+const StyledLabel = styled(Row)`
+  margin: 0 auto;
+  width: max-content;
+  gap: 2rem;
+  padding-bottom: 1rem;
+  cursor: pointer;
+`;
+
+const ErrorMessage = styled(StyledErrorText)`
+  text-align: center;
+  padding-top: 1rem;
 `;

@@ -7,13 +7,14 @@ import ModalPost from "../features/posts/ModalPost.jsx";
 import Modal, { ModalContext } from "../ui/modal/Modal.jsx";
 import { useEffect } from "react";
 import { useContext } from "react";
-import ErrorText from "../ui/ErrorText.jsx";
+import StyledErrorText from "../ui/StyledErrorText.jsx";
 import { usePosts } from "../features/posts/hooks/usePosts.js";
 import UserSugestions from "../features/users/UserSugestions.jsx";
 import SpinnerGrayMini from "../ui/loaders/SpinnerGrayMini.jsx";
 import { useInView } from "react-intersection-observer";
 import Footer from "../ui/Footer.jsx";
 import useWindowWidth from "../hooks/useWindowWidth.js";
+import Row from "../ui/Row.jsx";
 
 function Home() {
   const {
@@ -42,7 +43,7 @@ function Home() {
   }, [inView, hasNextPage, fetchNextPage, isFetchingNextPage]);
 
   if (isLoading || !data) return <SpinnerFullPage />;
-  if (error) return (<ErrorText>{error.message}</ErrorText>)();
+  if (error) return (<StyledErrorText>{error.message}</StyledErrorText>)();
   if (!data || data.pages.length === 0) return <Empty resourceName="posts" />;
 
   const content = data.pages.map((page) =>
@@ -68,12 +69,12 @@ function Home() {
       <StyledPosts>
         <div>
           {content}
-          <CenteredSpinnerWrapper>
+          <Row type="horizontal-center" margin="2rem 0 0 0">
             {isFetchingNextPage && <SpinnerGrayMini />}
-          </CenteredSpinnerWrapper>
+          </Row>
         </div>
         {windowWidth >= 992 && (
-          <SuggestedFriends>
+          <SuggestedFriends type="vertical" margin="0 0 0 19rem">
             <UserSugestions />
           </SuggestedFriends>
         )}
@@ -102,10 +103,7 @@ const StyledPosts = styled.main`
   }
 `;
 
-const SuggestedFriends = styled.section`
-  display: flex;
-  flex-direction: column;
-  margin-left: 19rem;
+const SuggestedFriends = styled(Row)`
   width: 29rem;
 
   @media (max-width: 1600px) {
@@ -114,10 +112,4 @@ const SuggestedFriends = styled.section`
   @media (max-width: 1200px) {
     margin-left: 0rem;
   }
-`;
-
-const CenteredSpinnerWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
 `;

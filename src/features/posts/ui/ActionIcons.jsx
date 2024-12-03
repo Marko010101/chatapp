@@ -6,8 +6,8 @@ import styled, { keyframes } from "styled-components";
 import EmojiAction from "./EmojiAction.jsx";
 import { useUpdatePost } from "../hooks/useUpdatePost.js";
 import { useLike } from "../../../context/LikesContext.jsx";
-import ErrorText from "../../../ui/ErrorText.jsx";
-import SpinnerMini from "../../../ui/loaders/SpinnerMini.jsx";
+import StyledErrorText from "../../../ui/StyledErrorText.jsx";
+import Row from "../../../ui/Row.jsx";
 
 function ActionIcons({ textareaRef, postId, post }) {
   const { mutate, isLoading, error } = useUpdatePost();
@@ -41,10 +41,10 @@ function ActionIcons({ textareaRef, postId, post }) {
       });
   };
 
-  if (error) return <ErrorText>{error.message}</ErrorText>;
+  if (error) return <StyledErrorText>{error.message}</StyledErrorText>;
 
   return (
-    <StyledIcons>
+    <StyledIcons type="horizontal" margin="0.7rem 0 0 0">
       <div>
         <span>
           <EmojiAction
@@ -88,11 +88,7 @@ const pulse = keyframes`
   }
 `;
 
-const StyledIcons = styled.section`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 0.7rem;
-
+const StyledIcons = styled(Row)`
   & div {
     display: flex;
     align-items: center;

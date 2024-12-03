@@ -9,12 +9,21 @@ const Row = styled.div`
       justify-content: space-between;
       align-items: center;
     `}
+
+  ${(props) =>
+    props.type === "horizontal-center" &&
+    css`
+      justify-content: center;
+      align-items: center;
+    `}
+
   ${(props) =>
     props.type === "horizontal-around" &&
     css`
       justify-content: space-around;
       align-items: center;
     `}
+
   ${(props) =>
     props.type === "vertical" &&
     css`
@@ -22,9 +31,21 @@ const Row = styled.div`
     `}
 
     ${(props) =>
-    props?.mt &&
+    props?.margin &&
     css`
-      margin-top: ${props.mt};
+      margin: ${props.margin};
+    `}
+
+    ${(props) =>
+    props?.padding &&
+    css`
+      padding: ${props.padding};
+    `}
+
+    ${(props) =>
+    props?.gap &&
+    css`
+      gap: ${props.gap};
     `}
 `;
 

@@ -4,7 +4,7 @@ import { NavLink, useParams } from "react-router-dom";
 import { useComments } from "../posts/hooks/useComment.js";
 import Modal from "../../ui/modal/Modal.jsx";
 import ModalPost from "./ModalPost.jsx";
-import ErrorText from "../../ui/ErrorText.jsx";
+import StyledErrorText from "../../ui/StyledErrorText.jsx";
 import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
 
 function CommentsModal({ postIdComment, textareaRef }) {
@@ -45,7 +45,7 @@ function CommentsModal({ postIdComment, textareaRef }) {
       ) : (
         <>
           {error ? (
-            <ErrorText>Could not load comments, {error}</ErrorText>
+            <StyledErrorText>Could not load comments, {error}</StyledErrorText>
           ) : (
             <Text onClick={handleFocusingTextarea}>No comments yet</Text>
           )}

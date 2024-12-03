@@ -6,6 +6,7 @@ import { FaComment } from "react-icons/fa";
 
 import { ModalContext } from "../../../ui/modal/Modal.jsx";
 import { useComments } from "../hooks/useComment.js";
+import Row from "../../../ui/Row.jsx";
 
 function SearchedUserPost({ post }) {
   const { open } = useContext(ModalContext);
@@ -24,14 +25,14 @@ function SearchedUserPost({ post }) {
         src={post?.image}
         alt={`Post by ${post?.user}`}
       />
-      <p>
+      <StyledParagraph type="horizontal-center" as="p" gap="3rem">
         <span>
           <FaHeart /> {post?.likes}
         </span>
         <span>
           <FaComment /> {comments?.data?.length}
         </span>
-      </p>
+      </StyledParagraph>
     </StyledPost>
   );
 }
@@ -50,26 +51,10 @@ const StyledPost = styled(NavLink)`
     transition: filter 0.2s ease;
   }
 
-  & p {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: var(--font-size-big);
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    width: 100%;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 3rem;
-  }
-
   & span {
     display: flex;
     align-items: center;
+    justify-content: center;
     font-weight: var(--font-weight-medium);
     gap: 0.5rem;
   }
@@ -81,4 +66,17 @@ const StyledPost = styled(NavLink)`
   &:hover p {
     opacity: 1;
   }
+`;
+
+const StyledParagraph = styled(Row)`
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: var(--font-size-big);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  width: 100%;
 `;

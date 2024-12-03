@@ -10,6 +10,7 @@ import useHover from "../../../hooks/useHover.js";
 import UserProfileOnHover from "../../users/UserProfileOnHover.jsx";
 import { RelativeDiv } from "../../../ui/RelativeDiv.jsx";
 import UserName from "../../users/ui/UserName.jsx";
+import Row from "../../../ui/Row.jsx";
 
 function CommentSectionModal({
   ownerPicture,
@@ -48,7 +49,7 @@ function CommentSectionModal({
         {isImageHovered && <UserProfileOnHover user={owner} />}
       </RelativePositionWrapper>
 
-      <StyledCommentBody>
+      <StyledCommentBody type="vertical">
         <Heading as="h5">
           <RelativePositionWrapper
             onMouseEnter={handleHeaderMouseEnter}
@@ -87,9 +88,7 @@ const StyledCommentSection = styled.section`
   max-height: 20rem;
 `;
 
-const StyledCommentBody = styled.div`
-  display: flex;
-  flex-direction: column;
+const StyledCommentBody = styled(Row)`
   max-width: 38rem;
   line-break: anywhere;
 `;

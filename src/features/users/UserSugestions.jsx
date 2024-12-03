@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
 import UserLink from "./UserLink.jsx";
-import ErrorText from "../../ui/ErrorText.jsx";
+import StyledErrorText from "../../ui/StyledErrorText.jsx";
 import { useUserById } from "./hooks/useUserById.js";
 import { useCurrentDummyUser } from "./hooks/useCurrentDummyUser.js";
 import { Link } from "react-router-dom";
 import DummyUsersList from "./DummyUsersList.jsx";
+import Row from "../../ui/Row.jsx";
 
 function UserSugestions() {
   const {
@@ -16,16 +17,16 @@ function UserSugestions() {
   const { userById = {}, isLoading, error } = useUserById(currentUser?.id);
 
   if (errorCurrentUser || error)
-    return <ErrorText>{errorCurrentUser || error}</ErrorText>;
+    return <StyledErrorText>{errorCurrentUser || error}</StyledErrorText>;
 
   return (
-    <StyledUserSuggestions>
+    <>
       <UserLink
         user={userById}
         currentUser={true}
         isLoadingDummyUsers={currentUserIsLoading || isLoading}
       />
-      <StyledHeading>
+      <StyledHeading type="horizontal" margin="2rem 0 0 0">
         <h4>Suggested for you</h4>
         <Link to="/explore/people">See All</Link>
       </StyledHeading>
@@ -33,22 +34,13 @@ function UserSugestions() {
         isLoading={currentUserIsLoading || isLoading}
         slicedNumber={5}
       />
-    </StyledUserSuggestions>
+    </>
   );
 }
 
 export default UserSugestions;
 
-const StyledUserSuggestions = styled.div`
-  /* cursor: ${(props) => (props.currentUserIsLoading ? "wait" : "pointer")}; */
-`;
-
-const StyledHeading = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 2rem;
-
+const StyledHeading = styled(Row)`
   & h4 {
     font-size: var(--font-size-small);
     color: var(--color-neutral-400);

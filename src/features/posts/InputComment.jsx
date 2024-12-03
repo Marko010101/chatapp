@@ -8,7 +8,7 @@ import MemoizedEmoji from "../../ui/MemoizedEmoji.jsx";
 import SpinnerFullPage from "../../ui/loaders/SpinnerFullPage.jsx";
 import { useCurrentDummyUser } from "../users/hooks/useCurrentDummyUser.js";
 import useCreateComment from "./hooks/useCreateComment.js";
-import ErrorText from "../../ui/ErrorText.jsx";
+import StyledErrorText from "../../ui/StyledErrorText.jsx";
 
 function InputComment({ textareaRef, postId, isModalComment }) {
   const { currentUser, isLoading, error } = useCurrentDummyUser();
@@ -75,7 +75,7 @@ function InputComment({ textareaRef, postId, isModalComment }) {
   };
 
   if (isLoading) return <SpinnerFullPage />;
-  if (error) return <ErrorText />;
+  if (error) return <StyledErrorText />;
 
   return (
     <StyledCommentArea

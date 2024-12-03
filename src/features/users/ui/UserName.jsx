@@ -6,6 +6,8 @@ import Heading from "../../../ui/Heading.jsx";
 
 const StyledUserName = styled(Heading)`
   cursor: pointer;
+  width: max-content;
+  display: block;
 `;
 
 function UserName({
@@ -18,7 +20,7 @@ function UserName({
 }) {
   return (
     <Link to={`/profile/${id}`}>
-      <StyledUserName as={heading}>
+      <StyledUserName as="h4">
         {fixedSizeFullName(firstName, lastName, length, isUnderscore)}
       </StyledUserName>
     </Link>

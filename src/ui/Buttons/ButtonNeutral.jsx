@@ -1,12 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import Row from "../Row.jsx";
 
-const StyledButton = styled.button`
+const StyledButton = styled(Row)`
   width: max-content;
-  display: flex;
-  justify-items: center;
-  align-items: center;
-  padding: 0.6rem 1.6rem;
   border-style: none;
   background-color: rgba(51, 51, 51, 0.95);
   border-radius: var(--border-radius-lg);
@@ -25,5 +22,14 @@ const StyledButton = styled.button`
 
 // ButtonNeutral component to accept and forward all props to StyledButton
 export default function ButtonNeutral({ children, ...props }) {
-  return <StyledButton {...props}>{children}</StyledButton>;
+  return (
+    <StyledButton
+      as="button"
+      type="horizontal-center"
+      padding="0.6rem 1.6rem"
+      {...props}
+    >
+      {children}
+    </StyledButton>
+  );
 }

@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import Row from "../Row.jsx";
 
 const l13 = keyframes`
   100% {
@@ -11,11 +12,8 @@ const StyledSpinner = styled.div`
   height: calc(100vh - 5rem);
 `;
 
-const SpinnerContainer = styled.div`
+const SpinnerContainer = styled(Row)`
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   opacity: 0.7;
 `;
 
@@ -46,7 +44,7 @@ const Loader = styled.div`
 function SpinnerFullPage() {
   return (
     <StyledSpinner>
-      <SpinnerContainer>
+      <SpinnerContainer type="horizontal-center">
         <Loader />
       </SpinnerContainer>
     </StyledSpinner>

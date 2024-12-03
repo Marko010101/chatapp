@@ -1,7 +1,7 @@
 import CommentSectionModal from "./CommentSectionModal.jsx";
 import { useUserById } from "../../users/hooks/useUserById.js";
 import SpinnerMini from "../../../ui/loaders/SpinnerMini.jsx";
-import ErrorText from "../../../ui/ErrorText.jsx";
+import StyledErrorText from "../../../ui/StyledErrorText.jsx";
 import { useDeleteComment } from "../hooks/useDeleteComment.js";
 
 function Comment({ comment }) {
@@ -20,9 +20,13 @@ function Comment({ comment }) {
   } = userById; /* This have more parts */
 
   if (!owner)
-    return <ErrorText>Comment could not load due to an API error.</ErrorText>;
+    return (
+      <StyledErrorText>
+        Comment could not load due to an API error.
+      </StyledErrorText>
+    );
   if (isLoading) return <SpinnerMini />;
-  if (error) return <ErrorText>{error}</ErrorText>;
+  if (error) return <StyledErrorText>{error}</StyledErrorText>;
 
   return (
     <CommentSectionModal

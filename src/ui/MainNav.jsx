@@ -22,6 +22,7 @@ import { useLogout } from "../features/users/hooks/useLogout.js";
 import { useCurrentDummyUser } from "../features/users/hooks/useCurrentDummyUser.js";
 import useWindowWidth from "../hooks/useWindowWidth.js";
 import CreatePost from "../features/posts/CreatePost.jsx";
+import Row from "./Row.jsx";
 
 function MainNav() {
   const { isShrunk } = useSidebarShrink();
@@ -36,10 +37,10 @@ function MainNav() {
   };
 
   return (
-    <StyledNav>
+    <StyledNav as="nav" type="vertical" padding="0 0 2rem 0">
       {isCreatePostOpen && <CreatePost onClose={handleCreatePostToggle} />}
       <div>
-        <NavList isShrunk={isShrunk}>
+        <NavList as="ul" type="vertical" gap="0.4rem" isShrunk={isShrunk}>
           <li>
             <StyledNavLink to="/">
               <NavLinkItem
@@ -97,7 +98,12 @@ function MainNav() {
             </StyledNavLink>
           </li>
           <li>
-            <StyledNavButton onClick={handleCreatePostToggle}>
+            <StyledNavButton
+              type="horizontal-center"
+              gap="1.4rem"
+              padding="1rem 1.2rem"
+              onClick={handleCreatePostToggle}
+            >
               {isCreatePostOpen ? <RiAddCircleFill /> : <RiAddCircleLine />}
               <span>Create</span>
             </StyledNavButton>
@@ -146,18 +152,12 @@ function MainNav() {
 
 export default MainNav;
 
-const StyledNav = styled.nav`
-  display: flex;
-  flex-direction: column;
+const StyledNav = styled(Row)`
+  list-style: none;
   justify-content: space-between;
-  padding-bottom: 2rem;
 `;
 
-const NavList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-
+const NavList = styled(Row)`
   ${(props) =>
     props.isShrunk &&
     css`
@@ -221,16 +221,12 @@ const StyledNavLink = styled(NavLink)`
     scale: 110%;
   }
 `;
-const StyledNavButton = styled.div`
-  display: flex;
-  align-items: center;
+const StyledNavButton = styled(Row)`
   justify-content: start;
-  gap: 1.4rem;
 
   color: var(--color-gray-300);
   font-size: 1.6rem;
   font-weight: var(--font-weight-regular);
-  padding: 1rem 1.2rem;
   transition: all 0.3s;
   cursor: pointer;
 

@@ -17,7 +17,6 @@ export const uploadFileToCloudinary = async (file) => {
         body: formData,
       }
     );
-    console.log(response);
     if (!response.ok) {
       throw new Error("Failed to upload file to Cloudinary");
     }

@@ -3,12 +3,13 @@ import styled from "styled-components";
 import { useMoveBack } from "../hooks/useMoveBack";
 import Heading from "../ui/Heading";
 import Footer from "../ui/Footer.jsx";
+import Row from "../ui/Row.jsx";
 
 function PageNotFound() {
   const moveBack = useMoveBack();
 
   return (
-    <StyledPageNotFound>
+    <StyledPageNotFound as="main" type="vertical" padding="3.3rem">
       <Heading as="h1">Sorry, this page isn't available.</Heading>
       <p>
         The link you followed may be broken, or the page may have been removed.
@@ -24,14 +25,11 @@ function PageNotFound() {
 
 export default PageNotFound;
 
-const StyledPageNotFound = styled.main`
+const StyledPageNotFound = styled(Row)`
   height: 100vh;
   background-color: var(--color-black);
-  display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: start;
-  padding: 3.3rem;
 
   & p {
     margin-top: 3rem;

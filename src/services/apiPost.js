@@ -77,7 +77,6 @@ export async function getPostById(id) {
 
 // services/postService.js
 export const createPost = async (postData) => {
-  console.log("postData", postData);
   try {
     const response = await fetch(`${DUMMY_API}post/create`, {
       headers: {

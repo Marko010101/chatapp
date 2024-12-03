@@ -4,12 +4,10 @@ import SpinnerFullPage from "./loaders/SpinnerFullPage.jsx";
 import styled from "styled-components";
 // import { useUserFirebase } from "../features/users/useUserFirebase.js";
 import { useUserFirebase } from "../features/users/./hooks/useUserFirebase.js";
+import Row from "./Row.jsx";
 
-const FullPage = styled.div`
+const FullPage = styled(Row)`
   height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 function ProtectedRoute({ children }) {
@@ -31,7 +29,7 @@ function ProtectedRoute({ children }) {
   // 3. While loading, show a spinner
   if (isLoading)
     return (
-      <FullPage>
+      <FullPage type="horizontal-center">
         <SpinnerFullPage />
       </FullPage>
     );

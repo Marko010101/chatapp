@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 
-import ErrorText from "./ErrorText.jsx";
+import StyledErrorText from "./StyledErrorText.jsx";
 import { ToggleButton } from "./Buttons/ToggleButton.jsx";
 
 const StyledFormRow = styled.div`
@@ -90,7 +90,7 @@ function FormRow({
           </ToggleButton>
         )}
       </span>
-      {error && <ErrorText>{error}</ErrorText>}
+      {error && <StyledErrorText>{error}</StyledErrorText>}
     </StyledFormRow>
   );
 }

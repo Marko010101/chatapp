@@ -7,8 +7,4 @@ const StyledErrorText = styled.p`
   font-style: italic;
 `;
 
-function ErrorText({ children }) {
-  return <StyledErrorText>{children}</StyledErrorText>;
-}
-
-export default ErrorText;
+export default StyledErrorText;

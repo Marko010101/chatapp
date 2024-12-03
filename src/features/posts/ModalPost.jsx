@@ -10,7 +10,7 @@ import ActionButtonDots from "./ui/ActionButtonDots.jsx";
 import InputComment from "./InputComment.jsx";
 import Likes from "./ui/Likes.jsx";
 import PostFormatedDate from "./ui/PostFormatedDate.jsx";
-import ErrorText from "../../ui/ErrorText.jsx";
+import StyledErrorText from "../../ui/StyledErrorText.jsx";
 import { useComments } from "./hooks/useComment.js";
 import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
 import ActionIcons from "./ui/ActionIcons.jsx";
@@ -48,7 +48,6 @@ function ModalPost() {
 
   const { data: commentsData = [] } = comments;
   const { post, isLoading, error } = useModalPostById(postId);
-  console.log(post);
   const {
     userById,
     isLoading: loadingUserById,
@@ -63,23 +62,27 @@ function ModalPost() {
 
   if (isLoading || loadingUserById) return <SpinnerFullPage />;
   if (error || commentsError || userByIdError)
-    return <ErrorText>{error || commentsError || userByIdError}</ErrorText>;
+    return (
+      <StyledErrorText>
+        {error || commentsError || userByIdError}
+      </StyledErrorText>
+    );
   const { image, likes, link, owner = {}, publishDate, tags, text } = post;
   const { firstName, lastName, id, picture: ownerPicture, title } = owner;
   return (
     <StyledModal>
       {isSmallerDevice && (
-        <StyledDesc>
+        <StyledDesc type="horizontal-center">
           <IoIosArrowBack size={26} onClick={close} />
           <p>Comments</p>
         </StyledDesc>
       )}
-      <PostImage>
+      <PostImage type="horizontal-center">
         <img src={image} alt="" />
       </PostImage>
       <PostBody>
-        <StyledOwner>
-          <div>
+        <StyledOwner as="header" type="horizontal">
+          <Row type="horizontal-center">
             <StyledRow
               onMouseEnter={handleImageMouseEnter}
               onMouseLeave={handleImageMouseLeave}
@@ -106,7 +109,7 @@ function ModalPost() {
                 {isHeaderHovered && <UserProfileOnHover user={userById} />}
               </RelativeDiv>
             </StyledRow>
-          </div>
+          </Row>
           {!isSmallerDevice && (
             <div>
               <ActionButtonDots />
@@ -118,8 +121,13 @@ function ModalPost() {
           <SpinnerMini />
         ) : (
           <StyledCommentSection
+            as="section"
+            type="vertical"
             className="scrollButtonDisappear"
             isHovered={isImageHovered || isHeaderHovered}
+            gap="2rem"
+            padding="0 1.5rem"
+            margin="2rem 0 0 0"
           >
             {sortedComments?.map((comment) => (
               <Comment key={comment.id} comment={comment} />
@@ -160,9 +168,7 @@ const StyledModal = styled.main`
   }
 `;
 
-const StyledDesc = styled.div`
-  display: flex;
-  align-items: center;
+const StyledDesc = styled(Row)`
   position: relative;
   border-bottom: var(--border);
   padding: 1rem 0;
@@ -174,19 +180,17 @@ const StyledDesc = styled.div`
   }
 
   & p {
-    margin: 0 auto; /* Centers the text horizontally */
+    margin: 0 auto;
     font-weight: var(--font-weight-semibold);
     font-size: var(--font-size-big);
   }
 `;
 
-const PostImage = styled.div`
+const PostImage = styled(Row)`
   height: 90vh;
   max-height: 90vh;
   background-color: var(--color-black);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
   border-right: var(--border);
   max-width: 70rem;
 
@@ -210,31 +214,22 @@ const PostBody = styled.article`
   }
 `;
 
-const StyledOwner = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+const StyledOwner = styled(Row)`
   border-bottom: var(--border);
 
   border-radius: var(--border-radius-sm);
   padding: 3rem 1.5rem;
 
   & > div {
-    display: flex;
-    align-items: center;
     gap: 1.5rem;
   }
+
   @media (max-width: 992px) {
     padding: 1rem;
   }
 `;
 
-const StyledCommentSection = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  padding: 0 1.5rem;
-  margin-top: 2rem;
+const StyledCommentSection = styled(Row)`
   max-height: 50rem;
   overflow: auto;
   ${(props) => (props.isHovered ? "visible" : "auto")}

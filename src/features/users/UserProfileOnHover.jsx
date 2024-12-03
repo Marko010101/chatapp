@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { useUserPosts } from "../posts/hooks/useUsersPosts.js";
 import Row from "../../ui/Row.jsx";
 import OwnerImage from "../posts/ui/OwnerImage.jsx";
-import ErrorText from "../../ui/ErrorText.jsx";
+import StyledErrorText from "../../ui/StyledErrorText.jsx";
 import UserName from "./ui/UserName.jsx";
 import PersonalInfo from "./ui/PersonalInfo.jsx";
 import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
@@ -13,13 +13,13 @@ function UserProfileOnHover({ user, left }) {
 
   const { currentUserPosts, isLoading, error } = useUserPosts(id);
 
-  if (error) return <ErrorText>{error}</ErrorText>;
+  if (error) return <StyledErrorText>{error}</StyledErrorText>;
 
   return (
     <StyledHoverPopup left={left}>
       <StyledHeader>
         <OwnerImage ownerPicture={picture} id={id} />
-        {title && <span>{title}</span>}{" "}
+        {title && <span>{title}</span>}
         <UserName
           firstName={firstName}
           lastName={lastName}
@@ -39,7 +39,7 @@ function UserProfileOnHover({ user, left }) {
       ) : (
         <div></div>
       )}
-      <StyledPosts isLoading={isLoading}>
+      <StyledPosts type="horizontal-center" gap="0.3rem" isLoading={isLoading}>
         {isLoading && <SpinnerMini />}
         {currentUserPosts?.data.length
           ? currentUserPosts?.data
@@ -57,6 +57,25 @@ function UserProfileOnHover({ user, left }) {
 }
 
 export default UserProfileOnHover;
+
+const StyledHeader = styled.header`
+  display: grid;
+  grid-template-columns: 5rem max-content max-content;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1.5rem;
+  width: 100%;
+
+  & h4 {
+    cursor: pointer;
+  }
+
+  & img {
+    width: 5rem;
+    max-width: 5rem;
+    height: 5rem;
+  }
+`;
 
 const StyledHoverPopup = styled.div`
   position: absolute;
@@ -108,36 +127,8 @@ const StyledHoverPopup = styled.div`
   }
 `;
 
-const StyledHeader = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 0 1.5rem;
-  width: 100%;
-
-  & h4 {
-    cursor: pointer;
-    margin-left: -1rem;
-  }
-
-  & img {
-    width: 6rem;
-    scale: 1.3;
-    height: auto;
-  }
-`;
-
-// const PersonalInfo = styled.div`
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-around;
-// `;
-
-const StyledPosts = styled.div`
-  display: flex;
-  gap: 0.3rem;
+const StyledPosts = styled(Row)`
   align-items: ${(props) => (props.isLoading ? "center" : "end")};
-  justify-content: center;
   & img {
     width: calc(100% / 3);
     height: 10rem;

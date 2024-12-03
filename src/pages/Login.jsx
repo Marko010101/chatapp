@@ -4,13 +4,19 @@ import LoginForm from "../features/users/LoginForm.jsx";
 import LogoText from "../ui/LogoText";
 import dogImage from "../assets/loginImage.jpg";
 import useWindowWidth from "../hooks/useWindowWidth.js";
+import Row from "../ui/Row.jsx";
 
 function Login() {
   const { windowWidth } = useWindowWidth();
   const isSmallDevice = windowWidth <= 768;
 
   return (
-    <LoginLayout isSmallDevice={isSmallDevice}>
+    <LoginLayout
+      isSmallDevice={isSmallDevice}
+      type="vertical"
+      as="main"
+      margin="0 auto"
+    >
       <div>
         {isSmallDevice ? (
           <ImageBox isSmallDevice={isSmallDevice}>
@@ -25,7 +31,7 @@ function Login() {
           </ImageBox>
         )}
 
-        <LoginBox isSmallDevice={isSmallDevice}>
+        <LoginBox isSmallDevice={isSmallDevice} type="vertical">
           <LogoText />
           <LoginForm />
         </LoginBox>
@@ -36,11 +42,8 @@ function Login() {
 
 export default Login;
 
-const LoginLayout = styled.main`
+const LoginLayout = styled(Row)`
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
   justify-content: center;
 
   width: ${(props) => (props.isSmallDevice ? "100%" : "max-content")};
@@ -69,10 +72,7 @@ const ImageBox = styled.div`
   }
 `;
 
-const LoginBox = styled.div`
-  display: flex;
-  flex-direction: column;
-
+const LoginBox = styled(Row)`
   border-left: ${(props) => (props.isSmallDevice ? "none" : "var(--border)")};
   ${(props) =>
     props.isSmallDevice &&

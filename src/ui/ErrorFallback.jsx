@@ -2,14 +2,11 @@ import styled from "styled-components";
 import Heading from "./Heading.jsx";
 import GlobalStyles from "../styles/globalStyles.js";
 import Button from "./Buttons/Button.jsx";
+import Row from "./Row.jsx";
 
-const StyledErrorFallback = styled.main`
+const StyledErrorFallback = styled(Row)`
   height: 100vh;
   background-color: var(--color-grey-50);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4.8rem;
 `;
 
 const Box = styled.div`
@@ -36,7 +33,7 @@ function ErrorFallback({ error, resetErrorBoundary }) {
   return (
     <>
       <GlobalStyles />
-      <StyledErrorFallback>
+      <StyledErrorFallback as="main" type="horizontal-center" padding="4.8rem">
         <Box>
           <Heading as="h1">Something went wrong 🙄</Heading>
           <p>{error}</p>

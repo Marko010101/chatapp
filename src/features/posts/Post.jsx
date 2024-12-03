@@ -8,7 +8,7 @@ import Row from "../../ui/Row.jsx";
 import useHover from "../../hooks/useHover.js";
 import { useUserById } from "../users/hooks/useUserById.js";
 import UserProfileOnHover from "../users/UserProfileOnHover.jsx";
-import ErrorText from "../../ui/ErrorText.jsx";
+import StyledErrorText from "../../ui/StyledErrorText.jsx";
 import UserName from "../users/ui/UserName.jsx";
 import { RelativeDiv } from "../../ui/RelativeDiv.jsx";
 
@@ -34,7 +34,7 @@ function Post({ post, innerRef }) {
   const { userById, isLoading, error } = useUserById(ownerId);
 
   if (isLoading) return;
-  if (error) return <ErrorText>{error}</ErrorText>;
+  if (error) return <StyledErrorText>{error}</StyledErrorText>;
 
   return (
     <StyledPost>

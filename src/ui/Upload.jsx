@@ -2,17 +2,16 @@ import styled from "styled-components";
 
 import PlusCircle from "../assets/plus-circle.svg?react";
 import Delete from "../assets/delete.svg?react";
+import Row from "./Row.jsx";
 
-const FileUploadWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const FileUploadWrapper = styled(Row)`
   height: 100%;
   border: 0.1rem dashed
     ${(props) =>
       props.isError ? "var(--color-primary)" : "var(--color-cloudy-gray)"};
   border-radius: 2rem;
   border: 1px dotted var(--color-neutral-700);
+
   & > div {
     position: relative;
     display: flex;
@@ -61,7 +60,11 @@ const Upload = ({ value, onChange, handleDelete, name, isError, setError }) => {
   };
 
   return value ? (
-    <FileUploadWrapper className="group" isError={isError}>
+    <FileUploadWrapper
+      type="horizontal-center"
+      className="group"
+      isError={isError}
+    >
       <div>
         <img src={value} alt={`${name}`} />
         <span onClick={onDeleteClick}>
@@ -70,7 +73,7 @@ const Upload = ({ value, onChange, handleDelete, name, isError, setError }) => {
       </div>
     </FileUploadWrapper>
   ) : (
-    <FileUploadWrapper isError={isError}>
+    <FileUploadWrapper type="horizontal-center" isError={isError}>
       <label htmlFor={name}>
         <PlusCircle />
         <input

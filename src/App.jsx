@@ -11,6 +11,7 @@ import { SidebarShrinkProvider } from "./context/SidebarShrinkingContext.jsx";
 import { LikeProvider } from "./context/LikesContext.jsx";
 import ProtectedRoute from "./ui/ProtectedRoute.jsx";
 import Modal from "./ui/modal/Modal.jsx";
+// 864.05 kB
 
 const queryClient = new QueryClient({
   defaultOptions: {
