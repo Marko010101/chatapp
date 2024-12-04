@@ -13,7 +13,7 @@ const StyledPostInfo = styled.div`
 `;
 
 function PostInfo({ post }) {
-  const { id, likes, text } = post;
+  const { id, likes, text, owner } = post;
 
   const textareaRef = useRef(null);
 
@@ -21,7 +21,7 @@ function PostInfo({ post }) {
     <StyledPostInfo>
       <ActionIcons textareaRef={textareaRef} post={post} />
       <Likes likes={likes} />
-      <Title text={text} />
+      <Title text={text} owner={owner} />
       <Comments postIdComment={id} textareaRef={textareaRef} />
       <InputComment textareaRef={textareaRef} postId={id} />
     </StyledPostInfo>

@@ -35,7 +35,7 @@ function Home() {
       open("modalPost");
     }
   }, [postId, open]);
-
+  console.log(data);
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();

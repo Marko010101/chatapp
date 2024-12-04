@@ -1,11 +1,40 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getPosts, getPostsTotalLength } from "../../../services/apiPost.js";
-import { useEffect, useState } from "react";
+
+import { getPosts } from "../../../services/apiPost.js";
 import { POST_PER_PAGE } from "../../../constants/POST.js";
 
 export function usePosts() {
+  const {
+    data,
+    isLoading,
+    error,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["posts"],
+    queryFn: ({ pageParam = 0 }) => getPosts({ pageParam }),
+    getNextPageParam: (lastPage) => {
+      const totalPages = Math.ceil(lastPage.total / POST_PER_PAGE);
+      const nextPage = lastPage.page + 1;
+      return nextPage < totalPages ? nextPage : undefined;
+    },
+  });
+
+  return {
+    data,
+    isLoading,
+    error,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  };
+}
+
+// If we want to fetch posts from old to new
+/* export function usePosts() {
   const [totalPost, setTotalPost] = useState(0);
-  const [initialPage, setInitialPage] = useState(null);
+  const [initialPage, setInitialPage] = useState(1);
 
   async function postLength() {
     const totalPost = await getPostsTotalLength();
@@ -50,3 +79,4 @@ export function usePosts() {
     hasNextPage,
   };
 }
+ */

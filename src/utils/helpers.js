@@ -67,6 +67,8 @@ export function getFormattedDateInfo(dateString) {
 export function titleFix(str) {
   if (str.endsWith("...")) {
     return str.slice(0, -3);
+  } else if (str.length === 0) {
+    return "";
   } else if (!str.endsWith(".")) {
     return str + ".";
   }
@@ -76,7 +78,7 @@ export function titleFix(str) {
 export function fixedSizeFullName(
   firstName,
   lastName,
-  length,
+  length = 40,
   useUnderscore = false
 ) {
   const fullName = useUnderscore

@@ -1,16 +1,28 @@
 import styled from "styled-components";
-import { titleFix } from "../../../utils/helpers.js";
+import { fixedSizeFullName, titleFix } from "../../../utils/helpers.js";
 
 const StyledTitle = styled.span`
   font-weight: var(--font-weight-light);
-  margin-left: 0.3rem;
   color: var(--color-gray-0);
   pointer-events: none;
   text-overflow: ellipsis;
+  pointer-events: none;
+  & p {
+    display: inline;
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    pointer-events: auto;
+  }
 `;
 
-function CommentText({ text }) {
-  return <StyledTitle>{titleFix(text)}</StyledTitle>;
+function CommentText({ text, owner }) {
+  const { firstName, lastName } = owner;
+  return (
+    <StyledTitle>
+      <p>{fixedSizeFullName(firstName, lastName, (length = 50))} </p>
+      {titleFix(text)}
+    </StyledTitle>
+  );
 }
 
 export default CommentText;
