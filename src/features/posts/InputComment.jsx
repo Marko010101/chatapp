@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled, { css } from "styled-components";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 
-import Button from "../../ui/Buttons/Button.jsx";
+import StyledButton from "../../ui/Buttons/StyledButton.jsx";
 import { useOutsideClick } from "../../hooks/useOutsideClick.js";
 import MemoizedEmoji from "../../ui/MemoizedEmoji.jsx";
 import SpinnerFullPage from "../../ui/loaders/SpinnerFullPage.jsx";
@@ -93,16 +93,16 @@ function InputComment({ textareaRef, postId, isModalComment }) {
         className="scrollButtonDisappear"
       />
       {isCommenting ? (
-        <Button onClick={handlePostComment}>Post</Button>
+        <StyledButton onClick={handlePostComment}>Post</StyledButton>
       ) : (
         isModalComment && (
-          <Button
+          <StyledButton
             onClick={handlePostComment}
             isCommenting={isCommenting}
             isModalComment={isModalComment}
           >
             Post
-          </Button>
+          </StyledButton>
         )
       )}
       <HiOutlineEmojiHappy onClick={toggleEmojiPicker} />
@@ -126,6 +126,7 @@ const StyledCommentArea = styled.div`
   padding: 0.3rem 0.3rem 1rem;
   border-bottom: var(--border);
   min-height: 5rem;
+  margin-bottom: 1.6rem;
 
   ${(props) =>
     !props.isModalComment && props.isCommenting
