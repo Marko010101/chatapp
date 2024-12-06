@@ -2,13 +2,13 @@ import { useState } from "react";
 import styled, { css } from "styled-components";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 
-import StyledButton from "../../ui/Buttons/StyledButton.jsx";
 import { useOutsideClick } from "../../hooks/useOutsideClick.js";
 import MemoizedEmoji from "../../ui/MemoizedEmoji.jsx";
 import SpinnerFullPage from "../../ui/loaders/SpinnerFullPage.jsx";
 import { useCurrentDummyUser } from "../users/hooks/useCurrentDummyUser.js";
 import useCreateComment from "./hooks/useCreateComment.js";
 import StyledErrorText from "../../ui/StyledErrorText.jsx";
+import StyledButton from "../../ui/Buttons/StyledButton.jsx";
 
 function InputComment({ textareaRef, postId, isModalComment }) {
   const { currentUser, isLoading, error } = useCurrentDummyUser();
