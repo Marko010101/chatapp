@@ -3,7 +3,7 @@ import Comments from "./CommentsModal.jsx";
 import InputComment from "./InputComment.jsx";
 import { useRef } from "react";
 import Likes from "./ui/Likes.jsx";
-import Title from "./ui/CommentText.jsx";
+import CommentText from "./ui/CommentText.jsx";
 import ActionIcons from "./ui/ActionIcons.jsx";
 
 const StyledPostInfo = styled.div`
@@ -21,7 +21,7 @@ function PostInfo({ post }) {
     <StyledPostInfo>
       <ActionIcons textareaRef={textareaRef} post={post} />
       <Likes likes={likes} />
-      <Title text={text} owner={owner} />
+      <CommentText text={text} owner={owner} />
       <Comments postIdComment={id} textareaRef={textareaRef} />
       <InputComment textareaRef={textareaRef} postId={id} />
     </StyledPostInfo>

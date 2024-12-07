@@ -4,7 +4,7 @@ import {
   fixedSizeFullName,
   getFormattedDateInfo,
 } from "../../utils/helpers.js";
-import Button from "../../ui/Buttons/Button.jsx";
+import StyledButton from "../../ui/Buttons/StyledButton.jsx";
 import { useUserById } from "./hooks/useUserById.js";
 import OwnerImage from "../posts/ui/OwnerImage.jsx";
 import useHover from "../../hooks/useHover.js";
@@ -91,7 +91,7 @@ function UserLink({ user, currentUser, isLoadingDummyUsers, isSuggestedPage }) {
             </span>
           </Row>
         </Row>
-        {!currentUser && <Button>message</Button>}
+        {!currentUser && <StyledButton>message</StyledButton>}
       </StyledUser>
     </>
   );

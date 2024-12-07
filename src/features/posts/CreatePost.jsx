@@ -20,8 +20,7 @@ import Row from "../../ui/Row.jsx";
 import StyledErrorText from "../../ui/StyledErrorText.jsx";
 
 const CreatePost = ({ onClose }) => {
-  const ref = useOutsideClick(onClose);
-  const { currentUser, isLoading, error } = useCurrentDummyUser();
+  const { currentUser, isLoading } = useCurrentDummyUser();
   const { createUserPost, isLoading: isLoadingCreatePost } = useCreatePost(
     currentUser?.id
   );
@@ -37,6 +36,7 @@ const CreatePost = ({ onClose }) => {
     resolver: zodResolver(postSchema),
   });
   const [previewImage, setPreviewImage] = useState(watch("image"));
+  const ref = useOutsideClick(!isSubmitting ? onClose : undefined);
 
   const handleFileChange = (file) => {
     if (file) {
@@ -75,9 +75,10 @@ const CreatePost = ({ onClose }) => {
 
       onClose();
     } catch (error) {
-      console.error("Error:", error.message);
+      setError(error.message);
     }
   };
+
   return (
     <StyledOverlay>
       <StyledModal ref={ref}>

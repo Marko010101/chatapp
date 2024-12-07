@@ -33,9 +33,9 @@ function CommentsModal({ postIdComment, textareaRef }) {
         <Modal>
           <Modal.Open opens="comments">
             <Text isComments={isComments}>
-              <NavLink to={`/${postIdComment}`}>
-                View all {isComments} comments
-              </NavLink>
+              <StyledNavlink to={`/${postIdComment}`}>
+                View all {commentsData.length} comments
+              </StyledNavlink>
             </Text>
           </Modal.Open>
           <Modal.Window name="comments">
@@ -43,11 +43,16 @@ function CommentsModal({ postIdComment, textareaRef }) {
           </Modal.Window>
         </Modal>
       ) : (
+        // Show message if no comments
         <>
           {error ? (
-            <StyledErrorText>Could not load comments, {error}</StyledErrorText>
+            <StyledErrorText>Could not load comments: {error}</StyledErrorText>
           ) : (
-            <Text onClick={handleFocusingTextarea}>No comments yet</Text>
+            <Text onClick={handleFocusingTextarea}>
+              {isComments
+                ? `View all ${commentsData.length} comments`
+                : "No comments yet"}
+            </Text>
           )}
         </>
       )}
@@ -62,18 +67,9 @@ const StyledComments = styled.div`
 `;
 
 const Text = styled.p`
-  & NavLink {
-    font-size: var(--font-size-small);
-    color: var(--color-gray-text);
-
-    ${(props) =>
-      props.isComments &&
-      css`
-        cursor: pointer;
-
-        &:active {
-          color: var(--color-gray-active);
-        }
-      `}
-  }
+  width: max-content;
+`;
+const StyledNavlink = styled(NavLink)`
+  display: block;
+  height: max-content;
 `;

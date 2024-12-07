@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useRef, useContext } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import Comment from "./ui/Comment.jsx";
 import { useModalPostById } from "./hooks/useModalPostById.js";
@@ -23,17 +23,22 @@ import UserName from ".././users/ui/UserName.jsx";
 import useWindowWidth from "../../hooks/useWindowWidth.js";
 import { IoIosArrowBack } from "react-icons/io";
 import { ModalContext } from "../../ui/modal/Modal.jsx";
+import useDisableScroll from "../../hooks/useDisableScroll.js";
 
 function ModalPost() {
   let { postId } = useParams();
   const { windowWidth } = useWindowWidth();
+  useDisableScroll(true);
+
   const { close } = useContext(ModalContext);
   const isSmallerDevice = windowWidth <= 992;
+
   const {
     isHovered: isImageHovered,
     handleMouseEnter: handleImageMouseEnter,
     handleMouseLeave: handleImageMouseLeave,
   } = useHover();
+
   const {
     isHovered: isHeaderHovered,
     handleMouseEnter: handleHeaderMouseEnter,
@@ -55,7 +60,6 @@ function ModalPost() {
   } = useUserById(post?.owner?.id);
 
   const textareaRef = useRef(null);
-
   const sortedComments = commentsData?.sort(
     (a, b) => new Date(a.publishDate) - new Date(b.publishDate)
   );
@@ -67,8 +71,16 @@ function ModalPost() {
         {error || commentsError || userByIdError}
       </StyledErrorText>
     );
-  const { image, likes, link, owner = {}, publishDate, tags, text } = post;
-  const { firstName, lastName, id, picture: ownerPicture, title } = owner;
+  const {
+    image,
+    likes,
+    link,
+    owner = {},
+    publishDate,
+    tags,
+    text,
+  } = post || {};
+  const { firstName, lastName, id, picture: ownerPicture, title } = owner || {};
   return (
     <StyledModal>
       {isSmallerDevice && (
@@ -112,7 +124,7 @@ function ModalPost() {
           </Row>
           {!isSmallerDevice && (
             <div>
-              <ActionButtonDots />
+              <ActionButtonDots post={post} />
             </div>
           )}
         </StyledOwner>

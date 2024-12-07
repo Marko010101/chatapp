@@ -11,8 +11,8 @@ const slideDown = keyframes`
   }
 `;
 
-const StyledOverlay = styled.div`
-  position: fixed;
+const StyledModal = styled.div`
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -23,4 +23,4 @@ const StyledOverlay = styled.div`
   animation: ${slideDown} 0.2s ease-out;
 `;
 
-export default StyledOverlay;
+export default StyledModal;

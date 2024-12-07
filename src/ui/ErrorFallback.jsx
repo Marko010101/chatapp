@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Heading from "./Heading.jsx";
 import GlobalStyles from "../styles/globalStyles.js";
-import Button from "./Buttons/Button.jsx";
+import StyledButton from "./Buttons/StyledButton.jsx";
 import Row from "./Row.jsx";
 
 const StyledErrorFallback = styled(Row)`
@@ -37,9 +37,9 @@ function ErrorFallback({ error, resetErrorBoundary }) {
         <Box>
           <Heading as="h1">Something went wrong 🙄</Heading>
           <p>{error}</p>
-          <Button size="large" onClick={resetErrorBoundary}>
+          <StyledButton size="large" onClick={resetErrorBoundary}>
             Try again
-          </Button>
+          </StyledButton>
         </Box>
       </StyledErrorFallback>
     </>

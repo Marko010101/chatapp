@@ -11,6 +11,7 @@ import { SidebarShrinkProvider } from "./context/SidebarShrinkingContext.jsx";
 import { LikeProvider } from "./context/LikesContext.jsx";
 import ProtectedRoute from "./ui/ProtectedRoute.jsx";
 import Modal from "./ui/modal/Modal.jsx";
+import { DeletedPostProvider } from "./context/DeletedPostContext.jsx";
 // 864.05 kB
 
 const queryClient = new QueryClient({
@@ -39,62 +40,64 @@ function App() {
   return (
     <SidebarShrinkProvider>
       <LikeProvider>
-        <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools initialIsOpen={false} />
-          <BrowserRouter>
-            <Modal>
-              <GlobalStyles />
-              <Suspense fallback={<SpinnerFullPage />}>
-                <Routes>
-                  <Route
-                    element={
-                      <ProtectedRoute>
-                        <AppLayout />
-                      </ProtectedRoute>
-                    }
-                  >
-                    <Route path="/" index element={<Home />} />
-                    <Route path="/:postId" element={<Home />} />
-                    <Route path="search" element={<Search />} />
-                    <Route path="explore" element={<Explore />} />
-                    <Route path="explore/people" element={<AllPeople />} />
-                    <Route path="reels" element={<Reels />} />
-                    <Route path="messages" element={<Messages />} />
-                    <Route path="notifications" element={<Notifications />} />
-                    <Route path="profile/:userId" element={<Profile />} />
+        <DeletedPostProvider>
+          <QueryClientProvider client={queryClient}>
+            <ReactQueryDevtools initialIsOpen={false} />
+            <BrowserRouter>
+              <Modal>
+                <GlobalStyles />
+                <Suspense fallback={<SpinnerFullPage />}>
+                  <Routes>
                     <Route
-                      path="profile/:userId/:postId"
-                      element={<Profile />}
-                    />
-                    <Route path="*" element={<PageNotFound />} />
-                  </Route>
-                  <Route path="register" element={<Register />} />
-                  <Route path="login" element={<Login />} />
-                </Routes>
-              </Suspense>
-            </Modal>
-          </BrowserRouter>
-          <Toaster
-            position="top-center"
-            gutter={12}
-            containerStyle={{ margin: "8px" }}
-            toastOptions={{
-              success: {
-                duration: 3000,
-              },
-              error: {
-                duration: 5000,
-              },
-              style: {
-                fontSize: "16px",
-                maxWidth: "500px",
-                padding: "16px 24px",
-                backgroundColor: "var(--color-neutral-700)",
-                color: "var(--color-neutral-100)",
-              },
-            }}
-          />
-        </QueryClientProvider>
+                      element={
+                        <ProtectedRoute>
+                          <AppLayout />
+                        </ProtectedRoute>
+                      }
+                    >
+                      <Route path="/" index element={<Home />} />
+                      <Route path="/:postId" element={<Home />} />
+                      <Route path="search" element={<Search />} />
+                      <Route path="explore" element={<Explore />} />
+                      <Route path="explore/people" element={<AllPeople />} />
+                      <Route path="reels" element={<Reels />} />
+                      <Route path="messages" element={<Messages />} />
+                      <Route path="notifications" element={<Notifications />} />
+                      <Route path="profile/:userId" element={<Profile />} />
+                      <Route
+                        path="profile/:userId/:postId"
+                        element={<Profile />}
+                      />
+                      <Route path="*" element={<PageNotFound />} />
+                    </Route>
+                    <Route path="register" element={<Register />} />
+                    <Route path="login" element={<Login />} />
+                  </Routes>
+                </Suspense>
+              </Modal>
+            </BrowserRouter>
+            <Toaster
+              position="top-center"
+              gutter={12}
+              containerStyle={{ margin: "8px" }}
+              toastOptions={{
+                success: {
+                  duration: 3000,
+                },
+                error: {
+                  duration: 5000,
+                },
+                style: {
+                  fontSize: "16px",
+                  maxWidth: "500px",
+                  padding: "16px 24px",
+                  backgroundColor: "var(--color-neutral-700)",
+                  color: "var(--color-neutral-100)",
+                },
+              }}
+            />
+          </QueryClientProvider>
+        </DeletedPostProvider>
       </LikeProvider>
     </SidebarShrinkProvider>
   );

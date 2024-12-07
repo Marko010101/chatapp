@@ -8,6 +8,7 @@ import { useUpdatePost } from "../hooks/useUpdatePost.js";
 import { useLike } from "../../../context/LikesContext.jsx";
 import StyledErrorText from "../../../ui/StyledErrorText.jsx";
 import Row from "../../../ui/Row.jsx";
+import { handleCopyUrl } from "../../../utils/copyUrl.js";
 
 function ActionIcons({ textareaRef, postId, post }) {
   const { mutate, isLoading, error } = useUpdatePost();
@@ -27,20 +28,6 @@ function ActionIcons({ textareaRef, postId, post }) {
     textareaRef.current.focus();
   };
 
-  const handleCopyUrl = () => {
-    const urlToCopy = postId
-      ? window.location.href
-      : `${window.location.href}${post.id}`;
-    navigator.clipboard
-      .writeText(urlToCopy)
-      .then(() => {
-        toast.success("URL copied to clipboard");
-      })
-      .catch((err) => {
-        console.error("Failed to copy URL: ", err);
-      });
-  };
-
   if (error) return <StyledErrorText>{error.message}</StyledErrorText>;
 
   return (
@@ -50,7 +37,7 @@ function ActionIcons({ textareaRef, postId, post }) {
           <EmojiAction
             action={handleToggleLike}
             emoji={
-              likedPosts[post.id] ? (
+              likedPosts[post?.id] ? (
                 <LikedHeart size={28} />
               ) : (
                 <IoMdHeartEmpty size={28} />
@@ -67,7 +54,10 @@ function ActionIcons({ textareaRef, postId, post }) {
       </div>
       <div>
         <span>
-          <EmojiAction action={handleCopyUrl} emoji={<IoIosSend size={24} />} />
+          <EmojiAction
+            action={() => handleCopyUrl(post)}
+            emoji={<IoIosSend size={24} />}
+          />
         </span>
       </div>
     </StyledIcons>

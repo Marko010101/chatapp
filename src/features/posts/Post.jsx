@@ -65,7 +65,7 @@ function Post({ post, innerRef }) {
             {isHeaderHovered && <UserProfileOnHover user={userById} />}
           </RelativeDiv>
           <PostFormatedDate date={publishDate} />
-          <ActionButtonDots />
+          <ActionButtonDots post={post} />
         </HeaderPost>
         <PostImg>
           <img src={image} alt="Post image" />

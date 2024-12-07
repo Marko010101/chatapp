@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { TiDeleteOutline } from "react-icons/ti";
 
@@ -9,7 +10,6 @@ import { useCurrentDummyUser } from "../../users/hooks/useCurrentDummyUser.js";
 import useHover from "../../../hooks/useHover.js";
 import UserProfileOnHover from "../../users/UserProfileOnHover.jsx";
 import { RelativeDiv } from "../../../ui/RelativeDiv.jsx";
-import UserName from "../../users/ui/UserName.jsx";
 import Row from "../../../ui/Row.jsx";
 
 function CommentSectionModal({
@@ -55,16 +55,11 @@ function CommentSectionModal({
             onMouseEnter={handleHeaderMouseEnter}
             onMouseLeave={handleHeaderMouseLeave}
           >
-            <UserName
-              firstName={firstName}
-              lastName={lastName}
-              length={30}
-              heading="h5"
-              id={owner?.id}
-            />
+            <Link to={`/profile/${owner.id}`}>
+              <Title text={text} owner={owner} />
+            </Link>
             {isHeaderHovered && <UserProfileOnHover user={owner} />}
           </RelativePositionWrapper>
-          <Title text={text} />
         </Heading>
         <PostFormatedDate date={date} isModalComment={true} />
       </StyledCommentBody>

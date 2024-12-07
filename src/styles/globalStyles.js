@@ -92,6 +92,7 @@ const GlobalStyles = createGlobalStyle`
   --shadow-lg: 0 2.4rem 3.2rem rgba(0, 0, 0, 0.12);
 
   --border: 0.1px solid var(--color-solf-black);
+  --border-light: 0.1px solid var(--color-neutral-700);
 
   --border-radius-tiny: 3px;
   --border-radius-sm: 5px;
@@ -147,7 +148,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, A
     border-radius: 0.65rem;
     background: var(--color-neutral-700);
   }
-
+  
   ::-webkit-scrollbar-thumb {
     border-radius: 0.65rem;
     background: var(--color-neutral-500);
@@ -156,11 +157,11 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, A
   ::-webkit-scrollbar-thumb:hover {
     background: var(--color-neutral-400);
   }
-
+  
   ::-webkit-scrollbar-thumb:active {
     background: var(--color-neutral-300);
   }
-
+  
   ::-webkit-scrollbar-button {
     display: block;
     background-color: var(--color-neutral-700);
@@ -195,6 +196,11 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, A
   ::-webkit-scrollbar-button:vertical:start:decrement:active {
     background-color: var(--color-neutral-400);
   }
+
+
+body.modal-open::-webkit-scrollbar-thumb {
+  display: none;
+}
 
 
 
@@ -278,6 +284,8 @@ img {
 .scrollButtonDisappear::-webkit-scrollbar-button {
     display: none;
 }
+
+
 
 
 @media (max-width: 1200px) {

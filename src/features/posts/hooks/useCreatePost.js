@@ -6,15 +6,13 @@ export function useCreatePost() {
 
   const {
     mutate: createUserPost,
-    isLoading,
+    isPending: isLoading,
     error,
   } = useMutation({
     mutationFn: createPost,
     onSuccess: () => {
-      //   queryClient.invalidateQueries("posts");
       queryClient.invalidateQueries("userPosts");
     },
   });
-
   return { createUserPost, isLoading, error };
 }

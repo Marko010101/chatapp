@@ -71,7 +71,6 @@ export async function getPostById(id) {
   }
 
   const result = await response.json();
-
   return result;
 }
 
@@ -115,4 +114,20 @@ export async function updatePost(id, updatedPostData) {
   const result = await response.json();
 
   return result;
+}
+
+export async function deletePostApi(id) {
+  const response = await fetch(`${DUMMY_API}post/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      "app-id": APP_ID,
+    },
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error(`Could not delete post, status: ${response.status}`);
+  }
+
+  return response.json();
 }

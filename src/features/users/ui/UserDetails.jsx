@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ButtonNeutral from "../../../ui/Buttons/ButtonNeutral.jsx";
 import Row from "../../../ui/Row.jsx";
 import Heading from "../../../ui/Heading.jsx";
-import Button from "../../../ui/Buttons/Button.jsx";
+import StyledButton from "../../../ui/Buttons/StyledButton.jsx";
 import PersonalInfo from "./PersonalInfo.jsx";
 
 function UserDetails({
@@ -49,7 +49,7 @@ const UserDetail = styled.div`
 `;
 
 const RecreatedBtn = styled(({ isCurrentUser, ...props }) =>
-  isCurrentUser ? <ButtonNeutral {...props} /> : <Button {...props} />
+  isCurrentUser ? <ButtonNeutral {...props} /> : <StyledButton {...props} />
 )`
   margin-left: 3rem;
 `;

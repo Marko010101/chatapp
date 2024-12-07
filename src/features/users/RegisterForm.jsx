@@ -6,7 +6,7 @@ import FormRow from "../../ui/FormRow.jsx";
 import Input from "../../ui/Input.jsx";
 import Form from "../../ui/Form.jsx";
 import FancyButton from "../../ui/Buttons/FancyButton.jsx";
-import Button from "../../ui/Buttons/Button.jsx";
+import StyledButton from "../../ui/Buttons/StyledButton.jsx";
 import { useSignup } from "./hooks/useSignup.js";
 import { useFirebaseSignup } from "./hooks/useFirebaseSignup.js";
 import StyledErrorText from "../../ui/StyledErrorText.jsx";
@@ -138,7 +138,7 @@ function RegisterForm() {
         {error?.message && "Could not register user, please try again."}
       </StyledErrorText>
       <FormRow>
-        <Button
+        <StyledButton
           type="reset"
           disabled={isLoading1 || isLoading2}
           onClick={() => {
@@ -147,7 +147,7 @@ function RegisterForm() {
           }}
         >
           {isLoading2 || isLoading1 ? <SpinnerMini /> : "Cancel"}
-        </Button>
+        </StyledButton>
         <FancyButton type="submit" disabled={isLoading1 || isLoading2}>
           {isLoading2 || isLoading1 ? <SpinnerMini /> : "Join us!"}
         </FancyButton>

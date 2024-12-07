@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Button from "../../ui/Buttons/Button.jsx";
+import StyledButton from "../../ui/Buttons/StyledButton.jsx";
 import Form from "../../ui/Form";
 import Input from "../../ui/Input";
 import { useLogin } from "./hooks/useLogin.js";
@@ -62,21 +62,20 @@ function LoginForm() {
         />
       </FormRowVertical>
       <FormRowVertical>
-        <Row type="horizontal" >
+        <Row type="horizontal">
           {!isLoading ? (
             <FancyButton disabled={isLoading}>Sign in</FancyButton>
           ) : (
             <SpinnerMini />
           )}
-          <Button
-          
+          <StyledButton
             onClick={(e) => {
               e.preventDefault();
               navigate("/register");
             }}
           >
             Register
-          </Button>
+          </StyledButton>
         </Row>
       </FormRowVertical>
     </Form>

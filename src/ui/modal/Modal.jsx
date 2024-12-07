@@ -10,16 +10,34 @@ import useWindowWidth from "../../hooks/useWindowWidth.js";
 import StyledModalButton from "./StyledModalButton.jsx";
 import StyledOverlay from "./StyledOverlay.jsx";
 import StyledModal from "./StyledModal.jsx";
+import { useDeletedPost } from "../../context/DeletedPostContext.jsx";
 
 const ModalContext = createContext();
 
+const handleRedirect = () => {
+  const path = window.location.pathname;
+
+  if (path.includes("profile")) {
+    const splitPath = path.split("/").slice(0, -1).join("/");
+    console.log("splitPath", splitPath);
+    return splitPath;
+  }
+
+  return "/";
+};
+
 function Modal({ children }) {
   const [openName, setOpenName] = useState("");
+  const { deletedPostId } = useDeletedPost();
   const navigate = useNavigate();
   const close = () => {
     setOpenName("");
-    navigate(-1);
+
+    if (!deletedPostId) navigate(-1);
+    // const redirectUrl = handleRedirect();
+    // navigate(redirectUrl);
   };
+
   const open = setOpenName;
 
   return (
