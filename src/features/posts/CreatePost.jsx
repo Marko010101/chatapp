@@ -67,7 +67,6 @@ const CreatePost = ({ onClose }) => {
         text,
         image: imageUrl,
         likes: 0,
-        tags: ["example-tag"],
         owner: currentUser.id,
       };
 

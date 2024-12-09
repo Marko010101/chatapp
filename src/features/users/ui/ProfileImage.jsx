@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import SpinnerMini from "../../../ui/loaders/SpinnerMini.jsx";
 
-function ProfileImage({ firstName, lastName, picture }) {
+function ProfileImage({ firstName, lastName, picture, isLoading = false }) {
   return (
     <UserImage>
       <img
@@ -8,6 +9,7 @@ function ProfileImage({ firstName, lastName, picture }) {
         src={picture}
         alt={`${firstName} ${lastName}`}
       />
+      {isLoading && <SpinnerMini />}
     </UserImage>
   );
 }

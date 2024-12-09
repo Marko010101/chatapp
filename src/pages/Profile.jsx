@@ -54,7 +54,7 @@ function Profile() {
   if (errorCurrentUser)
     return (
       <ErrorFallback
-        error={errorCurrentUser || error}
+        error={errorCurrentUser || error || error1}
         resetErrorBoundary={moveBack}
       />
     );

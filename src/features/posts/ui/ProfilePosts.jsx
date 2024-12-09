@@ -9,7 +9,7 @@ const StyledPosts = styled.div`
   width: 80rem;
 `;
 
-function ProfilePosts({ posts, isCurrentUser }) {
+function ProfilePosts({ posts }) {
   const allPost = posts?.data;
 
   return (

@@ -7,16 +7,21 @@ import { FaComment } from "react-icons/fa";
 import { ModalContext } from "../../../ui/modal/Modal.jsx";
 import { useComments } from "../hooks/useComment.js";
 import Row from "../../../ui/Row.jsx";
+import SpinnerMini from "../../../ui/loaders/SpinnerMini.jsx";
 
 function SearchedUserPost({ post }) {
   const { open } = useContext(ModalContext);
-  const { isLoading, comments } = useComments(post?.id);
-
+  const { comments, isLoading } = useComments(post?.id);
   function handleModalOpen() {
     open("ProfilePost");
   }
 
-  if (isLoading) return null;
+  if (isLoading)
+    return (
+      <StyledLoadingRow type="horizontal-center">
+        <SpinnerMini />
+      </StyledLoadingRow>
+    );
 
   return (
     <StyledPost to={post?.id}>
@@ -79,4 +84,8 @@ const StyledParagraph = styled(Row)`
   opacity: 0;
   transition: opacity 0.2s ease;
   width: 100%;
+`;
+
+const StyledLoadingRow = styled(Row)`
+  height: 25rem;
 `;
