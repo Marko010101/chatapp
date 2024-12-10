@@ -10,10 +10,13 @@ import { useState } from "react";
 import ConfirmDelete from "../../ui/modal/ConfirmDelete.jsx";
 import useDisableScroll from "../../hooks/useDisableScroll.js";
 import { useDeletePost } from "./hooks/useDeletePost.js";
+import { useNavigate, useParams } from "react-router-dom";
 
 const PostActionModal = ({ onClose, post }) => {
   const { deletePost, isLoading } = useDeletePost();
-
+  let { postId } = useParams();
+  const navigate = useNavigate();
+  const { href } = window.location;
   const ref = useOutsideClick(onClose);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const { currentUser } = useCurrentDummyUser();
@@ -24,7 +27,8 @@ const PostActionModal = ({ onClose, post }) => {
   };
 
   const handleGoToPost = () => {
-    console.log("Go to Post action triggered");
+    if (!postId) navigate(`${post.id}`);
+    onClose();
   };
 
   const handleDeletePost = () => {

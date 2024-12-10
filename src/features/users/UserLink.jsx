@@ -50,7 +50,11 @@ function UserLink({ user, currentUser, isLoadingDummyUsers, isSuggestedPage }) {
         >
           <OwnerImage ownerPicture={picture} id={id} />
           {!currentUser && isImageHovered && (
-            <UserProfileOnHover user={userById} left={"7rem"} />
+            <UserProfileOnHover
+              user={userById}
+              left={"7rem"}
+              isSuggestedPage={isSuggestedPage}
+            />
           )}
         </Row>
         <Row type="vertical">
@@ -75,7 +79,7 @@ function UserLink({ user, currentUser, isLoadingDummyUsers, isSuggestedPage }) {
               {!currentUser ? (
                 <>
                   <span>
-                    {diffInMonths > 0.9
+                    {diffInMonths > 0.1
                       ? "Suggested for you"
                       : "New to Petfolio"}
                   </span>

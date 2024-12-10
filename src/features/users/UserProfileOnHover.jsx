@@ -1,4 +1,5 @@
-import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 import { useUserPosts } from "../posts/hooks/useUsersPosts.js";
 import Row from "../../ui/Row.jsx";
@@ -8,15 +9,15 @@ import UserName from "./ui/UserName.jsx";
 import PersonalInfo from "./ui/PersonalInfo.jsx";
 import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
 
-function UserProfileOnHover({ user, left }) {
-  const { dateOfBirth, firstName, gender, id, lastName, picture, title } = user;
-
+function UserProfileOnHover({ user, left, isSuggestedPage }) {
+  const { dateOfBirth, firstName, gender, id, lastName, picture, title } =
+    user || {};
   const { currentUserPosts, isLoading, error } = useUserPosts(id);
-
+  const { href } = window.location;
   if (error) return <StyledErrorText>{error}</StyledErrorText>;
 
   return (
-    <StyledHoverPopup left={left}>
+    <StyledHoverPopup left={left} isSuggestedPage={isSuggestedPage}>
       <StyledHeader>
         <OwnerImage ownerPicture={picture} id={id} />
         {title && <span>{title}</span>}
@@ -42,11 +43,18 @@ function UserProfileOnHover({ user, left }) {
       <StyledPosts type="horizontal-center" gap="0.3rem" isLoading={isLoading}>
         {isLoading && <SpinnerMini />}
         {currentUserPosts?.data.length
-          ? currentUserPosts?.data
-              ?.slice(0, 3)
-              .map((post) => (
+          ? currentUserPosts?.data?.slice(0, 3).map((post) => (
+              <Link
+                to={
+                  href.includes("profile")
+                    ? `/profile/${id}/${post.id}`
+                    : `/${post.id}`
+                }
+                key={post?.id}
+              >
                 <img key={post?.id} src={post?.image} alt={`Post ${post.id}`} />
-              ))
+              </Link>
+            ))
           : !isLoading && <span>No posts yet</span>}
       </StyledPosts>
       <Row>
@@ -55,7 +63,6 @@ function UserProfileOnHover({ user, left }) {
     </StyledHoverPopup>
   );
 }
-
 export default UserProfileOnHover;
 
 const StyledHeader = styled.header`
@@ -79,8 +86,7 @@ const StyledHeader = styled.header`
 
 const StyledHoverPopup = styled.div`
   position: absolute;
-  top: 95%;
-
+  top: ${(props) => (props.isSuggestedPage ? "85%" : "95%")};
   left: ${(props) => props.left || "18rem"};
 
   transform: translateX(-50%);
@@ -128,10 +134,23 @@ const StyledHoverPopup = styled.div`
 `;
 
 const StyledPosts = styled(Row)`
+  justify-content: ${(props) => (props.isLoading ? "center" : "start")};
   align-items: ${(props) => (props.isLoading ? "center" : "end")};
-  & img {
+
+  & a {
     width: calc(100% / 3);
+  }
+
+  & img {
+    width: 100%;
     height: 10rem;
     object-fit: cover;
+    cursor: pointer;
+  }
+
+  & > span {
+    width: 100%;
+    align-self: center;
+    text-align: center;
   }
 `;

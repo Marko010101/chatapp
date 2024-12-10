@@ -60,6 +60,10 @@ function App() {
                       <Route path="search" element={<Search />} />
                       <Route path="explore" element={<Explore />} />
                       <Route path="explore/people" element={<AllPeople />} />
+                      <Route
+                        path="explore/people/:postId"
+                        element={<AllPeople />}
+                      />
                       <Route path="reels" element={<Reels />} />
                       <Route path="messages" element={<Messages />} />
                       <Route path="notifications" element={<Notifications />} />

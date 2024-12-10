@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useContext } from "react";
 
+import { ModalContext } from "../../../ui/modal/Modal.jsx";
 import { fixedSizeFullName } from "../../../utils/helpers.js";
 import Heading from "../../../ui/Heading.jsx";
+import { useEffect } from "react";
 
 const StyledUserName = styled(Heading)`
   cursor: pointer;
@@ -15,9 +18,17 @@ function UserName({
   lastName,
   length = 15,
   isUnderscore = false,
-  heading = "h4",
   id,
 }) {
+  const { close } = useContext(ModalContext);
+
+  useEffect(
+    function () {
+      if (!id) close();
+    },
+    [id]
+  );
+
   return (
     <Link to={`/profile/${id}`}>
       <StyledUserName as="h4">

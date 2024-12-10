@@ -1,12 +1,34 @@
+import { useContext, useEffect } from "react";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
+
 import DummyUsersList from "../features/users/DummyUsersList.jsx";
+import Modal, { ModalContext } from "../ui/modal/Modal.jsx";
+import ModalPost from "../features/posts/ModalPost.jsx";
 
 function AllPeople() {
+  let { postId } = useParams();
+  const { open } = useContext(ModalContext);
+  useEffect(() => {
+    if (postId) {
+      open("modalPost");
+    }
+  }, [postId, open, close]);
+
   return (
-    <StyledSugestions>
-      <h4>Suggested</h4>
-      <DummyUsersList isSuggestedPage={true} />
-    </StyledSugestions>
+    <>
+      {postId && (
+        <div>
+          <Modal.Window name="modalPost">
+            <ModalPost />
+          </Modal.Window>
+        </div>
+      )}
+      <StyledSugestions>
+        <h4>Suggested</h4>
+        <DummyUsersList isSuggestedPage={true} />
+      </StyledSugestions>
+    </>
   );
 }
 

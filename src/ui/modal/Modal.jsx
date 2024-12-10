@@ -1,11 +1,9 @@
-import styled, { keyframes } from "styled-components";
-
 import { HiXMark } from "react-icons/hi2";
 import { createPortal } from "react-dom";
 import { cloneElement, createContext, useContext, useState } from "react";
-import { useOutsideClick } from "../../hooks/useOutsideClick.js";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { useOutsideClick } from "../../hooks/useOutsideClick.js";
 import useWindowWidth from "../../hooks/useWindowWidth.js";
 import StyledModalButton from "./StyledModalButton.jsx";
 import StyledOverlay from "./StyledOverlay.jsx";
@@ -14,28 +12,10 @@ import { useDeletedPost } from "../../context/DeletedPostContext.jsx";
 
 const ModalContext = createContext();
 
-const handleRedirect = () => {
-  const path = window.location.pathname;
-
-  if (path.includes("profile")) {
-    const splitPath = path.split("/").slice(0, -1).join("/");
-    console.log("splitPath", splitPath);
-    return splitPath;
-  }
-
-  return "/";
-};
-
 function Modal({ children }) {
   const [openName, setOpenName] = useState("");
-  const { deletedPostId } = useDeletedPost();
-  const navigate = useNavigate();
   const close = () => {
     setOpenName("");
-
-    if (!deletedPostId) navigate(-1);
-    // const redirectUrl = handleRedirect();
-    // navigate(redirectUrl);
   };
 
   const open = setOpenName;
@@ -55,23 +35,14 @@ function Open({ children, opens: opensWindowName }) {
 
 function Window({ children, name }) {
   const { windowWidth } = useWindowWidth();
+  const { deletedPostId } = useDeletedPost();
+  const navigate = useNavigate();
   const { openName, close } = useContext(ModalContext);
-  const ref = useOutsideClick(close);
-
-  useEffect(() => {
-    if (name === openName) {
-      // Add class to body when modal opens
-      document.body.style.overflow = "hidden";
-    } else {
-      // Remove class from body when modal closes
-      document.body.style.overflow = "unset";
-    }
-
-    return () => {
-      // Ensure the overflow style is removed when the component unmounts
-      document.body.style.overflow = "unset";
-    };
-  }, [name, openName]);
+  const handleOutsideClick = () => {
+    if (!deletedPostId) navigate(-1);
+    close();
+  };
+  const ref = useOutsideClick(handleOutsideClick);
 
   if (name !== openName) return null;
 
