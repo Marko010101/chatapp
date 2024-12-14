@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import Comment from "./ui/Comment.jsx";
 import { useModalPostById } from "./hooks/useModalPostById.js";
 import SpinnerFullPage from "../../ui/loaders/SpinnerFullPage.jsx";
-import OwnerImage from "./ui/OwnerImage.jsx";
 import ActionButtonDots from "./ui/ActionButtonDots.jsx";
 import InputComment from "./InputComment.jsx";
 import Likes from "./ui/Likes.jsx";
@@ -14,19 +13,20 @@ import StyledErrorText from "../../ui/StyledErrorText.jsx";
 import { useComments } from "./hooks/useComment.js";
 import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
 import ActionIcons from "./ui/ActionIcons.jsx";
-import useHover from "../../hooks/useHover.js";
-import UserProfileOnHover from "../users/UserProfileOnHover.jsx";
 import Row from "../../ui/Row.jsx";
 import { useUserById } from "../users/hooks/useUserById.js";
-import { RelativeDiv } from "../../ui/RelativeDiv.jsx";
-import UserName from ".././users/ui/UserName.jsx";
 import useWindowWidth from "../../hooks/useWindowWidth.js";
 import { IoIosArrowBack } from "react-icons/io";
 import { ModalContext } from "../../ui/modal/Modal.jsx";
 import useDisableScroll from "../../hooks/useDisableScroll.js";
+import HoveredImg from "../users/ui/hoverComponentsCard/HoveredImg.jsx";
+import HoveredName from "../users/ui/hoverComponentsCard/HoveredUsername.jsx";
 
 function ModalPost() {
-  let { postId } = useParams();
+  let { postId, hoveredPostId } = useParams();
+  const currentPostId = hoveredPostId || postId;
+  console.log("postId", postId);
+  console.log("hoveredPostId", hoveredPostId);
   const { windowWidth } = useWindowWidth();
   useDisableScroll(true);
 
@@ -34,25 +34,13 @@ function ModalPost() {
   const isSmallerDevice = windowWidth <= 992;
 
   const {
-    isHovered: isImageHovered,
-    handleMouseEnter: handleImageMouseEnter,
-    handleMouseLeave: handleImageMouseLeave,
-  } = useHover();
-
-  const {
-    isHovered: isHeaderHovered,
-    handleMouseEnter: handleHeaderMouseEnter,
-    handleMouseLeave: handleHeaderMouseLeave,
-  } = useHover();
-
-  const {
     comments = {},
     error: commentsError,
     isLoading: loadingComments,
-  } = useComments(postId);
+  } = useComments(currentPostId);
 
   const { data: commentsData = [] } = comments;
-  const { post, isLoading, error } = useModalPostById(postId);
+  const { post, isLoading, error } = useModalPostById(currentPostId);
   const {
     userById,
     isLoading: loadingUserById,
@@ -80,7 +68,7 @@ function ModalPost() {
     tags,
     text,
   } = post || {};
-  const { firstName, lastName, id, picture: ownerPicture, title } = owner || {};
+
   return (
     <StyledModal>
       {isSmallerDevice && (
@@ -95,31 +83,20 @@ function ModalPost() {
       <PostBody>
         <StyledOwner as="header" type="horizontal">
           <Row type="horizontal-center">
-            <StyledRow
-              onMouseEnter={handleImageMouseEnter}
-              onMouseLeave={handleImageMouseLeave}
-            >
-              <OwnerImage
-                ownerPicture={ownerPicture}
+            <StyledRow>
+              <HoveredImg
+                user={userById}
+                isSuggestedPage={false}
+                left="7rem"
                 haveBorder={true}
-                id={id}
               />
-              {isImageHovered && <UserProfileOnHover user={userById} />}
             </StyledRow>
-            <StyledRow
-              onMouseEnter={handleHeaderMouseEnter}
-              onMouseLeave={handleHeaderMouseLeave}
-            >
-              <RelativeDiv>
-                <UserName
-                  firstName={firstName}
-                  lastName={lastName}
-                  length={40}
-                  id={id}
-                />
-                {isSmallerDevice && <span>{post?.text}</span>}
-                {isHeaderHovered && <UserProfileOnHover user={userById} />}
-              </RelativeDiv>
+            <StyledRow>
+              <HoveredName
+                user={userById}
+                isSmallerDevice={isSmallerDevice}
+                text={isSmallerDevice && text}
+              />
             </StyledRow>
           </Row>
           {!isSmallerDevice && (
@@ -136,7 +113,6 @@ function ModalPost() {
             as="section"
             type="vertical"
             className="scrollButtonDisappear"
-            isHovered={isImageHovered || isHeaderHovered}
             gap="2rem"
             padding="0 1.5rem"
             margin="2rem 0 0 0"
@@ -148,13 +124,17 @@ function ModalPost() {
         )}
 
         <StyledReactionsPart>
-          <ActionIcons textareaRef={textareaRef} post={post} postId={postId} />
+          <ActionIcons
+            textareaRef={textareaRef}
+            post={post}
+            currentPostId={currentPostId}
+          />
           <Likes likes={likes} />
           <PostFormatedDate date={publishDate} isModalComment={true} />
         </StyledReactionsPart>
 
         <InputComment
-          postId={postId}
+          currentPostId={currentPostId}
           textareaRef={textareaRef}
           isModalComment={true}
         />
@@ -220,6 +200,7 @@ const PostBody = styled.article`
   display: grid;
   grid-template-rows: 5rem 1fr 9rem max-content;
   height: 90vh;
+  position: relative;
 
   @media (max-width: 992px) {
     grid-template-rows: max-content 1fr 9rem max-content;
@@ -243,8 +224,7 @@ const StyledOwner = styled(Row)`
 
 const StyledCommentSection = styled(Row)`
   max-height: 50rem;
-  overflow: auto;
-  ${(props) => (props.isHovered ? "visible" : "auto")}
+  overflow-y: auto;
 `;
 
 const StyledReactionsPart = styled.div`

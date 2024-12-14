@@ -6,30 +6,16 @@ import {
 } from "../../utils/helpers.js";
 import StyledButton from "../../ui/Buttons/StyledButton.jsx";
 import { useUserById } from "./hooks/useUserById.js";
-import OwnerImage from "../posts/ui/OwnerImage.jsx";
-import useHover from "../../hooks/useHover.js";
-import UserProfileOnHover from "./UserProfileOnHover.jsx";
 import Row from "../../ui/Row.jsx";
-import UserName from "./ui/UserName.jsx";
-import { RelativeDiv } from "../../ui/RelativeDiv.jsx";
 import Heading from "../../ui/Heading.jsx";
 import defaultUserImg from "../../assets/default-user.jpg";
+import HoveredImg from "./ui/hoverComponentsCard/HoveredImg.jsx";
+import HoveredUsername from "./ui/hoverComponentsCard/HoveredUsername.jsx";
 
 function UserLink({ user, currentUser, isLoadingDummyUsers, isSuggestedPage }) {
   const { firstName, id, lastName, picture = defaultUserImg } = user;
   const { userById = {}, isLoading: isLoadingUserById } = useUserById(id);
   const { registerDate, location, email } = userById;
-  const {
-    isHovered: isImageHovered,
-    handleMouseEnter: handleImageMouseEnter,
-    handleMouseLeave: handleImageMouseLeave,
-  } = useHover();
-  const {
-    isHovered: isHeaderHovered,
-    handleMouseEnter: handleHeaderMouseEnter,
-    handleMouseLeave: handleHeaderMouseLeave,
-  } = useHover();
-
   const { diffInMonths } = getFormattedDateInfo(registerDate);
   if (isLoadingDummyUsers || isLoadingUserById) {
     return (
@@ -44,36 +30,15 @@ function UserLink({ user, currentUser, isLoadingDummyUsers, isSuggestedPage }) {
   return (
     <>
       <StyledUser isSuggestedPage={isSuggestedPage}>
-        <Row
-          onMouseEnter={handleImageMouseEnter}
-          onMouseLeave={handleImageMouseLeave}
-        >
-          <OwnerImage ownerPicture={picture} id={id} />
-          {!currentUser && isImageHovered && (
-            <UserProfileOnHover
-              user={userById}
-              left={"7rem"}
-              isSuggestedPage={isSuggestedPage}
-            />
-          )}
-        </Row>
+        <HoveredImg
+          user={userById}
+          isSuggestedPage={isSuggestedPage}
+          left={"7rem"}
+        />
+
         <Row type="vertical">
-          <RelativeDiv
-            onMouseEnter={handleHeaderMouseEnter}
-            onMouseLeave={handleHeaderMouseLeave}
-          >
-            <UserName
-              firstName={firstName}
-              lastName={lastName}
-              length={30}
-              isUnderscore
-              heading="h5"
-              id={id}
-            />
-            {!currentUser && isHeaderHovered && (
-              <UserProfileOnHover user={userById} left={"7rem"} />
-            )}
-          </RelativeDiv>
+          <HoveredUsername user={userById} />
+
           <Row>
             <span>
               {!currentUser ? (

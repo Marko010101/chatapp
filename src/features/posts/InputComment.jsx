@@ -126,7 +126,6 @@ const StyledCommentArea = styled.div`
   padding: 0.3rem 0.3rem 1rem;
   border-bottom: var(--border);
   min-height: 5rem;
-  margin-bottom: 1.6rem;
 
   ${(props) =>
     !props.isModalComment && props.isCommenting

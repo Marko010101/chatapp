@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { useUserPosts } from "../posts/hooks/useUsersPosts.js";
@@ -8,12 +8,14 @@ import StyledErrorText from "../../ui/StyledErrorText.jsx";
 import UserName from "./ui/UserName.jsx";
 import PersonalInfo from "./ui/PersonalInfo.jsx";
 import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
+import { navigatePostUrl } from "../../utils/navigatePostUrl.js";
 
 function UserProfileOnHover({ user, left, isSuggestedPage }) {
   const { dateOfBirth, firstName, gender, id, lastName, picture, title } =
     user || {};
+  const { postId } = useParams();
   const { currentUserPosts, isLoading, error } = useUserPosts(id);
-  const { href } = window.location;
+
   if (error) return <StyledErrorText>{error}</StyledErrorText>;
 
   return (
@@ -44,14 +46,7 @@ function UserProfileOnHover({ user, left, isSuggestedPage }) {
         {isLoading && <SpinnerMini />}
         {currentUserPosts?.data.length
           ? currentUserPosts?.data?.slice(0, 3).map((post) => (
-              <Link
-                to={
-                  href.includes("profile")
-                    ? `/profile/${id}/${post.id}`
-                    : `/${post.id}`
-                }
-                key={post?.id}
-              >
+              <Link to={navigatePostUrl(id, post.id)} key={post?.id}>
                 <img key={post?.id} src={post?.image} alt={`Post ${post.id}`} />
               </Link>
             ))
@@ -93,7 +88,7 @@ const StyledHoverPopup = styled.div`
   width: 35rem;
   height: 27rem;
   padding: 1rem 0;
-  z-index: 1000;
+  z-index: 900;
   background: var(--color-black);
   box-shadow: 0rem 0.5rem 3rem rgba(255, 255, 255, 0.3);
   border-radius: var(--border-radius-lg);

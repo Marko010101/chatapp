@@ -66,7 +66,7 @@ const PostActionModal = ({ onClose, post }) => {
     ...(isCurrentUserPostOwner
       ? [{ label: "Delete Post", onClick: handleDeletePost, destructive: true }]
       : []),
-    { label: "Close Modal", onClick: onClose },
+    { label: "Close", onClick: onClose },
   ];
 
   return (

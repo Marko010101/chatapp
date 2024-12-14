@@ -86,7 +86,7 @@ function Home() {
 export default Home;
 
 const StyledPosts = styled.main`
-  margin-top: 2rem;
+  margin-top: 1rem;
   width: 100%;
   display: grid;
   grid-template-columns: max-content 23rem;

@@ -32,8 +32,8 @@ function DummyUsersList({
     <div>
       {combinedUsers.length !== 0 &&
         combinedUsers
-          .slice(0, slicedNumber)
-          .map((user) => (
+          ?.slice(0, slicedNumber)
+          ?.map((user) => (
             <UserLink
               user={user}
               key={user?.id}

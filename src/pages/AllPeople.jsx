@@ -1,19 +1,20 @@
 import { useContext, useEffect } from "react";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
 
 import DummyUsersList from "../features/users/DummyUsersList.jsx";
 import Modal, { ModalContext } from "../ui/modal/Modal.jsx";
 import ModalPost from "../features/posts/ModalPost.jsx";
+import { useParams } from "react-router-dom";
 
 function AllPeople() {
   let { postId } = useParams();
   const { open } = useContext(ModalContext);
+
   useEffect(() => {
     if (postId) {
       open("modalPost");
     }
-  }, [postId, open, close]);
+  }, [postId, open]);
 
   return (
     <>

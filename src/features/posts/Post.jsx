@@ -1,35 +1,18 @@
 import styled from "styled-components";
 
 import PostInfo from "./PostInfo.jsx";
-import OwnerImage from "./ui/OwnerImage.jsx";
 import PostFormatedDate from "./ui/PostFormatedDate.jsx";
 import ActionButtonDots from "./ui/ActionButtonDots.jsx";
 import Row from "../../ui/Row.jsx";
-import useHover from "../../hooks/useHover.js";
 import { useUserById } from "../users/hooks/useUserById.js";
-import UserProfileOnHover from "../users/UserProfileOnHover.jsx";
 import StyledErrorText from "../../ui/StyledErrorText.jsx";
-import UserName from "../users/ui/UserName.jsx";
-import { RelativeDiv } from "../../ui/RelativeDiv.jsx";
+import HoveredImg from "../users/ui/hoverComponentsCard/HoveredImg.jsx";
+import HoveredName from "../users/ui/hoverComponentsCard/HoveredUsername.jsx";
 
 function Post({ post, innerRef }) {
   const { image, owner, publishDate } = post;
-  const {
-    isHovered: isImageHovered,
-    handleMouseEnter: handleImageMouseEnter,
-    handleMouseLeave: handleImageMouseLeave,
-  } = useHover();
-  const {
-    isHovered: isHeaderHovered,
-    handleMouseEnter: handleHeaderMouseEnter,
-    handleMouseLeave: handleHeaderMouseLeave,
-  } = useHover();
-  const {
-    firstName: ownerFirstName,
-    lastName: ownerLastName,
-    picture: ownerPicture,
-    id: ownerId,
-  } = owner;
+
+  const { id: ownerId } = owner;
 
   const { userById, isLoading, error } = useUserById(ownerId);
 
@@ -40,30 +23,8 @@ function Post({ post, innerRef }) {
     <StyledPost>
       <PostContainer>
         <HeaderPost ref={innerRef}>
-          <StyledRow
-            onMouseEnter={handleImageMouseEnter}
-            onMouseLeave={handleImageMouseLeave}
-          >
-            <OwnerImage
-              ownerPicture={ownerPicture}
-              haveBorder={true}
-              id={ownerId}
-            />
-            {isImageHovered && <UserProfileOnHover user={userById} />}
-          </StyledRow>
-          <RelativeDiv
-            onMouseEnter={handleHeaderMouseEnter}
-            onMouseLeave={handleHeaderMouseLeave}
-          >
-            <UserName
-              firstName={ownerFirstName}
-              lastName={ownerLastName}
-              length={25}
-              heading="h4"
-              id={ownerId}
-            />
-            {isHeaderHovered && <UserProfileOnHover user={userById} />}
-          </RelativeDiv>
+          <HoveredImg user={userById} haveBorder={true} />
+          <HoveredName user={userById} />
           <PostFormatedDate date={publishDate} />
           <ActionButtonDots post={post} />
         </HeaderPost>
@@ -85,7 +46,7 @@ const PostContainer = styled.li`
   grid-template-columns: 1fr;
   grid-template-rows: 5rem max-content max-content;
   row-gap: 0.5rem;
-
+  margin-top: 1.6rem;
   @media (max-width: 576px) {
     width: calc(100vw - 10rem);
   }
@@ -99,7 +60,12 @@ const HeaderPost = styled.header`
   display: grid;
   grid-template-columns: repeat(2, max-content) 1fr max-content;
   align-items: center;
+  justify-content: center;
   column-gap: 2rem;
+
+  & > div {
+    align-self: center;
+  }
 
   & h4 {
     cursor: pointer;
