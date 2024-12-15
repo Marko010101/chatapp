@@ -11,7 +11,6 @@ import HoveredName from "../users/ui/hoverComponentsCard/HoveredUsername.jsx";
 
 function Post({ post, innerRef }) {
   const { image, owner, publishDate } = post;
-
   const { id: ownerId } = owner;
 
   const { userById, isLoading, error } = useUserById(ownerId);

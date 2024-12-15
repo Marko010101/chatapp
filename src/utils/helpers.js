@@ -5,27 +5,6 @@ export function capitalizeFirstLetter(str) {
 export function getFormattedDateInfo(dateString) {
   const inputDate = new Date(dateString);
   const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-
-  const yearsToReplace = [2019, 2020, 2021];
-  const inputYear = inputDate.getFullYear();
-
-  // Replace the year based on the logic provided
-  if (yearsToReplace.includes(inputYear)) {
-    const inputMonth = inputDate.getMonth();
-    const inputDay = inputDate.getDate();
-    const currentMonth = currentDate.getMonth();
-    const currentDay = currentDate.getDate();
-
-    if (
-      inputMonth < currentMonth ||
-      (inputMonth === currentMonth && inputDay <= currentDay)
-    ) {
-      inputDate.setFullYear(currentYear);
-    } else {
-      inputDate.setFullYear(currentYear - 1);
-    }
-  }
 
   const diffInMilliseconds = currentDate - inputDate;
   const diffInSeconds = Math.floor(diffInMilliseconds / 1000);
@@ -56,7 +35,7 @@ export function getFormattedDateInfo(dateString) {
 
   // Format the date
   const formattedDate = inputDate.toLocaleDateString("en-GB", {
-    day: "2-digit",
+    day: "numeric",
     month: "long",
     year: "numeric",
   });

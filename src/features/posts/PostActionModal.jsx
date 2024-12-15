@@ -11,14 +11,15 @@ import ConfirmDelete from "../../ui/modal/ConfirmDelete.jsx";
 import useDisableScroll from "../../hooks/useDisableScroll.js";
 import { useDeletePost } from "./hooks/useDeletePost.js";
 import { useNavigate, useParams } from "react-router-dom";
+import AccountDetailsModal from "../users/AccountDetailsModal.jsx";
 
-const PostActionModal = ({ onClose, post }) => {
+const PostActionModal = ({ onClose, post, setIsAccountDetailsOpen }) => {
   const { deletePost, isLoading } = useDeletePost();
   let { postId } = useParams();
   const navigate = useNavigate();
-  const { href } = window.location;
   const ref = useOutsideClick(onClose);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
   const { currentUser } = useCurrentDummyUser();
   useDisableScroll(true);
 
@@ -33,6 +34,15 @@ const PostActionModal = ({ onClose, post }) => {
 
   const handleDeletePost = () => {
     setIsDeleteOpen(true);
+  };
+
+  const handleCopyLink = () => {
+    handleCopyUrl(post);
+    onClose();
+  };
+  const handleOpenaccountDetails = () => {
+    setIsAccountDetailsOpen(true);
+    onClose();
   };
 
   const confirmDeletePost = () => {
@@ -51,18 +61,13 @@ const PostActionModal = ({ onClose, post }) => {
     });
   };
 
-  const handleCopyLink = () => {
-    handleCopyUrl(post);
-    onClose();
-  };
-
   const isCurrentUserPostOwner = currentUser?.id === post.owner?.id;
 
   const actions = [
     { label: "Edit Post", onClick: handleEdit },
     { label: "Go to Post", onClick: handleGoToPost },
     { label: "Copy link", onClick: handleCopyLink },
-    { label: "About this Account", onClick: () => console.log("About action") },
+    { label: "About this Account", onClick: handleOpenaccountDetails },
     ...(isCurrentUserPostOwner
       ? [{ label: "Delete Post", onClick: handleDeletePost, destructive: true }]
       : []),
@@ -112,4 +117,8 @@ const StyledActionItem = styled(Row)`
   border-bottom: var(--border-light);
   color: ${({ destructive }) =>
     destructive ? "var(--color-red-400)" : "var(--color-text)"};
+
+  &:last-child {
+    border-bottom: none;
+  }
 `;

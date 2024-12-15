@@ -25,8 +25,6 @@ import HoveredName from "../users/ui/hoverComponentsCard/HoveredUsername.jsx";
 function ModalPost() {
   let { postId, hoveredPostId } = useParams();
   const currentPostId = hoveredPostId || postId;
-  console.log("postId", postId);
-  console.log("hoveredPostId", hoveredPostId);
   const { windowWidth } = useWindowWidth();
   useDisableScroll(true);
 
