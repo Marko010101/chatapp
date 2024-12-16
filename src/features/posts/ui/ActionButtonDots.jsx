@@ -3,6 +3,8 @@ import { PiDotsThreeBold } from "react-icons/pi";
 import styled from "styled-components";
 import PostActionModal from "../PostActionModal.jsx";
 import AccountDetailsModal from "../../users/AccountDetailsModal.jsx";
+import CreatePost from "../CreatePost.jsx";
+import EditPost from "../EditPost.jsx";
 
 const StyledActionDots = styled.span`
   width: 2.5rem;
@@ -24,9 +26,14 @@ const StyledActionDots = styled.span`
 function ActionButtonDots({ post }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isAccountDetailsOpen, setIsAccountDetailsOpen] = useState(false);
+  const [isEditPostOpen, setIsEditPostOpen] = useState(false);
+
+  const handleEditPostToggle = () => setIsEditPostOpen((isOpen) => !isOpen);
+
   const toggleActionDots = () => {
     setIsOpen((isOpen) => !isOpen);
   };
+
   return (
     <StyledActionDots>
       <PiDotsThreeBold onClick={toggleActionDots} />
@@ -35,6 +42,7 @@ function ActionButtonDots({ post }) {
           onClose={toggleActionDots}
           post={post}
           setIsAccountDetailsOpen={setIsAccountDetailsOpen}
+          handleEditPostToggle={handleEditPostToggle}
         />
       )}
 
@@ -43,6 +51,9 @@ function ActionButtonDots({ post }) {
           onClose={() => setIsAccountDetailsOpen(false)}
           ownerId={post.owner.id}
         />
+      )}
+      {isEditPostOpen && (
+        <EditPost onClose={handleEditPostToggle} post={post} />
       )}
     </StyledActionDots>
   );

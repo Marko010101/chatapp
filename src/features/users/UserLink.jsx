@@ -1,9 +1,5 @@
 import styled, { keyframes, css } from "styled-components";
 
-import {
-  fixedSizeFullName,
-  getFormattedDateInfo,
-} from "../../utils/helpers.js";
 import StyledButton from "../../ui/Buttons/StyledButton.jsx";
 import { useUserById } from "./hooks/useUserById.js";
 import Row from "../../ui/Row.jsx";
@@ -11,12 +7,14 @@ import Heading from "../../ui/Heading.jsx";
 import defaultUserImg from "../../assets/default-user.jpg";
 import HoveredImg from "./ui/hoverComponentsCard/HoveredImg.jsx";
 import HoveredUsername from "./ui/hoverComponentsCard/HoveredUsername.jsx";
+import { fixedSizeFullName } from "../../utils/fixedSizeFullName.js";
+import { getTimeDifferences } from "../../utils/getTimeDifferences.js";
 
 function UserLink({ user, currentUser, isLoadingDummyUsers, isSuggestedPage }) {
   const { firstName, id, lastName, picture = defaultUserImg } = user;
   const { userById = {}, isLoading: isLoadingUserById } = useUserById(id);
   const { registerDate, location, email } = userById;
-  const { diffInMonths } = getFormattedDateInfo(registerDate);
+  const diffInMonths = getTimeDifferences(registerDate);
   if (isLoadingDummyUsers || isLoadingUserById) {
     return (
       <StyledUser isLoading={true}>

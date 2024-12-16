@@ -7,15 +7,15 @@ import StyledButton from "../../ui/Buttons/StyledButton.jsx";
 import { TbCalendarTime } from "react-icons/tb";
 import defaultImage from "../../assets/default-user.jpg";
 import Row from "../../ui/Row.jsx";
-import {
-  fixedSizeFullName,
-  getFormattedDateInfo,
-} from "../../utils/helpers.js";
 import { useUserById } from "./hooks/useUserById.js";
 import SpinnerGrayMini from "../../ui/loaders/SpinnerGrayMini.jsx";
+import { fixedSizeFullName } from "../../utils/fixedSizeFullName.js";
+import { getFormattedDate } from "../../utils/getFormattedDate.js";
+import useDisableScroll from "../../hooks/useDisableScroll.js";
 
 const AccountDetailsModal = ({ onClose, ownerId }) => {
   const ref = useOutsideClick(onClose);
+  useDisableScroll(true);
   const { userById, isLoading, error } = useUserById(ownerId);
   if (error)
     return (
@@ -33,7 +33,7 @@ const AccountDetailsModal = ({ onClose, ownerId }) => {
     registerDate,
   } = userById || {};
 
-  const { formattedDate } = getFormattedDateInfo(registerDate);
+  const formattedDate = getFormattedDate(registerDate);
 
   return (
     <StyledOverlay>

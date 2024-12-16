@@ -1,9 +1,14 @@
 import styled, { css } from "styled-components";
-import { getFormattedDateInfo } from "../../../utils/helpers.js";
 import { Tooltip } from "react-tooltip";
+import { getFormattedDate } from "../../../utils/getFormattedDate.js";
+import { getRelativeTime } from "../../../utils/getRelativeTime.js";
+import { getTimeDifferences } from "../../../utils/getTimeDifferences.js";
 
 function PostFormatedDate({ date, isModalComment }) {
-  const { relativeTime, formattedDate } = getFormattedDateInfo(date);
+  const getDiff = getTimeDifferences(date);
+  const relativeTime = getRelativeTime(getDiff);
+  const formattedDate = getFormattedDate(date);
+
   return (
     <StyledFormatedDate isModalComment={isModalComment}>
       <a data-tooltip-id="formatedDate" data-tooltip-content={formattedDate}>

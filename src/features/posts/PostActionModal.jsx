@@ -11,9 +11,14 @@ import ConfirmDelete from "../../ui/modal/ConfirmDelete.jsx";
 import useDisableScroll from "../../hooks/useDisableScroll.js";
 import { useDeletePost } from "./hooks/useDeletePost.js";
 import { useNavigate, useParams } from "react-router-dom";
-import AccountDetailsModal from "../users/AccountDetailsModal.jsx";
+import CreatePost from "./CreatePost.jsx";
 
-const PostActionModal = ({ onClose, post, setIsAccountDetailsOpen }) => {
+const PostActionModal = ({
+  onClose,
+  post,
+  setIsAccountDetailsOpen,
+  handleEditPostToggle,
+}) => {
   const { deletePost, isLoading } = useDeletePost();
   let { postId } = useParams();
   const navigate = useNavigate();
@@ -24,7 +29,8 @@ const PostActionModal = ({ onClose, post, setIsAccountDetailsOpen }) => {
   useDisableScroll(true);
 
   const handleEdit = () => {
-    console.log("Edit Post action triggered");
+    handleEditPostToggle();
+    onClose();
   };
 
   const handleGoToPost = () => {
@@ -64,7 +70,9 @@ const PostActionModal = ({ onClose, post, setIsAccountDetailsOpen }) => {
   const isCurrentUserPostOwner = currentUser?.id === post.owner?.id;
 
   const actions = [
-    { label: "Edit Post", onClick: handleEdit },
+    ...(isCurrentUserPostOwner
+      ? [{ label: "Edit Post", onClick: handleEdit }]
+      : []),
     { label: "Go to Post", onClick: handleGoToPost },
     { label: "Copy link", onClick: handleCopyLink },
     { label: "About this Account", onClick: handleOpenaccountDetails },

@@ -57,7 +57,7 @@ export function useUpdatePost() {
 
   return {
     mutate: mutation.mutate,
-    isLoading: mutation.isLoading,
+    isLoading: mutation.isPending,
     error: mutation.error,
   };
 }

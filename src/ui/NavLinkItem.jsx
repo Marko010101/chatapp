@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { capitalizeFirstLetter } from "../utils/helpers.js";
+import { capitalizeFirstLetter } from "../utils/capitalizeFirstLetter.js";
 
 function NavLinkItem({ icon, iconActive, title }) {
   const location = useLocation();

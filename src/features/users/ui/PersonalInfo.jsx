@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { calculateAge } from "../../../utils/helpers.js";
 import Heading from "../../../ui/Heading.jsx";
 import Row from "../../../ui/Row.jsx";
+import { calculateAge } from "../../../utils/calculateAge.js";
 
 function PersonalInfo({ postLength, gender, dateOfBirth, registerDate }) {
   return (

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { fixedSizeFullName, titleFix } from "../../../utils/helpers.js";
+import { fixedSizeFullName } from "../../../utils/fixedSizeFullName.js";
 
 const StyledTitle = styled.span`
   font-weight: var(--font-weight-light);
@@ -20,7 +20,7 @@ function CommentText({ text, owner }) {
   return (
     <StyledTitle>
       <p>{fixedSizeFullName(firstName, lastName, (length = 50))} </p>
-      {titleFix(text)}
+      {text}
     </StyledTitle>
   );
 }

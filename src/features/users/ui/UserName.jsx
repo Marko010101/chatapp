@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { useContext } from "react";
 
 import { ModalContext } from "../../../ui/modal/Modal.jsx";
-import { fixedSizeFullName } from "../../../utils/helpers.js";
 import Heading from "../../../ui/Heading.jsx";
 import { useEffect } from "react";
+import { fixedSizeFullName } from "../../../utils/fixedSizeFullName.js";
 
 const StyledUserName = styled(Heading)`
   cursor: pointer;
