@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 import { ToggleButton } from "./Buttons/ToggleButton.jsx";
 import Row from "./Row.jsx";
+import ErrorDisplay from "./ErrorDisplay.jsx";
 
 const StyledFormRow = styled(Row)`
   width: 100%;
@@ -9,13 +11,6 @@ const StyledFormRow = styled(Row)`
   & label {
     font-weight: 500;
   }
-`;
-
-const Label = styled.label``;
-
-const Error = styled.p`
-  font-size: 1.4rem;
-  color: var(--color-red-700);
 `;
 
 const Span = styled.span`
@@ -49,7 +44,7 @@ function FormRowVertical({
           </ToggleButton>
         )}
       </Span>
-      {error && <Error>{error}</Error>}
+      {error && <ErrorDisplay error={error} padding="0rem" />}
     </StyledFormRow>
   );
 }

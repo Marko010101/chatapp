@@ -1,8 +1,9 @@
 import { useContext } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { NavLink } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { FaComment } from "react-icons/fa";
+import { BiSolidCommentError } from "react-icons/bi";
 
 import { ModalContext } from "../../../ui/modal/Modal.jsx";
 import { useComments } from "../hooks/useComment.js";
@@ -11,7 +12,7 @@ import SpinnerMini from "../../../ui/loaders/SpinnerMini.jsx";
 
 function SearchedUserPost({ post }) {
   const { open } = useContext(ModalContext);
-  const { comments, isLoading } = useComments(post?.id);
+  const { comments, isLoading, error } = useComments(post?.id);
   function handleModalOpen() {
     open("ProfilePost");
   }
@@ -35,7 +36,13 @@ function SearchedUserPost({ post }) {
           <FaHeart /> {post?.likes}
         </span>
         <span>
-          <FaComment /> {comments?.data?.length}
+          {error ? (
+            <BiSolidCommentError />
+          ) : (
+            <>
+              <FaHeart /> {comments?.data?.length}
+            </>
+          )}
         </span>
       </StyledParagraph>
     </StyledPost>

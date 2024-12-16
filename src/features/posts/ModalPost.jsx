@@ -9,7 +9,6 @@ import ActionButtonDots from "./ui/ActionButtonDots.jsx";
 import InputComment from "./InputComment.jsx";
 import Likes from "./ui/Likes.jsx";
 import PostFormatedDate from "./ui/PostFormatedDate.jsx";
-import StyledErrorText from "../../ui/StyledErrorText.jsx";
 import { useComments } from "./hooks/useComment.js";
 import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
 import ActionIcons from "./ui/ActionIcons.jsx";
@@ -21,6 +20,7 @@ import { ModalContext } from "../../ui/modal/Modal.jsx";
 import useDisableScroll from "../../hooks/useDisableScroll.js";
 import HoveredImg from "../users/ui/hoverComponentsCard/HoveredImg.jsx";
 import HoveredName from "../users/ui/hoverComponentsCard/HoveredUsername.jsx";
+import ErrorDisplay from "../../ui/ErrorDisplay.jsx";
 
 function ModalPost() {
   let { postId, hoveredPostId } = useParams();
@@ -33,8 +33,8 @@ function ModalPost() {
 
   const {
     comments = {},
-    error: commentsError,
     isLoading: loadingComments,
+    error: commentsError,
   } = useComments(currentPostId);
 
   const { data: commentsData = [] } = comments;
@@ -51,12 +51,10 @@ function ModalPost() {
   );
 
   if (isLoading || loadingUserById) return <SpinnerFullPage />;
-  if (error || commentsError || userByIdError)
-    return (
-      <StyledErrorText>
-        {error || commentsError || userByIdError}
-      </StyledErrorText>
-    );
+
+  if (userByIdError || error)
+    return <ErrorDisplay error={userByIdError || error} />;
+
   const {
     image,
     likes,
@@ -106,6 +104,8 @@ function ModalPost() {
 
         {loadingComments ? (
           <SpinnerMini />
+        ) : commentsError ? (
+          <ErrorDisplay error={commentsError} padding="0.5rem" />
         ) : (
           <StyledCommentSection
             as="section"

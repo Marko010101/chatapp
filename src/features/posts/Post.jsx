@@ -5,18 +5,23 @@ import PostFormatedDate from "./ui/PostFormatedDate.jsx";
 import ActionButtonDots from "./ui/ActionButtonDots.jsx";
 import Row from "../../ui/Row.jsx";
 import { useUserById } from "../users/hooks/useUserById.js";
-import StyledErrorText from "../../ui/StyledErrorText.jsx";
 import HoveredImg from "../users/ui/hoverComponentsCard/HoveredImg.jsx";
 import HoveredName from "../users/ui/hoverComponentsCard/HoveredUsername.jsx";
+import ErrorDisplay from "../../ui/ErrorDisplay.jsx";
+import SpinnerFullPage from "../../ui/loaders/SpinnerFullPage.jsx";
 
 function Post({ post, innerRef }) {
   const { image, owner, publishDate } = post;
   const { id: ownerId } = owner;
 
   const { userById, isLoading, error } = useUserById(ownerId);
-
-  if (isLoading) return;
-  if (error) return <StyledErrorText>{error}</StyledErrorText>;
+  if (isLoading)
+    return (
+      <Row type="horizontal-center">
+        <SpinnerFullPage />
+      </Row>
+    );
+  if (error) return <ErrorDisplay error={error} />;
 
   return (
     <StyledPost>

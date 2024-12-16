@@ -4,11 +4,11 @@ import styled from "styled-components";
 import { useUserPosts } from "../posts/hooks/useUsersPosts.js";
 import Row from "../../ui/Row.jsx";
 import OwnerImage from "../posts/ui/OwnerImage.jsx";
-import StyledErrorText from "../../ui/StyledErrorText.jsx";
 import UserName from "./ui/UserName.jsx";
 import PersonalInfo from "./ui/PersonalInfo.jsx";
 import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
 import { navigatePostUrl } from "../../utils/navigatePostUrl.js";
+import ErrorDisplay from "../../ui/ErrorDisplay.jsx";
 
 function UserProfileOnHover({ user, left, isSuggestedPage }) {
   const { dateOfBirth, firstName, gender, id, lastName, picture, title } =
@@ -16,7 +16,7 @@ function UserProfileOnHover({ user, left, isSuggestedPage }) {
   const { postId } = useParams();
   const { currentUserPosts, isLoading, error } = useUserPosts(id);
 
-  if (error) return <StyledErrorText>{error}</StyledErrorText>;
+  if (error) return <ErrorDisplay error={error} />;
 
   return (
     <StyledHoverPopup left={left} isSuggestedPage={isSuggestedPage}>

@@ -1,4 +1,4 @@
-import StyledErrorText from "../../ui/StyledErrorText.jsx";
+import ErrorDisplay from "../../ui/ErrorDisplay.jsx";
 import { useUsers } from "./hooks/useUsers.js";
 import UserLink from "./UserLink.jsx";
 
@@ -19,10 +19,8 @@ function DummyUsersList({
     error: errorDummyUsers,
   } = useUsers();
 
-  if (errorRealUsers)
-    return <StyledErrorText>{errorRealUsers.message}</StyledErrorText>;
-  if (errorDummyUsers)
-    return <StyledErrorText>{errorDummyUsers.message}</StyledErrorText>;
+  if (errorRealUsers || errorDummyUsers)
+    return <ErrorDisplay error={errorRealUsers || errorDummyUsers} />;
 
   const combinedUsers = slicedNumber
     ? [...(dummyUsersData?.data || []), ...(realUsers?.data || [])]

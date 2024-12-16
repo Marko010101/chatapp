@@ -1,20 +1,20 @@
+import { useEffect, useContext } from "react";
 import styled from "styled-components";
+import { useInView } from "react-intersection-observer";
+import { useParams } from "react-router-dom";
+
 import SpinnerFullPage from "../ui/loaders/SpinnerFullPage.jsx";
 import Post from "../features/posts/Post.jsx";
 import Empty from "../ui/Empty.jsx";
-import { useParams } from "react-router-dom";
 import ModalPost from "../features/posts/ModalPost.jsx";
 import Modal, { ModalContext } from "../ui/modal/Modal.jsx";
-import { useEffect } from "react";
-import { useContext } from "react";
-import StyledErrorText from "../ui/StyledErrorText.jsx";
 import { usePosts } from "../features/posts/hooks/usePosts.js";
 import UserSugestions from "../features/users/UserSugestions.jsx";
 import SpinnerGrayMini from "../ui/loaders/SpinnerGrayMini.jsx";
-import { useInView } from "react-intersection-observer";
 import Footer from "../ui/Footer.jsx";
 import useWindowWidth from "../hooks/useWindowWidth.js";
 import Row from "../ui/Row.jsx";
+import ErrorDisplay from "../ui/ErrorDisplay.jsx";
 
 function Home() {
   const {
@@ -42,7 +42,7 @@ function Home() {
   }, [inView, hasNextPage, fetchNextPage, isFetchingNextPage]);
 
   if (isLoading || !data) return <SpinnerFullPage />;
-  if (error) return (<StyledErrorText>{error.message}</StyledErrorText>)();
+  if (error) return <ErrorDisplay error={error} />;
   if (!data || data.pages.length === 0) return <Empty resourceName="posts" />;
 
   const content = data.pages.map((page) =>

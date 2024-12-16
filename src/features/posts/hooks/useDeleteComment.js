@@ -7,7 +7,7 @@ export function useDeleteComment(postId) {
 
   const {
     mutate: deleteComment,
-    isLoading,
+    isPending: isLoading,
     error,
   } = useMutation({
     mutationFn: async (id) => {

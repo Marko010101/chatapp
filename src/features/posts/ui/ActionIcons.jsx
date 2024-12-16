@@ -6,9 +6,9 @@ import styled, { keyframes } from "styled-components";
 import EmojiAction from "./EmojiAction.jsx";
 import { useUpdatePost } from "../hooks/useUpdatePost.js";
 import { useLike } from "../../../context/LikesContext.jsx";
-import StyledErrorText from "../../../ui/StyledErrorText.jsx";
 import Row from "../../../ui/Row.jsx";
 import { handleCopyUrl } from "../../../utils/copyUrl.js";
+import ErrorDisplay from "../../../ui/ErrorDisplay.jsx";
 
 function ActionIcons({ textareaRef, postId, post }) {
   const { mutate, isLoading, error } = useUpdatePost();
@@ -28,7 +28,7 @@ function ActionIcons({ textareaRef, postId, post }) {
     textareaRef.current.focus();
   };
 
-  if (error) return <StyledErrorText>{error.message}</StyledErrorText>;
+  if (error) return <ErrorDisplay error={error} />;
 
   return (
     <StyledIcons type="horizontal" margin="0.7rem 0 0 0">

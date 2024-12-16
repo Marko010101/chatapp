@@ -12,17 +12,13 @@ import SpinnerGrayMini from "../../ui/loaders/SpinnerGrayMini.jsx";
 import { fixedSizeFullName } from "../../utils/fixedSizeFullName.js";
 import { getFormattedDate } from "../../utils/getFormattedDate.js";
 import useDisableScroll from "../../hooks/useDisableScroll.js";
+import ErrorDisplay from "../../ui/ErrorDisplay.jsx";
 
 const AccountDetailsModal = ({ onClose, ownerId }) => {
   const ref = useOutsideClick(onClose);
   useDisableScroll(true);
   const { userById, isLoading, error } = useUserById(ownerId);
-  if (error)
-    return (
-      <Row type="horizontal-center">
-        <p>Error loading user details.</p>
-      </Row>
-    );
+  if (error) return <ErrorDisplay error={error} />;
 
   const {
     firstName,

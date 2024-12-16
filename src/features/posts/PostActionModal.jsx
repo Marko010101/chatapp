@@ -12,6 +12,7 @@ import useDisableScroll from "../../hooks/useDisableScroll.js";
 import { useDeletePost } from "./hooks/useDeletePost.js";
 import { useNavigate, useParams } from "react-router-dom";
 import CreatePost from "./CreatePost.jsx";
+import ErrorDisplay from "../../ui/ErrorDisplay.jsx";
 
 const PostActionModal = ({
   onClose,
@@ -19,7 +20,7 @@ const PostActionModal = ({
   setIsAccountDetailsOpen,
   handleEditPostToggle,
 }) => {
-  const { deletePost, isLoading } = useDeletePost();
+  const { deletePost, isLoading, error } = useDeletePost();
   let { postId } = useParams();
   const navigate = useNavigate();
   const ref = useOutsideClick(onClose);
@@ -81,6 +82,8 @@ const PostActionModal = ({
       : []),
     { label: "Close", onClick: onClose },
   ];
+
+  if (error) return <ErrorDisplay error={error} />;
 
   return (
     <StyledOverlay>

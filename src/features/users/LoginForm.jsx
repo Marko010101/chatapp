@@ -13,7 +13,7 @@ import FancyButton from "../../ui/Buttons/FancyButton.jsx";
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, isLoading, error } = useLogin();
+  const { login, isLoading } = useLogin();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const navigate = useNavigate();
 

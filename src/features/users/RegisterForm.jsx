@@ -9,8 +9,8 @@ import FancyButton from "../../ui/Buttons/FancyButton.jsx";
 import StyledButton from "../../ui/Buttons/StyledButton.jsx";
 import { useSignup } from "./hooks/useSignup.js";
 import { useFirebaseSignup } from "./hooks/useFirebaseSignup.js";
-import StyledErrorText from "../../ui/StyledErrorText.jsx";
 import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
+import ErrorDisplay from "../../ui/ErrorDisplay.jsx";
 
 function RegisterForm() {
   const {
@@ -134,9 +134,7 @@ function RegisterForm() {
           })}
         />
       </FormRow>
-      <StyledErrorText>
-        {error?.message && "Could not register user, please try again."}
-      </StyledErrorText>
+      <ErrorDisplay error={error} padding="0rem" />
       <FormRow>
         <StyledButton
           type="reset"

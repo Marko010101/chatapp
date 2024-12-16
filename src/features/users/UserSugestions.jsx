@@ -1,12 +1,12 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import UserLink from "./UserLink.jsx";
-import StyledErrorText from "../../ui/StyledErrorText.jsx";
 import { useUserById } from "./hooks/useUserById.js";
 import { useCurrentDummyUser } from "./hooks/useCurrentDummyUser.js";
-import { Link } from "react-router-dom";
 import DummyUsersList from "./DummyUsersList.jsx";
 import Row from "../../ui/Row.jsx";
+import ErrorDisplay from "../../ui/ErrorDisplay.jsx";
 
 function UserSugestions() {
   const {
@@ -15,9 +15,8 @@ function UserSugestions() {
     error: errorCurrentUser,
   } = useCurrentDummyUser();
   const { userById = {}, isLoading, error } = useUserById(currentUser?.id);
-
   if (errorCurrentUser || error)
-    return <StyledErrorText>{errorCurrentUser || error}</StyledErrorText>;
+    return <ErrorDisplay error={errorCurrentUser || error} />;
 
   return (
     <>

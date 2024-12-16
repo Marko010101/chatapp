@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { TiDeleteOutline } from "react-icons/ti";
 
 import Heading from "../../../ui/Heading.jsx";
@@ -11,6 +11,7 @@ import useHover from "../../../hooks/useHover.js";
 import UserProfileOnHover from "../../users/UserProfileOnHover.jsx";
 import { RelativeDiv } from "../../../ui/RelativeDiv.jsx";
 import Row from "../../../ui/Row.jsx";
+import SpinnerMini from "../../../ui/loaders/SpinnerMini.jsx";
 
 function CommentSectionModal({
   ownerPicture,
@@ -20,6 +21,7 @@ function CommentSectionModal({
   date,
   onDeleteComment,
   owner,
+  isDeletingComment,
 }) {
   const { currentUser } = useCurrentDummyUser();
 
@@ -34,7 +36,7 @@ function CommentSectionModal({
     handleMouseEnter: handleHeaderMouseEnter,
     handleMouseLeave: handleHeaderMouseLeave,
   } = useHover();
-
+  console.log(isDeletingComment);
   return (
     <StyledCommentSection>
       <RelativePositionWrapper
@@ -64,10 +66,17 @@ function CommentSectionModal({
         <PostFormatedDate date={date} isModalComment={true} />
       </StyledCommentBody>
 
-      <StyledDeleteSvg>
-        {currentUser?.id === owner.id && (
-          <TiDeleteOutline onClick={onDeleteComment} />
-        )}
+      <StyledDeleteSvg
+        as="span"
+        type="horizontal-center"
+        isDeletingComment={isDeletingComment}
+      >
+        {currentUser?.id === owner.id &&
+          (isDeletingComment ? (
+            <SpinnerMini />
+          ) : (
+            <TiDeleteOutline onClick={onDeleteComment} />
+          ))}
       </StyledDeleteSvg>
     </StyledCommentSection>
   );
@@ -102,9 +111,16 @@ const RelativePositionWrapper = styled(RelativeDiv)`
   }
 `;
 
-const StyledDeleteSvg = styled.span`
+const StyledDeleteSvg = styled(Row)`
   position: absolute;
   right: 0;
+
+  ${(props) =>
+    props.isDeletingComment &&
+    css`
+      height: 1.5rem;
+      width: 1.5rem;
+    `}
 
   & svg {
     cursor: pointer;
