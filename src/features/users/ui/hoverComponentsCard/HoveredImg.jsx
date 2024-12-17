@@ -9,8 +9,8 @@ const HoveredImg = ({ user, isSuggestedPage, left, haveBorder }) => {
     handleMouseEnter: handleImageMouseEnter,
     handleMouseLeave: handleImageMouseLeave,
   } = useHover();
+  const { id, picture } = user || {};
 
-  const { id, picture } = user;
   return (
     <HoverableRow
       handleMouseEnter={handleImageMouseEnter}

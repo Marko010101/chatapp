@@ -50,8 +50,6 @@ function InputComment({ textareaRef, postId, isModalComment }) {
   const handlePostComment = () => {
     if (comment.trim() === "") return;
 
-    console.log("postId", postId);
-    console.log("currentUser", postId);
     if (!currentUser || !postId) {
       return;
     }

@@ -27,6 +27,7 @@ function ModalPost() {
   const currentPostId = hoveredPostId || postId;
   const { windowWidth } = useWindowWidth();
   useDisableScroll(true);
+  const textareaRef = useRef(null);
 
   const { close } = useContext(ModalContext);
   const isSmallerDevice = windowWidth <= 992;
@@ -45,16 +46,13 @@ function ModalPost() {
     error: userByIdError,
   } = useUserById(post?.owner?.id);
 
-  const textareaRef = useRef(null);
-  const sortedComments = commentsData?.sort(
-    (a, b) => new Date(a.publishDate) - new Date(b.publishDate)
-  );
-
   if (isLoading || loadingUserById) return <SpinnerFullPage />;
 
   if (userByIdError || error)
     return <ErrorDisplay error={userByIdError || error} />;
-  console.log("currentPostId", currentPostId);
+  const sortedComments = commentsData?.sort(
+    (a, b) => new Date(a.publishDate) - new Date(b.publishDate)
+  );
   const {
     image,
     likes,
@@ -64,7 +62,7 @@ function ModalPost() {
     tags,
     text,
   } = post || {};
-
+  console.log(owner);
   return (
     <StyledModal>
       {isSmallerDevice && (
@@ -81,7 +79,7 @@ function ModalPost() {
           <Row type="horizontal-center">
             <StyledRow>
               <HoveredImg
-                user={userById}
+                user={owner}
                 isSuggestedPage={false}
                 left="7rem"
                 haveBorder={true}
@@ -89,7 +87,7 @@ function ModalPost() {
             </StyledRow>
             <StyledRow>
               <HoveredName
-                user={userById}
+                user={owner}
                 isSmallerDevice={isSmallerDevice}
                 text={isSmallerDevice && text}
               />
