@@ -3,7 +3,7 @@ import StyledErrorText from "./StyledErrorText.jsx";
 
 const ErrorDisplay = ({
   error,
-  padding = "3rem",
+  padding = "1.5rem",
   alignment = "horizontal-center",
 }) => {
   if (!error) return null;

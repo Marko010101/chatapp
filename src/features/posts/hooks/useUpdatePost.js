@@ -7,15 +7,14 @@ export function useUpdatePost() {
 
   const mutation = useMutation({
     mutationFn: ({ id, updatedPostData }) => updatePost(id, updatedPostData),
-    onMutate: async (variables) => {
-      const { id, updatedPostData } = variables;
-
+    onMutate: async ({ id, updatedPostData }) => {
       await queryClient.cancelQueries(["posts"]);
       await queryClient.cancelQueries(["ModalPost", id]);
 
       const previousPosts = queryClient.getQueryData(["posts"]);
       const previousModalPost = queryClient.getQueryData(["ModalPost", id]);
 
+      // Optimistically update the cache
       queryClient.setQueryData(["posts"], (oldData) => {
         if (!oldData) return oldData;
 
@@ -39,25 +38,22 @@ export function useUpdatePost() {
 
       return { previousPosts, previousModalPost };
     },
-    onError: (error, variables, context) => {
+    onError: (error, { id }, context) => {
       toast.error(`Failed to update post: ${error.message}`);
       queryClient.setQueryData(["posts"], context.previousPosts);
       if (context.previousModalPost) {
-        queryClient.setQueryData(
-          ["ModalPost", variables.id],
-          context.previousModalPost
-        );
+        queryClient.setQueryData(["ModalPost", id], context.previousModalPost);
       }
     },
-    onSettled: (data, error, variables) => {
+    onSettled: (data, error, { id }) => {
       queryClient.invalidateQueries(["posts"]);
-      queryClient.invalidateQueries(["ModalPost", variables.id]);
+      queryClient.invalidateQueries(["ModalPost", id]);
     },
   });
 
   return {
     mutate: mutation.mutate,
-    isLoading: mutation.isPending,
+    isLoading: mutation.isLoading,
     error: mutation.error,
   };
 }

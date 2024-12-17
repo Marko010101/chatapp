@@ -16,12 +16,23 @@ function ActionIcons({ textareaRef, postId, post }) {
 
   const handleToggleLike = () => {
     if (isLoading) return;
+
+    // Optimistically toggle like state
+    toggleLike(post.id);
+
     const updatedLikes = likedPosts[post.id] ? post.likes - 1 : post.likes + 1;
     const updatedPostData = { ...post, likes: updatedLikes };
 
-    toggleLike(post.id);
-
-    mutate({ id: post.id, updatedPostData });
+    // Update backend
+    mutate(
+      { id: post.id, updatedPostData },
+      {
+        onError: () => {
+          // Revert optimistic update if backend call fails
+          toggleLike(post.id);
+        },
+      }
+    );
   };
 
   const handleFocusTextarea = () => {
