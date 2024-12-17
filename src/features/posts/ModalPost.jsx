@@ -54,7 +54,7 @@ function ModalPost() {
 
   if (userByIdError || error)
     return <ErrorDisplay error={userByIdError || error} />;
-
+  console.log("currentPostId", currentPostId);
   const {
     image,
     likes,
@@ -132,7 +132,7 @@ function ModalPost() {
         </StyledReactionsPart>
 
         <InputComment
-          currentPostId={currentPostId}
+          postId={currentPostId}
           textareaRef={textareaRef}
           isModalComment={true}
         />

@@ -36,7 +36,6 @@ function CommentSectionModal({
     handleMouseEnter: handleHeaderMouseEnter,
     handleMouseLeave: handleHeaderMouseLeave,
   } = useHover();
-  console.log(isDeletingComment);
   return (
     <StyledCommentSection>
       <RelativePositionWrapper
