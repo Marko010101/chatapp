@@ -5,7 +5,7 @@ import UserProfileOnHover from "../../UserProfileOnHover.jsx";
 import UserName from "../UserName.jsx";
 import HoverableRow from "./HoverableRow.jsx";
 
-const HoveredName = ({ user, text }) => {
+const HoveredName = ({ user, text, left }) => {
   const {
     isHovered: isHeaderHovered,
     handleMouseEnter: handleHeaderMouseEnter,
@@ -21,7 +21,7 @@ const HoveredName = ({ user, text }) => {
           handleMouseEnter={handleHeaderMouseEnter}
           handleMouseLeave={handleHeaderMouseLeave}
           isHovered={isHeaderHovered}
-          hoverContent={<UserProfileOnHover user={user} />}
+          hoverContent={<UserProfileOnHover user={user} left={left} />}
         >
           <UserName
             firstName={firstName}

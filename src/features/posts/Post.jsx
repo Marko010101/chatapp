@@ -27,8 +27,8 @@ function Post({ post, innerRef }) {
     <StyledPost>
       <PostContainer>
         <HeaderPost ref={innerRef}>
-          <HoveredImg user={userById} haveBorder={true} />
-          <HoveredName user={userById} />
+          <HoveredImg user={userById} haveBorder={true} left="7rem" />
+          <HoveredName user={userById} left="15rem" />
           <PostFormatedDate date={publishDate} />
           <ActionButtonDots post={post} />
         </HeaderPost>

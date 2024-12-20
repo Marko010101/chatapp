@@ -1,26 +1,31 @@
 import styled from "styled-components";
 import { fixedSizeFullName } from "../../../utils/fixedSizeFullName.js";
+import HoveredName from "../../users/ui/hoverComponentsCard/HoveredUsername.jsx";
+import Row from "../../../ui/Row.jsx";
 
-const StyledTitle = styled.span`
+const StyledTitle = styled(Row)`
   font-weight: var(--font-weight-light);
   color: var(--color-gray-0);
-  pointer-events: none;
   text-overflow: ellipsis;
-  pointer-events: none;
+  /* pointer-events: none;
+  text-align: start; */
+
   & p {
     display: inline;
     font-weight: var(--font-weight-semibold);
     cursor: pointer;
     pointer-events: auto;
   }
+  & > div {
+    display: flex;
+    gap: 1rem;
+  }
 `;
 
 function CommentText({ text, owner }) {
-  const { firstName, lastName } = owner;
   return (
-    <StyledTitle>
-      <p>{fixedSizeFullName(firstName, lastName, (length = 50))} </p>
-      {text}
+    <StyledTitle as="span">
+      <HoveredName user={owner} text={text} left="17.5rem" />
     </StyledTitle>
   );
 }
