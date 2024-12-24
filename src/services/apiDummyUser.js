@@ -24,7 +24,7 @@ export async function createUser(firstName, lastName, email) {
   return result;
 }
 
-const LIMIT = 20;
+const LIMIT = 6;
 const PAGE = 1;
 
 export async function getUsers(realUsers = false) {

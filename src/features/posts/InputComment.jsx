@@ -9,14 +9,20 @@ import { useCurrentDummyUser } from "../users/hooks/useCurrentDummyUser.js";
 import useCreateComment from "./hooks/useCreateComment.js";
 import StyledButton from "../../ui/Buttons/StyledButton.jsx";
 import ErrorDisplay from "../../ui/ErrorDisplay.jsx";
+import useEmojiHandler from "../../hooks/useEmojiHandler.js";
 
-function InputComment({ textareaRef, postId, isModalComment }) {
+function InputComment({ postId, isModalComment }) {
   const { currentUser, isLoading, error } = useCurrentDummyUser();
   const { mutate, isLoading: isLoadingComment } = useCreateComment();
-  const [comment, setComment] = useState("");
-  const [isEmojiPickerVisible, setEmojiPickerVisible] = useState(false);
-
-  const emojiRef = useOutsideClick(() => setEmojiPickerVisible(false), false);
+  const {
+    text: comment,
+    setText: setComment,
+    isEmojiPickerVisible,
+    toggleEmojiPicker,
+    handleEmojiSelect,
+    textareaRef,
+    emojiRef,
+  } = useEmojiHandler("");
 
   let isCommenting = comment.length > 0;
 
@@ -24,27 +30,6 @@ function InputComment({ textareaRef, postId, isModalComment }) {
     setComment(event.target.value);
     event.target.style.height = "auto";
     event.target.style.height = event.target.scrollHeight + "px";
-  };
-
-  const toggleEmojiPicker = (e) => {
-    e.stopPropagation();
-    setEmojiPickerVisible((prev) => !prev);
-  };
-
-  const handleEmojiSelect = (emojiObject) => {
-    const emoji = emojiObject.emoji;
-    const textarea = textareaRef.current;
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const newText = comment.slice(0, start) + emoji + comment.slice(end);
-
-    setComment(newText);
-    textarea.style.height = "auto";
-    textarea.style.height = textarea.scrollHeight + "px";
-
-    setTimeout(() => {
-      textarea.selectionStart = textarea.selectionEnd = start + emoji.length;
-    });
   };
 
   const handlePostComment = () => {

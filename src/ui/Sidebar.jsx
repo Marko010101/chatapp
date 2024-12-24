@@ -11,24 +11,29 @@ function Sidebar() {
   const { windowWidth } = useWindowWidth();
   const isSmallDevice = windowWidth <= 1200;
 
+  const isMessagesPage = window.location.href.includes("messages");
+
   const handleMouseEnter = () => {
-    if (isSmallDevice) return;
+    if (isSmallDevice || isMessagesPage) return;
     setIsShrunk(false);
   };
 
   const handleMouseLeave = () => {
-    if (isSmallDevice) return;
+    if (isSmallDevice || isMessagesPage) return;
     setIsShrunk(true);
   };
 
-  useEffect(
-    function () {
-      if (isSmallDevice) {
-        setIsShrunk(true);
-      }
-    },
-    [isSmallDevice]
-  );
+  useEffect(() => {
+    if (isMessagesPage) {
+      setIsShrunk(true);
+    }
+  }, [isMessagesPage, setIsShrunk]);
+
+  useEffect(() => {
+    if (isSmallDevice && !isMessagesPage) {
+      setIsShrunk(true);
+    }
+  }, [isSmallDevice, isMessagesPage, setIsShrunk]);
 
   return (
     <StyledSidebar
@@ -43,7 +48,6 @@ function Sidebar() {
 }
 
 export default Sidebar;
-
 const StyledSidebar = styled.aside`
   position: fixed;
   left: 0;

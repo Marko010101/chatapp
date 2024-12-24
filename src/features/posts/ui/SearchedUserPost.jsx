@@ -40,7 +40,7 @@ function SearchedUserPost({ post }) {
             <BiSolidCommentError />
           ) : (
             <>
-              <FaHeart /> {comments?.data?.length}
+              <FaComment /> {comments?.data?.length}
             </>
           )}
         </span>

@@ -48,7 +48,6 @@ export const fetchCurrentUsersCollectionUser = async (uid) => {
         matchedDummyIdUser = dummyIdUser;
       }
     });
-
     return matchedDummyIdUser;
   } catch (error) {
     console.error("Error fetching users collection:", error);
@@ -62,7 +61,6 @@ export const matchFirebaseAndDummyUsers = async (userUid, dummyUsers) => {
   const matchingUser = await dummyUsers?.find(
     (user) => user.id === currentUser
   );
-
   if (matchingUser) {
     return await getUserById(matchingUser.id);
   } else {

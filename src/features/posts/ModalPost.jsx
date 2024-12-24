@@ -62,7 +62,7 @@ function ModalPost() {
     tags,
     text,
   } = post || {};
-  console.log(owner);
+
   return (
     <StyledModal>
       {isSmallerDevice && (
