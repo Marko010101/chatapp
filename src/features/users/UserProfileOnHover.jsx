@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { useUserPosts } from "../posts/hooks/useUsersPosts.js";
@@ -13,7 +13,6 @@ import ErrorDisplay from "../../ui/ErrorDisplay.jsx";
 function UserProfileOnHover({ user, left, isSuggestedPage }) {
   const { dateOfBirth, firstName, gender, id, lastName, picture, title } =
     user || {};
-  const { postId } = useParams();
   const { currentUserPosts, isLoading, error } = useUserPosts(id);
 
   if (error) return <ErrorDisplay error={error} />;

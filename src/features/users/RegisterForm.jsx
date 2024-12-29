@@ -11,6 +11,7 @@ import { useSignup } from "./hooks/useSignup.js";
 import { useFirebaseSignup } from "./hooks/useFirebaseSignup.js";
 import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
 import ErrorDisplay from "../../ui/ErrorDisplay.jsx";
+import Row from "../../ui/Row.jsx";
 
 function RegisterForm() {
   const {
@@ -23,9 +24,7 @@ function RegisterForm() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isRepeatPasswordVisible, setIsRepeatPasswordVisible] = useState(false);
 
-  // Dummy api user uploading
   const { signupOnDummy, isPending: isLoading2, error } = useSignup();
-  // Firebase registration
   const { mutate: signupWithFirebase, isPending: isLoading1 } =
     useFirebaseSignup();
 
@@ -144,10 +143,10 @@ function RegisterForm() {
             navigate("/login");
           }}
         >
-          {isLoading2 || isLoading1 ? <SpinnerMini /> : "Cancel"}
+          {"Cancel"}
         </StyledButton>
         <FancyButton type="submit" disabled={isLoading1 || isLoading2}>
-          {isLoading2 || isLoading1 ? <SpinnerMini /> : "Join us!"}
+          Join us!
         </FancyButton>
       </FormRow>
     </Form>

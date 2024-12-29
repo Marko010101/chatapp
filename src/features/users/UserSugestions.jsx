@@ -22,7 +22,7 @@ function UserSugestions() {
     <>
       <UserLink
         user={userById}
-        currentUser={true}
+        isCurrentUser={true}
         isLoadingDummyUsers={currentUserIsLoading || isLoading}
       />
       <StyledHeading type="horizontal" margin="2rem 0 0 0">
@@ -31,7 +31,7 @@ function UserSugestions() {
       </StyledHeading>
       <DummyUsersList
         isLoading={currentUserIsLoading || isLoading}
-        slicedNumber={5}
+        slicedNumber={6}
       />
     </>
   );

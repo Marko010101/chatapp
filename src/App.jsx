@@ -66,6 +66,7 @@ function App() {
                       />
                       <Route path="reels" element={<Reels />} />
                       <Route path="messages" element={<Messages />} />
+                      <Route path="messages/:userId" element={<Messages />} />
                       <Route path="notifications" element={<Notifications />} />
                       <Route path="profile/:userId" element={<Profile />} />
                       <Route

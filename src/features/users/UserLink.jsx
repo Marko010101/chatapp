@@ -9,21 +9,44 @@ import HoveredImg from "./ui/hoverComponentsCard/HoveredImg.jsx";
 import HoveredUsername from "./ui/hoverComponentsCard/HoveredUsername.jsx";
 import { fixedSizeFullName } from "../../utils/fixedSizeFullName.js";
 import { getTimeDifferences } from "../../utils/getTimeDifferences.js";
+import { useUserCollection } from "./hooks/useUserCollection.js";
+import { useNavigate } from "react-router-dom";
+import ErrorDisplay from "../../ui/ErrorDisplay.jsx";
 
-function UserLink({ user, currentUser, isLoadingDummyUsers, isSuggestedPage }) {
+function UserLink({
+  user,
+  isCurrentUser,
+  isLoadingDummyUsers,
+  isSuggestedPage,
+}) {
   const { firstName, id, lastName, picture = defaultUserImg } = user;
-  const { userById = {}, isLoading: isLoadingUserById } = useUserById(id);
+  const {
+    userById = {},
+    isLoading: isLoadingUserById,
+    error,
+  } = useUserById(id);
+  const navigate = useNavigate();
+  const {
+    userCollection,
+    isLoading: isLoadingUserCollection,
+    error: errorUserCollection,
+  } = useUserCollection();
   const { registerDate, location, email } = userById;
+
   const diffInMonths = getTimeDifferences(registerDate);
-  if (isLoadingDummyUsers || isLoadingUserById) {
+
+  if (isLoadingDummyUsers || isLoadingUserById || isLoadingUserCollection) {
     return (
       <StyledUser isLoading={true}>
         <div className="image-user" />
         <div className="text-loader" />
-        {!currentUser && <div className="button-loader" />}
+        {!isCurrentUser && <div className="button-loader" />}
       </StyledUser>
     );
   }
+
+  if (error || errorUserCollection)
+    return <ErrorDisplay error={error || errorUserCollection} padding="1rem" />;
 
   return (
     <>
@@ -39,7 +62,7 @@ function UserLink({ user, currentUser, isLoadingDummyUsers, isSuggestedPage }) {
 
           <Row>
             <span>
-              {!currentUser ? (
+              {!isCurrentUser ? (
                 <>
                   <span>
                     {diffInMonths > 0.1
@@ -58,7 +81,11 @@ function UserLink({ user, currentUser, isLoadingDummyUsers, isSuggestedPage }) {
             </span>
           </Row>
         </Row>
-        {!currentUser && <StyledButton>message</StyledButton>}
+        {!isCurrentUser && (
+          <StyledButton onClick={() => navigate(`/messages/${id}`)}>
+            message
+          </StyledButton>
+        )}
       </StyledUser>
     </>
   );

@@ -11,9 +11,9 @@ import { doc, setDoc } from "firebase/firestore";
 
 import { collection, getDocs } from "firebase/firestore";
 import { getUserById } from "./apiDummyUser.js";
+import { getDummyUserByUid } from "../utils/getDummyIdByUid.js";
 
 export const registerUser = async ({ email, password, dummyId }) => {
-  // Create a new user with email and password
   const userCredential = await createUserWithEmailAndPassword(
     auth,
     email,
@@ -29,28 +29,29 @@ export const registerUser = async ({ email, password, dummyId }) => {
   return { user };
 };
 
-/**
- * Fetches the dummyIdUser from 'usersCollection' in Firestore based on UID match.
- * @param {string} uid - The UID of the Firebase authenticated user.
- * @returns {Promise<string|null>} The dummyIdUser if found, otherwise null.
- */
+export const fetchUserCollection = async () => {
+  const userCollectionRef = collection(firestore, "usersCollection");
+  const snapshot = await getDocs(userCollectionRef);
+
+  const users = snapshot.docs.map((doc) => ({
+    uid: doc.id,
+    ...doc.data(),
+  }));
+
+  return users;
+};
+
 export const fetchCurrentUsersCollectionUser = async (uid) => {
   try {
-    const usersCollectionRef = collection(firestore, "usersCollection");
-    const usersCollection = await getDocs(usersCollectionRef);
+    const users = await fetchUserCollection();
 
-    let matchedDummyIdUser = null;
+    const matchedUser = users.find(
+      (user) => user.dummyIdUser === uid || user.uid === uid
+    );
 
-    usersCollection.forEach((doc) => {
-      const userData = doc.data();
-      const { dummyIdUser } = userData;
-      if (doc.id === uid || dummyIdUser === uid) {
-        matchedDummyIdUser = dummyIdUser;
-      }
-    });
-    return matchedDummyIdUser;
+    return matchedUser?.dummyIdUser || null;
   } catch (error) {
-    console.error("Error fetching users collection:", error);
+    console.error("Error fetching current user's collection user:", error);
     throw error;
   }
 };
@@ -58,13 +59,17 @@ export const fetchCurrentUsersCollectionUser = async (uid) => {
 export const matchFirebaseAndDummyUsers = async (userUid, dummyUsers) => {
   const currentUser = await fetchCurrentUsersCollectionUser(userUid);
 
-  const matchingUser = await dummyUsers?.find(
-    (user) => user.id === currentUser
-  );
-  if (matchingUser) {
-    return await getUserById(matchingUser.id);
+  if (!currentUser) {
+    return null;
+  }
+
+  const matchingDummyId = getDummyUserByUid(dummyUsers, currentUser);
+
+  if (matchingDummyId) {
+    return await getUserById(matchingDummyId.id);
   } else {
-    return "";
+    console.log("No matching dummy user found");
+    return null;
   }
 };
 

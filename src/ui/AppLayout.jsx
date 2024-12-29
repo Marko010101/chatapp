@@ -20,7 +20,7 @@ function AppLayout() {
   const location = useLocation();
   const { isShrunk } = useSidebarShrink();
   const isHomePage = location.pathname === "/";
-  const isMessagesPage = location.pathname === "/messages";
+  const isMessagesPage = location.pathname.includes("messages");
 
   return (
     <StyledContainer isShrunk={isShrunk}>

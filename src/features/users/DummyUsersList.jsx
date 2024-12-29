@@ -1,18 +1,19 @@
 import ErrorDisplay from "../../ui/ErrorDisplay.jsx";
 import { useUsers } from "./hooks/useUsers.js";
 import UserLink from "./UserLink.jsx";
+import { useCurrentDummyUser } from "./hooks/useCurrentDummyUser.js";
 
 function DummyUsersList({
   isLoading = false,
   isSuggestedPage = false,
   slicedNumber,
 }) {
+  const { currentUser } = useCurrentDummyUser();
   const {
     dummyUsers: realUsers,
     isLoading: isLoadingRealUsers,
     error: errorRealUsers,
   } = useUsers(true);
-
   const {
     dummyUsers: dummyUsersData,
     isLoading: isLoadingDummyUsers,
@@ -23,8 +24,19 @@ function DummyUsersList({
     return <ErrorDisplay error={errorRealUsers || errorDummyUsers} />;
 
   const combinedUsers = slicedNumber
-    ? [...(dummyUsersData?.data || []), ...(realUsers?.data || [])]
-    : [...(realUsers?.data?.slice(1) || []), ...(dummyUsersData?.data || [])];
+    ? [
+        ...(realUsers?.data.filter(
+          (realUser) => realUser?.id !== currentUser?.id
+        ) || []),
+        ...(dummyUsersData?.data || []),
+      ]
+    : [
+        ...(realUsers?.data?.filter(
+          (realUser) => realUser?.id !== currentUser?.id
+        ) || []),
+        ,
+        ...(dummyUsersData?.data || []),
+      ];
 
   return (
     <div>

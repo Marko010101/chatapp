@@ -2,11 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { useUserFirebase } from "../users/hooks/useUserFirebase.js";
 
-const ChatMessage = ({ message }) => {
+const ChatMessage = ({ message, currentUserId }) => {
   const { text, senderId } = message;
-  const { user } = useUserFirebase();
 
-  const isSender = senderId === user?.uid;
+  const isSender = senderId === currentUserId;
 
   return (
     <MessageContainer isSender={isSender}>
