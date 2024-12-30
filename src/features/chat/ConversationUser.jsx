@@ -6,15 +6,19 @@ import Row from "../../ui/Row.jsx";
 import SpinnerMini from "../../ui/loaders/SpinnerMini.jsx";
 import DefaultUser from "../../assets/default-user.jpg";
 import { fixedSizeFullName } from "../../utils/fixedSizeFullName.js";
+import ErrorDisplay from "../../ui/ErrorDisplay.jsx";
 
 const ConversationUser = ({ receiverId }) => {
   const { userById, isLoading, error } = useUserById(receiverId);
+
   if (isLoading)
     return (
       <Row type="horizontal-center" padding="2rem">
         <SpinnerMini />
       </Row>
     );
+  if (error) return <ErrorDisplay error={error} />;
+
   const { id, firstName, lastName, picture = DefaultUser } = userById;
 
   return (

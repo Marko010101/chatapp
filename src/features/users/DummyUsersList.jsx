@@ -23,27 +23,26 @@ function DummyUsersList({
   if (errorRealUsers || errorDummyUsers)
     return <ErrorDisplay error={errorRealUsers || errorDummyUsers} />;
 
+  // Ensure fallback values to avoid undefined errors
+  const realUsersData = realUsers?.data || [];
+  const dummyUsersList = dummyUsersData?.data || [];
+
   const combinedUsers = slicedNumber
     ? [
-        ...(realUsers?.data.filter(
-          (realUser) => realUser?.id !== currentUser?.id
-        ) || []),
-        ...(dummyUsersData?.data || []),
+        ...realUsersData.filter((realUser) => realUser?.id !== currentUser?.id),
+        ...dummyUsersList,
       ]
     : [
-        ...(realUsers?.data?.filter(
-          (realUser) => realUser?.id !== currentUser?.id
-        ) || []),
-        ,
-        ...(dummyUsersData?.data || []),
+        ...realUsersData.filter((realUser) => realUser?.id !== currentUser?.id),
+        ...dummyUsersList,
       ];
 
   return (
     <div>
       {combinedUsers.length !== 0 &&
         combinedUsers
-          ?.slice(0, slicedNumber)
-          ?.map((user) => (
+          .slice(0, slicedNumber || combinedUsers.length)
+          .map((user) => (
             <UserLink
               user={user}
               key={user?.id}

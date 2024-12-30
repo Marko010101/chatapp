@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 
 import { HiOutlineEmojiHappy } from "react-icons/hi";
@@ -6,9 +5,8 @@ import { sendMessage } from "../../services/apiMessages.js";
 import Input from "../../ui/Input.jsx";
 import MemoizedEmoji from "../../ui/MemoizedEmoji.jsx";
 import useEmojiHandler from "../../hooks/useEmojiHandler.js";
-import Row from "../../ui/Row.jsx";
 
-const MessageInput = ({ userId, chatId }) => {
+const MessageInput = ({ userId, chatId, chatContainerRef }) => {
   const {
     text,
     setText,
@@ -19,50 +17,112 @@ const MessageInput = ({ userId, chatId }) => {
     emojiRef,
   } = useEmojiHandler("");
 
+  const handleInput = (e) => {
+    const textarea = e.target;
+    textarea.style.height = "4rem";
+    textarea.style.height = `${Math.min(textarea.scrollHeight, 160)}px`;
+  };
+
   const handleSendMessage = () => {
     if (text.trim()) {
       sendMessage(text, userId, chatId);
       setText("");
+
+      if (textareaRef.current) {
+        textareaRef.current.style.height = "4rem";
+      }
+
+      if (chatContainerRef?.current) {
+        chatContainerRef.current.scrollTo({
+          top: chatContainerRef.current.scrollHeight,
+          behavior: "smooth",
+        });
+      }
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
     }
   };
 
   return (
-    <StyledMessageInput type="horizontal">
-      <HiOutlineEmojiHappy size={24} onClick={toggleEmojiPicker} />
-      {isEmojiPickerVisible && (
-        <MemoizedEmoji
-          emojiRef={emojiRef}
-          handleEmojiSelect={handleEmojiSelect}
-          isModalEmojiPicker={false}
+    <StyledBox>
+      <StyledMessageInput type="horizontal">
+        <HiOutlineEmojiHappy size={24} onClick={toggleEmojiPicker} />
+        {isEmojiPickerVisible && (
+          <MemoizedEmoji
+            emojiRef={emojiRef}
+            handleEmojiSelect={handleEmojiSelect}
+            isModalEmojiPicker={false}
+          />
+        )}
+        <Input
+          type="text"
+          as="textarea"
+          ref={textareaRef}
+          rows={1}
+          value={text}
+          className="scrollButtonDisappear"
+          onChange={(e) => setText(e.target.value)}
+          onInput={handleInput}
+          onKeyDown={handleKeyDown}
+          placeholder="Message..."
         />
-      )}
-      <Input
-        type="text"
-        ref={textareaRef}
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="Message..."
-      />
-      <button onClick={handleSendMessage}>Send</button>
-    </StyledMessageInput>
+        <button onClick={handleSendMessage}>Send</button>
+      </StyledMessageInput>
+    </StyledBox>
   );
 };
 
 export default MessageInput;
 
-const StyledMessageInput = styled(Row)`
-  width: 100%;
-  border-radius: 5rem;
-  padding: 0.8rem 1.5rem;
-  border: var(--border);
+const StyledBox = styled.div`
+  position: fixed;
+  left: calc(var(--sidebar-width-shrunk) + var(--sidebar-width-messages));
+  background-color: var(--color-black);
+  bottom: 0;
+  width: calc(
+    100% - (var(--sidebar-width-shrunk) + var(--sidebar-width-messages))
+  );
+  padding: 3.7rem 0;
+`;
 
-  & input {
+const StyledMessageInput = styled.div`
+  display: grid;
+  grid-template-columns: 3rem 1fr 7rem;
+  align-items: center;
+  border-radius: 5rem;
+  padding: 0.4rem 1rem;
+  border: var(--border);
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  background-color: var(--color-black);
+
+  & textarea {
+    background-color: transparent;
+    height: 4rem;
+    max-height: 10rem;
     border: none;
-    background-color: inherit;
-    width: 95%;
+    outline: none;
+    resize: none;
+    overflow-y: auto;
+
+    &::placeholder {
+      color: var(--color-gray-text);
+    }
+
+    &:focus {
+      outline: none;
+    }
   }
 
   & > svg {
+    justify-self: center;
     cursor: pointer;
     &:hover {
       color: var(--color-neutral-300);
@@ -76,6 +136,6 @@ const StyledMessageInput = styled(Row)`
     background-color: var(--text-blue-600);
     border: none;
     border-radius: 5rem;
-    padding: 1rem;
+    padding: 0.7rem;
   }
 `;

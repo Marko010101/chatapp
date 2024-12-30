@@ -27,11 +27,11 @@ const MessageContainer = styled.div`
 `;
 
 const MessageBubble = styled.div`
-  max-width: 60%;
+  max-width: 70%;
   padding: 8px;
-  margin: 4px 0;
-  border-radius: 8px;
-  text-align: ${(props) => (props.isSender ? "right" : "left")};
+  margin: 0.4rem 1rem;
+  border-radius: 0.8rem;
+  text-align: left;
   background-color: ${(props) => (props.isSender ? "#DCF8C6" : "#FFF")};
   border: ${(props) =>
     props.isSender ? "1px solid #34B7F1" : "1px solid #CCC"};

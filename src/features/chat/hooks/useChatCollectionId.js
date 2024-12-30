@@ -6,10 +6,11 @@ export const useChatCollectionId = () => {
     data: chatCollectionId,
     isLoading,
     error,
+    refetch,
   } = useQuery({
     queryKey: ["chatCollectionId"],
     queryFn: fetchChats,
   });
 
-  return { chatCollectionId, isLoading, error };
+  return { chatCollectionId, isLoading, error, refetch };
 };

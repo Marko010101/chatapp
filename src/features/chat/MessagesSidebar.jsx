@@ -1,16 +1,39 @@
 import styled, { keyframes } from "styled-components";
-import { useChatCollectionId } from "./hooks/useChatCollectionId.js";
-import ConversationUser from "./ConversationUser.jsx";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import { useChatCollectionId } from "./hooks/useChatCollectionId.js";
+import ConversationUser from "./ConversationUser.jsx";
+import ErrorDisplay from "../../ui/ErrorDisplay.jsx";
+
 const MessagesSidebar = ({ currentUserId }) => {
-  const { userId } = useParams(); // Assuming userId comes from the URL params
+  const { userId } = useParams();
   const { chatCollectionId, isLoading, error } = useChatCollectionId();
-  console.log(userId);
+
+  const [sortedChats, setSortedChats] = useState([]);
+
+  useEffect(() => {
+    if (chatCollectionId) {
+      const filteredChats = chatCollectionId.filter((el) => {
+        const [user1, user2] = el.id.split("_");
+        return user1 === currentUserId || user2 === currentUserId;
+      });
+
+      const sorted = filteredChats.sort((a, b) => {
+        const aUpdatedAt = a.updatedAt || 0;
+        const bUpdatedAt = b.updatedAt || 0;
+
+        return bUpdatedAt - aUpdatedAt;
+      });
+
+      setSortedChats(sorted);
+    }
+  }, [chatCollectionId, currentUserId]);
 
   if (isLoading) return <p>...Loading</p>;
+  if (error) return <ErrorDisplay error={error} />;
 
-  const userInChats = chatCollectionId?.some((el) => {
+  const isUserIdInChats = sortedChats?.some((el) => {
     const [user1, user2] = el.id.split("_");
     return user1 === userId || user2 === userId;
   });
@@ -18,12 +41,15 @@ const MessagesSidebar = ({ currentUserId }) => {
   return (
     <StyledMessagesSidebar>
       <h2>Chats</h2>
-      {!userInChats && userId && (
+
+      {!isUserIdInChats && userId && (
         <ConversationUser key={userId} receiverId={userId} />
       )}
-      {chatCollectionId?.map((el) => {
+
+      {sortedChats?.map((el) => {
         const { id } = el;
         const [user1, user2] = id.split("_");
+
         const receiverId = user1 === currentUserId ? user2 : user1;
         return <ConversationUser key={receiverId} receiverId={receiverId} />;
       })}
@@ -52,4 +78,9 @@ const StyledMessagesSidebar = styled.div`
   height: 100vh;
   max-height: 100vh;
   animation: ${slideIn} 0.2s ease;
+  overflow-y: auto;
+  & > h2 {
+    padding: 0 0 1rem 2rem;
+    border-bottom: var(--border);
+  }
 `;
