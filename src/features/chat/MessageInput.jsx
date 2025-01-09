@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { sendMessage } from "../../services/apiMessages.js";
@@ -50,7 +50,10 @@ const MessageInput = ({ userId, chatId, chatContainerRef }) => {
 
   return (
     <StyledBox>
-      <StyledMessageInput type="horizontal">
+      <StyledMessageInput
+        type="horizontal"
+        isEmojiPickerVisible={isEmojiPickerVisible}
+      >
         <HiOutlineEmojiHappy size={24} onClick={toggleEmojiPicker} />
         {isEmojiPickerVisible && (
           <MemoizedEmoji
@@ -102,6 +105,15 @@ const StyledMessageInput = styled.div`
   left: 1rem;
   right: 1rem;
   background-color: var(--color-black);
+
+  ${(props) =>
+    props.isEmojiPickerVisible &&
+    css`
+      & > :nth-child(2) {
+        left: 1rem;
+        bottom: 4rem;
+      }
+    `}
 
   & textarea {
     background-color: transparent;

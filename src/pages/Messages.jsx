@@ -11,7 +11,7 @@ import MessagesSidebar from "../features/chat/MessagesSidebar.jsx";
 import MessageInput from "../features/chat/MessageInput.jsx";
 import { useCurrentDummyUser } from "../features/users/hooks/useCurrentDummyUser.js";
 import { useChatCollectionId } from "../features/chat/hooks/useChatCollectionId.js";
-import SpinnerMini from "../ui/loaders/SpinnerMini.jsx";
+import SpinnerFullPage from "../ui/loaders/SpinnerFullPage.jsx";
 
 function Messages() {
   const { currentUser = {}, isLoading, error } = useCurrentDummyUser();
@@ -40,7 +40,7 @@ function Messages() {
     }
   }, [messages, refetch]);
 
-  if (fetchingCollection || isLoading) return <SpinnerMini />;
+  if (fetchingCollection || isLoading) return <SpinnerFullPage />;
 
   return (
     <StyledMessages type="horizontal-center">
