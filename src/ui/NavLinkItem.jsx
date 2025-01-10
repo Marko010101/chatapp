@@ -3,13 +3,17 @@ import { capitalizeFirstLetter } from "../utils/capitalizeFirstLetter.js";
 
 function NavLinkItem({ icon, iconActive, title }) {
   const location = useLocation();
+
   // Check if the current location matches the NavLink's destination
-  const isActive = location.pathname === `/${title}`;
+  const isActive =
+    title.toLowerCase() === "home"
+      ? location.pathname === "/"
+      : location.pathname.includes(`/${title.toLowerCase()}`);
 
   return (
     <>
       {isActive ? iconActive : icon}
-      <span>{capitalizeFirstLetter(title) || "Home"}</span>
+      <span>{capitalizeFirstLetter(title)}</span>
     </>
   );
 }

@@ -51,9 +51,9 @@ function UserProfileOnHover({ user, left, isSuggestedPage }) {
             ))
           : !isLoading && <span>No posts yet</span>}
       </StyledPosts>
-      <Row>
+      <StyledLink to={`messages/${id}`}>
         <button>Message</button>
-      </Row>
+      </StyledLink>
     </StyledHoverPopup>
   );
 }
@@ -147,4 +147,8 @@ const StyledPosts = styled(Row)`
     align-self: center;
     text-align: center;
   }
+`;
+
+const StyledLink = styled(Link)`
+  display: flex;
 `;

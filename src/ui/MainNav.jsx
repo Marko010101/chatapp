@@ -46,7 +46,7 @@ function MainNav() {
               <NavLinkItem
                 icon={<IoHomeOutline />}
                 iconActive={<IoHomeSharp />}
-                title=""
+                title="Home"
               />
             </StyledNavLink>
           </li>

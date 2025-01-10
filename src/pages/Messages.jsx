@@ -12,10 +12,19 @@ import MessageInput from "../features/chat/MessageInput.jsx";
 import { useCurrentDummyUser } from "../features/users/hooks/useCurrentDummyUser.js";
 import { useChatCollectionId } from "../features/chat/hooks/useChatCollectionId.js";
 import SpinnerFullPage from "../ui/loaders/SpinnerFullPage.jsx";
+import EmptyChat from "../features/chat/EmptyChat.jsx";
+import { useUserById } from "../features/users/hooks/useUserById.js";
+import ChatHeader from "../features/chat/ChatHeader.jsx";
+import SpinnerGrayMini from "../ui/loaders/SpinnerGrayMini.jsx";
 
 function Messages() {
   const { currentUser = {}, isLoading, error } = useCurrentDummyUser();
   const { userId } = useParams();
+  const {
+    userById,
+    isLoading: isLoadingChatUser,
+    error: errorChatUser,
+  } = useUserById(userId);
   const chatContainerRef = useRef(null);
   const chatId = [currentUser.id, userId].sort().join("_");
   const { refetch, isLoading: fetchingCollection } = useChatCollectionId();
@@ -25,8 +34,9 @@ function Messages() {
     orderBy("createdAt", "asc"),
     limit(25)
   );
-  const [messages] = useCollectionData(messagesQuery, { idField: "id" });
-
+  const [messages, loading] = useCollectionData(messagesQuery, {
+    idField: "id",
+  });
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTo({
@@ -40,34 +50,44 @@ function Messages() {
     }
   }, [messages, refetch]);
 
-  if (fetchingCollection || isLoading) return <SpinnerFullPage />;
-
+  if (fetchingCollection || isLoading || isLoadingChatUser)
+    return <SpinnerFullPage />;
   return (
     <StyledMessages type="horizontal-center">
       <Row>
         <MessagesSidebar currentUserId={currentUser.id} />
       </Row>
       {userId && (
-        <StyledChatBox type="vertical" padding="1rem 0">
-          <div
-            ref={chatContainerRef}
-            style={{ overflowY: "auto", flexGrow: 1 }}
-          >
-            {messages &&
-              messages.map((msg, index) => (
-                <ChatMessage
-                  key={msg.id || index}
-                  message={msg}
-                  currentUserId={currentUser?.id}
-                />
-              ))}
-          </div>
-          <MessageInput
-            userId={currentUser.id}
-            chatId={userId}
-            chatContainerRef={chatContainerRef}
-          />
-        </StyledChatBox>
+        <>
+          <ChatHeader user={userById} />
+          <StyledChatBox type="vertical" padding="1rem 0">
+            <div
+              ref={chatContainerRef}
+              style={{ overflowY: "auto", flexGrow: 1 }}
+            >
+              {loading ? (
+                <StyledSpinnerBox type="horizontal-center">
+                  <SpinnerGrayMini />
+                </StyledSpinnerBox>
+              ) : messages?.length ? (
+                messages.map((msg, index) => (
+                  <ChatMessage
+                    key={msg.id || index}
+                    message={msg}
+                    currentUserId={currentUser?.id}
+                  />
+                ))
+              ) : (
+                <EmptyChat user={userById} />
+              )}
+            </div>
+            <MessageInput
+              userId={currentUser.id}
+              chatId={userId}
+              chatContainerRef={chatContainerRef}
+            />
+          </StyledChatBox>
+        </>
       )}
     </StyledMessages>
   );
@@ -80,6 +100,7 @@ const StyledMessages = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 const StyledChatBox = styled(Row)`
@@ -89,6 +110,14 @@ const StyledChatBox = styled(Row)`
     var(--sidebar-width-shrunk) + var(--sidebar-width-messages)
   );
   padding-bottom: 7.5rem;
+  padding-top: 11rem;
   justify-content: space-between;
   overflow: hidden;
+`;
+
+const StyledSpinnerBox = styled(Row)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;

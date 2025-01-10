@@ -62,6 +62,7 @@ function Profile() {
   const {
     firstName,
     lastName,
+    id,
     registerDate,
     picture = defaultUserImg,
     dateOfBirth,
@@ -88,6 +89,7 @@ function Profile() {
           dateOfBirth={dateOfBirth}
           gender={gender}
           title={title}
+          id={id}
         />
       </StyledProfile>
       <ProfilePosts

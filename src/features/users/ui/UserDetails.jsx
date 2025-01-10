@@ -5,6 +5,7 @@ import Row from "../../../ui/Row.jsx";
 import Heading from "../../../ui/Heading.jsx";
 import StyledButton from "../../../ui/Buttons/StyledButton.jsx";
 import PersonalInfo from "./PersonalInfo.jsx";
+import { useNavigate } from "react-router-dom";
 
 function UserDetails({
   firstName,
@@ -15,16 +16,25 @@ function UserDetails({
   gender,
   dateOfBirth,
   title,
+  id,
 }) {
+  const navigate = useNavigate();
+
   return (
     <UserDetail isCurrentUser={isCurrentUser}>
       <Row type="horizontal-around">
         <StyledHeading as="h3">
           <span>{title}</span> {firstName}_{lastName}
         </StyledHeading>
-        <RecreatedBtn isCurrentUser={isCurrentUser}>
-          {isCurrentUser ? "Edit profile" : "Message"}
-        </RecreatedBtn>
+        {isCurrentUser ? (
+          <RecreatedBtn isCurrentUser={isCurrentUser}>
+            Edit profile
+          </RecreatedBtn>
+        ) : (
+          <StyledButton onClick={() => navigate(`/messages/${id}`)}>
+            message
+          </StyledButton>
+        )}
       </Row>
       <StyledRow>
         <PersonalInfo

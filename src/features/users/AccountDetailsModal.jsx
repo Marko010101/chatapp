@@ -24,7 +24,6 @@ const AccountDetailsModal = ({ onClose, ownerId }) => {
     firstName,
     lastName,
     picture = defaultImage,
-    title = "",
     email,
     registerDate,
   } = userById || {};
