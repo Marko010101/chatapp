@@ -1,6 +1,8 @@
 import styled, { css } from "styled-components";
 
 const Form = styled.form`
+  display: flex;
+  gap: 2rem;
   padding: 2.4rem 4rem;
   background-color: var(--color-neutral-950);
   border: var(--border);
@@ -11,14 +13,9 @@ const Form = styled.form`
   ${(props) =>
     props.type === "register" &&
     css`
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 60rem;
-
-      @media (max-width: 576px) {
-        width: max-content;
+      @media (max-width: 992px) {
+        flex-direction: column;
+        gap: 4rem;
       }
     `}
 `;

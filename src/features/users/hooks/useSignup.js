@@ -7,8 +7,8 @@ export function useSignup() {
     isPending,
     error,
   } = useMutation({
-    mutationFn: ({ firstName, lastName, email }) =>
-      createUser(firstName, lastName, email),
+    mutationFn: ({ firstName, lastName, email, picture }) =>
+      createUser(firstName, lastName, email, picture),
   });
   return { signupOnDummy, isPending, error };
 }

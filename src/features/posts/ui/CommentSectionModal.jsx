@@ -52,15 +52,7 @@ function CommentSectionModal({
 
       <StyledCommentBody type="vertical">
         <Heading as="h5">
-          <RelativePositionWrapper
-            onMouseEnter={handleHeaderMouseEnter}
-            onMouseLeave={handleHeaderMouseLeave}
-          >
-            <Link to={`/profile/${owner.id}`}>
-              <Title text={text} owner={owner} />
-            </Link>
-            {isHeaderHovered && <UserProfileOnHover user={owner} />}
-          </RelativePositionWrapper>
+          <Title text={text} owner={owner} />
         </Heading>
         <PostFormatedDate date={date} isModalComment={true} />
       </StyledCommentBody>

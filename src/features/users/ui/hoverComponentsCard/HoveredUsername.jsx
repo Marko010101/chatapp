@@ -40,4 +40,8 @@ export default HoveredName;
 
 const StyledRow = styled(Row)`
   align-self: self-start;
+  display: ruby;
+  & > span {
+    margin-left: 0.7rem;
+  }
 `;

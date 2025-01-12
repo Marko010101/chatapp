@@ -1,17 +1,11 @@
-import React from "react";
-import { Cloudinary } from "@cloudinary/url-gen";
-import { auto } from "@cloudinary/url-gen/actions/resize";
-import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity";
-import { AdvancedImage } from "@cloudinary/react";
-
 export const uploadFileToCloudinary = async (file) => {
   try {
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "petfolio"); // Use your Cloudinary preset here
+    formData.append("upload_preset", "petfolio");
 
     const response = await fetch(
-      "https://api.cloudinary.com/v1_1/dphjwma4h/image/upload", // Replace with your Cloudinary cloud name
+      "https://api.cloudinary.com/v1_1/dphjwma4h/image/upload",
       {
         method: "POST",
         body: formData,

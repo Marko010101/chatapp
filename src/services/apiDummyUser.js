@@ -2,7 +2,7 @@ import toast from "react-hot-toast";
 import { APP_ID } from "../constants/APP_ID.js";
 import { DUMMY_API } from "../constants/DUMMY_API.js";
 
-export async function createUser(firstName, lastName, email) {
+export async function createUser(firstName, lastName, email, picture) {
   const response = await fetch(`${DUMMY_API}user/create`, {
     method: "POST",
     headers: {
@@ -13,6 +13,7 @@ export async function createUser(firstName, lastName, email) {
       firstName,
       lastName,
       email,
+      picture,
     }),
   });
 

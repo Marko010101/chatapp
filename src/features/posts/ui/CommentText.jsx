@@ -7,24 +7,11 @@ const StyledTitle = styled(Row)`
   font-weight: var(--font-weight-light);
   color: var(--color-gray-0);
   text-overflow: ellipsis;
-  /* pointer-events: none;
-  text-align: start; */
-
-  & p {
-    display: inline;
-    font-weight: var(--font-weight-semibold);
-    cursor: pointer;
-    pointer-events: auto;
-  }
-  & > div {
-    display: flex;
-    gap: 1rem;
-  }
 `;
 
 function CommentText({ text, owner }) {
   return (
-    <StyledTitle as="span">
+    <StyledTitle>
       <HoveredName user={owner} text={text} left="17.5rem" />
     </StyledTitle>
   );
