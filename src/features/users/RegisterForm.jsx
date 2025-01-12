@@ -54,29 +54,35 @@ function RegisterForm() {
         setError("image", {
           message: "Invalid file type. Only PNG, JPG, or WEBP allowed.",
         });
+        setPreviewImage(URL.createObjectURL(file));
         return;
       }
       if (file.size > 2 * 1024 * 1024) {
         setError("image", { message: "File size exceeds 2MB." });
+        setPreviewImage(URL.createObjectURL(file));
         return;
       }
       setPreviewImage(URL.createObjectURL(file));
       setValue("image", file);
       clearErrors("image");
+    } else {
+      setPreviewImage(null);
+      setValue("image", null);
     }
   };
 
   const handleFileDelete = () => {
     setPreviewImage(null);
-    setValue("image", null);
-    setError("image", { message: "Image is required" });
+    setValue("image", null); // Set image to null
+    clearErrors("image"); // Clear any existing image errors
   };
 
   // creating the dummyUser, on its success creating firebase user and passing id to it, ensuring that the dummyUser's ID matches firebase user's id
 
   async function onSubmit({ firstName, lastName, image, email, password }) {
     try {
-      const picture = await uploadFileToCloudinary(image);
+      let picture;
+      if (image) picture = await uploadFileToCloudinary(image);
       signupOnDummy(
         { firstName, lastName, email, picture },
         {
@@ -102,7 +108,7 @@ function RegisterForm() {
     <Form onSubmit={handleSubmit(onSubmit)} type="register">
       <StyledUploadRow>
         <StyledLabel as="label" type="horizontal-center" htmlFor="image-upload">
-          Upload Image <FaRegArrowAltCircleDown size={18} />
+          Upload Image (Optional) <FaRegArrowAltCircleDown size={18} />
         </StyledLabel>
         <Upload
           value={previewImage}
@@ -112,7 +118,7 @@ function RegisterForm() {
           isError={Boolean(errors.image)}
           setError={(error) => setError("image", { message: error })}
         />
-        {errors?.image && <ErrorDisplay error={errors.image} padding="0" />}
+        {errors?.image && <ErrorDisplay error={errors.image} padding="2rem" />}
       </StyledUploadRow>
       <StyledForm>
         <FormRow label="First name" error={errors?.firstName?.message}>
@@ -236,6 +242,7 @@ const StyledUploadRow = styled(Row)`
 const StyledForm = styled(Row)`
   border-left: var(--border);
   padding-left: 2rem;
+  width: max-content;
 `;
 
 const StyledLabel = styled(Row)`

@@ -11,7 +11,7 @@ const ErrorDisplay = ({
   return (
     <Row type={alignment} padding={padding}>
       <StyledErrorText>
-        {error.message || "An unexpected error occurred."}
+        {error?.message || error || "An unexpected error occurred."}
       </StyledErrorText>
     </Row>
   );

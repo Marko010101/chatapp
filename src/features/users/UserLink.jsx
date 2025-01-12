@@ -34,7 +34,6 @@ function UserLink({
   const { registerDate, location, email } = userById;
 
   const diffInMonths = getTimeDifferences(registerDate);
-
   if (isLoadingDummyUsers || isLoadingUserById || isLoadingUserCollection) {
     return (
       <StyledUser isLoading={true}>

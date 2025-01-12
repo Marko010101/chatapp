@@ -27,7 +27,7 @@ export async function sendMessage(text, senderId, receiverId) {
     const chatDocRef = doc(firestore, `chats/${chatId}`);
     const docSnapshot = await getDoc(chatDocRef);
 
-    const currentTime = Date.now(); // Get current timestamp in milliseconds
+    const currentTime = Date.now();
 
     if (!docSnapshot.exists()) {
       await setDoc(chatDocRef, {
@@ -41,14 +41,12 @@ export async function sendMessage(text, senderId, receiverId) {
       text,
       senderId,
       receiverId,
-      createdAt: currentTime, // Pass the current timestamp directly
+      createdAt: currentTime,
     });
 
     await updateDoc(chatDocRef, {
-      updatedAt: currentTime, // Pass the current timestamp directly
+      updatedAt: currentTime,
     });
-
-    console.log("Message sent and chat updated successfully!");
   } catch (error) {
     console.error("Error adding message: ", error);
   }

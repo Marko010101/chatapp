@@ -70,7 +70,6 @@ function Profile() {
     title,
   } = isCurrentUser ? currentUser : userById;
   const postLength = currentSearchedUserPost?.data.length;
-
   return (
     <>
       <StyledProfile>
