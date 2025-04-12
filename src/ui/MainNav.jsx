@@ -27,8 +27,7 @@ import Row from "./Row.jsx";
 function MainNav() {
   const { isShrunk } = useSidebarShrink();
   const { logout } = useLogout();
-  const { currentUser, isLoading: currentUserIsLoading } =
-    useCurrentDummyUser();
+  const { currentUser, isLoading: currentUserIsLoading } = useCurrentDummyUser();
   const { windowWidth } = useWindowWidth();
   const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
 
@@ -43,60 +42,38 @@ function MainNav() {
         <NavList as="ul" type="vertical" gap="0.4rem" isShrunk={isShrunk}>
           <li>
             <StyledNavLink to="/">
-              <NavLinkItem
-                icon={<IoHomeOutline />}
-                iconActive={<IoHomeSharp />}
-                title="Home"
-              />
+              <NavLinkItem icon={<IoHomeOutline />} iconActive={<IoHomeSharp />} title="Home" />
             </StyledNavLink>
           </li>
-          <li>
+          {/* <li>
             <StyledNavLink to="/search">
-              <NavLinkItem
-                icon={<IoIosSearch />}
-                iconActive={<IoSearchSharp />}
-                title="search"
-              />
+              <NavLinkItem icon={<IoIosSearch />} iconActive={<IoSearchSharp />} title="search" />
             </StyledNavLink>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <StyledNavLink to="/explore">
-              <NavLinkItem
-                icon={<MdOutlineExplore />}
-                iconActive={<MdExplore />}
-                title="explore"
-              />
+              <NavLinkItem icon={<MdOutlineExplore />} iconActive={<MdExplore />} title="explore" />
             </StyledNavLink>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <StyledNavLink to="/reels">
-              <NavLinkItem
-                icon={<PiFilmReelLight />}
-                iconActive={<PiFilmReelFill />}
-                title="reels"
-              />
+              <NavLinkItem icon={<PiFilmReelLight />} iconActive={<PiFilmReelFill />} title="reels" />
             </StyledNavLink>
-          </li>
+          </li> */}
           <li>
             <StyledNavLink to="/messages">
               <NavLinkItem
                 icon={<img src={messageIcon} alt="message icon" />}
-                iconActive={
-                  <img src={activeMessageIcon} alt="Active messages image" />
-                }
+                iconActive={<img src={activeMessageIcon} alt="Active messages image" />}
                 title="messages"
               />
             </StyledNavLink>
           </li>
-          <li>
+          {/* <li>
             <StyledNavLink to="/notifications">
-              <NavLinkItem
-                icon={<IoMdHeartEmpty />}
-                iconActive={<IoMdHeart />}
-                title="notifications"
-              />
+              <NavLinkItem icon={<IoMdHeartEmpty />} iconActive={<IoMdHeart />} title="notifications" />
             </StyledNavLink>
-          </li>
+          </li> */}
           <li>
             <StyledNavButton
               type="horizontal-center"
@@ -111,11 +88,7 @@ function MainNav() {
           {windowWidth <= 992 && (
             <li>
               <StyledNavLink to="/explore/people">
-                <NavLinkItem
-                  icon={<MdOutlinePeopleAlt />}
-                  iconActive={<MdPeopleAlt />}
-                  title="explore/people"
-                />
+                <NavLinkItem icon={<MdOutlinePeopleAlt />} iconActive={<MdPeopleAlt />} title="explore/people" />
               </StyledNavLink>
             </li>
           )}
