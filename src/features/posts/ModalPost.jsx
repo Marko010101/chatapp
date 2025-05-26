@@ -32,36 +32,17 @@ function ModalPost() {
   const { close } = useContext(ModalContext);
   const isSmallerDevice = windowWidth <= 992;
 
-  const {
-    comments = {},
-    isLoading: loadingComments,
-    error: commentsError,
-  } = useComments(currentPostId);
+  const { comments = {}, isLoading: loadingComments, error: commentsError } = useComments(currentPostId);
 
   const { data: commentsData = [] } = comments;
   const { post, isLoading, error } = useModalPostById(currentPostId);
-  const {
-    userById,
-    isLoading: loadingUserById,
-    error: userByIdError,
-  } = useUserById(post?.owner?.id);
+  const { userById, isLoading: loadingUserById, error: userByIdError } = useUserById(post?.owner?.id);
 
   if (isLoading || loadingUserById) return <SpinnerFullPage />;
 
-  if (userByIdError || error)
-    return <ErrorDisplay error={userByIdError || error} />;
-  const sortedComments = commentsData?.sort(
-    (a, b) => new Date(a.publishDate) - new Date(b.publishDate)
-  );
-  const {
-    image,
-    likes,
-    link,
-    owner = {},
-    publishDate,
-    tags,
-    text,
-  } = post || {};
+  if (userByIdError || error) return <ErrorDisplay error={userByIdError || error} />;
+  const sortedComments = commentsData?.sort((a, b) => new Date(a.publishDate) - new Date(b.publishDate));
+  const { image, likes, link, owner = {}, publishDate, tags, text } = post || {};
 
   return (
     <StyledModal>
@@ -78,19 +59,10 @@ function ModalPost() {
         <StyledOwner as="header" type="horizontal">
           <Row type="horizontal-center">
             <StyledRow>
-              <HoveredImg
-                user={owner}
-                isSuggestedPage={false}
-                left="7rem"
-                haveBorder={true}
-              />
+              <HoveredImg user={owner} isSuggestedPage={false} left="7rem" haveBorder={true} />
             </StyledRow>
             <StyledRow>
-              <HoveredName
-                user={owner}
-                isSmallerDevice={isSmallerDevice}
-                text={isSmallerDevice && text}
-              />
+              <HoveredName user={owner} isSmallerDevice={isSmallerDevice} text={isSmallerDevice && text} />
             </StyledRow>
           </Row>
           {!isSmallerDevice && (
@@ -120,20 +92,12 @@ function ModalPost() {
         )}
 
         <StyledReactionsPart>
-          <ActionIcons
-            textareaRef={textareaRef}
-            post={post}
-            currentPostId={currentPostId}
-          />
+          <ActionIcons textareaRef={textareaRef} post={post} currentPostId={currentPostId} />
           <Likes likes={likes} />
           <PostFormatedDate date={publishDate} isModalComment={true} />
         </StyledReactionsPart>
 
-        <InputComment
-          postId={currentPostId}
-          textareaRef={textareaRef}
-          isModalComment={true}
-        />
+        <InputComment postId={currentPostId} textareaRef={textareaRef} isModalComment={true} />
       </PostBody>
     </StyledModal>
   );

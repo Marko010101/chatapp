@@ -14,12 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import CreatePost from "./CreatePost.jsx";
 import ErrorDisplay from "../../ui/ErrorDisplay.jsx";
 
-const PostActionModal = ({
-  onClose,
-  post,
-  setIsAccountDetailsOpen,
-  handleEditPostToggle,
-}) => {
+const PostActionModal = ({ onClose, post, setIsAccountDetailsOpen, handleEditPostToggle }) => {
   const { deletePost, isLoading, error } = useDeletePost();
   let { postId } = useParams();
   const navigate = useNavigate();
@@ -71,15 +66,11 @@ const PostActionModal = ({
   const isCurrentUserPostOwner = currentUser?.id === post.owner?.id;
 
   const actions = [
-    ...(isCurrentUserPostOwner
-      ? [{ label: "Edit Post", onClick: handleEdit }]
-      : []),
+    ...(isCurrentUserPostOwner ? [{ label: "Edit Post", onClick: handleEdit }] : []),
     { label: "Go to Post", onClick: handleGoToPost },
     { label: "Copy link", onClick: handleCopyLink },
     { label: "About this Account", onClick: handleOpenaccountDetails },
-    ...(isCurrentUserPostOwner
-      ? [{ label: "Delete Post", onClick: handleDeletePost, destructive: true }]
-      : []),
+    ...(isCurrentUserPostOwner ? [{ label: "Delete Post", onClick: handleDeletePost, destructive: true }] : []),
     { label: "Close", onClick: onClose },
   ];
 
@@ -126,8 +117,7 @@ const StyledActionItem = styled(Row)`
   height: 4.8rem;
   cursor: pointer;
   border-bottom: var(--border-light);
-  color: ${({ destructive }) =>
-    destructive ? "var(--color-red-400)" : "var(--color-text)"};
+  color: ${({ destructive }) => (destructive ? "var(--color-red-400)" : "var(--color-text)")};
 
   &:last-child {
     border-bottom: none;

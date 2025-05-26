@@ -31,7 +31,7 @@ const MessagesSidebar = ({ currentUserId }) => {
   }, [chatCollectionId, currentUserId]);
 
   if (isLoading) return <p>...Loading</p>;
-  if (error) return <ErrorDisplay error={error} />;
+  if (error) return null;
 
   const isUserIdInChats = sortedChats?.some((el) => {
     const [user1, user2] = el.id.split("_");
@@ -42,9 +42,7 @@ const MessagesSidebar = ({ currentUserId }) => {
     <StyledMessagesSidebar>
       <h2>Chats</h2>
 
-      {!isUserIdInChats && userId && (
-        <ConversationUser key={userId} receiverId={userId} />
-      )}
+      {!isUserIdInChats && userId && <ConversationUser key={userId} receiverId={userId} />}
 
       {sortedChats?.map((el) => {
         const { id } = el;

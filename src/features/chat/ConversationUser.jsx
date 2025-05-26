@@ -17,7 +17,7 @@ const ConversationUser = ({ receiverId }) => {
         <SpinnerMini />
       </Row>
     );
-  if (error) return <ErrorDisplay error={error} />;
+  if (error) return null;
 
   const { id, firstName, lastName, picture = DefaultUser } = userById;
 
