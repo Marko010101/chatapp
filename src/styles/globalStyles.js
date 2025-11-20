@@ -102,7 +102,7 @@ const GlobalStyles = createGlobalStyle`
   /* Width */
   --sidebar-width-medium: 24.45rem;
   --sidebar-width-shrunk: 7.2rem;
-  --sidebar-width-messages: 30rem;
+  --sidebar-width-messages: 31rem;
 
 
   /* For dark mode */

@@ -1,15 +1,14 @@
-import styled, { keyframes } from "styled-components";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import styled, { keyframes } from "styled-components";
 
-import { useChatCollectionId } from "./hooks/useChatCollectionId.js";
 import ConversationUser from "./ConversationUser.jsx";
-import ErrorDisplay from "../../ui/ErrorDisplay.jsx";
+import { useChatCollectionId } from "./hooks/useChatCollectionId.js";
+import { deleteUser } from "../../services/apiDummyUser.js";
 
 const MessagesSidebar = ({ currentUserId }) => {
   const { userId } = useParams();
   const { chatCollectionId, isLoading, error } = useChatCollectionId();
-
   const [sortedChats, setSortedChats] = useState([]);
 
   useEffect(() => {
@@ -37,19 +36,31 @@ const MessagesSidebar = ({ currentUserId }) => {
     const [user1, user2] = el.id.split("_");
     return user1 === userId || user2 === userId;
   });
-
+  // deleteUser("676c5acce9991cd40fc4c4da");
   return (
     <StyledMessagesSidebar>
       <h2>Chats</h2>
 
-      {!isUserIdInChats && userId && <ConversationUser key={userId} receiverId={userId} />}
+      {!isUserIdInChats && userId && (
+        <ConversationUser
+          key={userId}
+          receiverId={userId}
+          currentUserId={currentUserId}
+        />
+      )}
 
       {sortedChats?.map((el) => {
         const { id } = el;
         const [user1, user2] = id.split("_");
 
         const receiverId = user1 === currentUserId ? user2 : user1;
-        return <ConversationUser key={receiverId} receiverId={receiverId} />;
+        return (
+          <ConversationUser
+            key={receiverId}
+            receiverId={receiverId}
+            currentUserId={currentUserId}
+          />
+        );
       })}
     </StyledMessagesSidebar>
   );

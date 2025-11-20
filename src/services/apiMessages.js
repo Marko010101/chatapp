@@ -4,11 +4,11 @@ import {
   doc,
   getDoc,
   getDocs,
-  serverTimestamp,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
 import { firestore } from "../constants/firebaseConfig.js";
+import { deleteDoc } from "firebase/firestore";
 
 export async function sendMessage(text, senderId, receiverId) {
   if (!senderId || !receiverId) {
@@ -67,5 +67,16 @@ export const fetchChats = async () => {
   } catch (error) {
     console.error("Error retrieving chats: ", error);
     return [];
+  }
+};
+
+export const deleteChat = async (chatId) => {
+  try {
+    const ref = doc(firestore, "chats", chatId);
+    await deleteDoc(ref);
+    return true;
+  } catch (err) {
+    console.error("Error deleting chat:", err);
+    throw err;
   }
 };

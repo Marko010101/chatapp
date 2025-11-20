@@ -21,7 +21,6 @@ function DummyUsersList({
   } = useUsers();
   if (errorRealUsers || errorDummyUsers)
     return <ErrorDisplay error={errorRealUsers || errorDummyUsers} />;
-  console.log(realUsers);
   // Ensure fallback values to avoid undefined errors
   const realUsersData = realUsers?.data || [];
   const dummyUsersList = dummyUsersData?.data || [];
